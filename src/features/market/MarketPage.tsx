@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Loader2, ArrowLeft, Share2, Star, MessageSquare } from 'lucide-react';
+import { Loader2, ArrowLeft, Share2, Star, MessageSquare, Activity } from 'lucide-react';
 import { useMarketStore } from './market.store';
 import { MarketChart } from './layout/Chart';
 import { TradePanel } from './layout/TradePanel';
@@ -8,8 +8,13 @@ import { OrderBook } from './layout/OrderBook';
 import { MobileTabs } from './layout/MobileTabs';
 import { CommentsSection } from './layout/CommentsSection';
 import { ResolutionBanner } from './layout/ResolutionBanner';
+import { StickyMarketHeader } from './layout/StickyMarketHeader';
+import { TradeActivity } from './layout/TradeActivity';
+import { MultiOutcomePanel } from './layout/MultiOutcomePanel';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { formatVolume, formatTimeRemaining } from '@/shared/utils';
+import { notificationService } from '@/services/notificationService';
+import { mockSocket } from '@/services/mockSocket';
 
 export function MarketPage() {
   const { id } = useParams<{ id: string }>();
@@ -27,6 +32,15 @@ export function MarketPage() {
       return unsubscribe;
     }
   }, [id, currentMarket, subscribeToUpdates]);
+
+  // Subscribe to notifications
+  useEffect(() => {
+    mockSocket.connect();
+    const unsubscribe = notificationService.subscribe();
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   if (isLoading) {
     return (
@@ -59,6 +73,9 @@ export function MarketPage() {
   return (
     <div className="min-h-screen bg-background">
       <AppHeader />
+
+      {/* Sticky Header for scrolling */}
+      <StickyMarketHeader market={currentMarket} />
 
       {/* Market Header */}
       <div className="border-b border-border">
@@ -149,29 +166,36 @@ export function MarketPage() {
               <MarketChart priceHistory={currentMarket.priceHistory} currentPrice={currentMarket.yesPrice} />
             </div>
 
-            {/* Options Table - Kalshi style */}
-            <div className="rounded-xl border border-border bg-card overflow-hidden">
-              <div className="px-5 py-3 border-b border-border">
-                <h2 className="text-sm font-semibold text-foreground">Outcomes</h2>
-              </div>
-              <div className="divide-y divide-border">
-                {/* Yes Row */}
-                <div className="flex items-center justify-between px-5 py-4">
-                  <div className="flex items-center gap-3">
-                    <span className="text-sm font-medium text-foreground">Yes</span>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <span className="text-sm font-semibold text-foreground">{yesPercent}%</span>
-                    {!isResolved && (
-                      <div className="flex gap-2">
-                        <button className="yes-no-btn yes-no-btn-yes px-4 py-1.5">Yes {(currentMarket.yesPrice * 100).toFixed(0)}¢</button>
-                        <button className="yes-no-btn yes-no-btn-no px-4 py-1.5">No {(currentMarket.noPrice * 100).toFixed(0)}¢</button>
-                      </div>
-                    )}
+            {/* Outcomes - Binary or Multi */}
+            {currentMarket.outcomes && currentMarket.outcomes.length > 0 ? (
+              <MultiOutcomePanel 
+                outcomes={currentMarket.outcomes} 
+                isResolved={isResolved}
+                resolvedOutcome={currentMarket.resolvedOutcome}
+              />
+            ) : (
+              <div className="rounded-xl border border-border bg-card overflow-hidden">
+                <div className="px-5 py-3 border-b border-border">
+                  <h2 className="text-sm font-semibold text-foreground">Outcomes</h2>
+                </div>
+                <div className="divide-y divide-border">
+                  <div className="flex items-center justify-between px-5 py-4">
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm font-medium text-foreground">Yes</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span className="text-sm font-semibold text-foreground">{yesPercent}%</span>
+                      {!isResolved && (
+                        <div className="flex gap-2">
+                          <button className="yes-no-btn yes-no-btn-yes px-4 py-1.5">Yes {(currentMarket.yesPrice * 100).toFixed(0)}¢</button>
+                          <button className="yes-no-btn yes-no-btn-no px-4 py-1.5">No {(currentMarket.noPrice * 100).toFixed(0)}¢</button>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            )}
 
             {/* Order Book */}
             {orderBook && !isResolved && (
@@ -207,8 +231,8 @@ export function MarketPage() {
             </div>
           </div>
 
-          {/* Right - Trade Panel */}
-          <div>
+          {/* Right - Trade Panel & Activity */}
+          <div className="space-y-6">
             {!isResolved && (
               <TradePanel
                 yesPrice={currentMarket.yesPrice}
@@ -225,6 +249,17 @@ export function MarketPage() {
                 </p>
               </div>
             )}
+
+            {/* Trade Activity */}
+            <div className="rounded-xl border border-border bg-card">
+              <div className="px-5 py-3 border-b border-border flex items-center gap-2">
+                <Activity className="h-4 w-4 text-muted-foreground" />
+                <h2 className="text-sm font-semibold text-foreground">Recent Trades</h2>
+              </div>
+              <div className="p-3">
+                <TradeActivity />
+              </div>
+            </div>
           </div>
         </div>
       </div>
