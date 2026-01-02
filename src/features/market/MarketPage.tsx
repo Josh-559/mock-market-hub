@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Loader2, ArrowLeft, Share2, Star, MessageSquare, Activity } from 'lucide-react';
+import { Loader2, ArrowLeft, Share2, Star, MessageSquare } from 'lucide-react';
 import { useMarketStore } from './market.store';
 import { MarketChart } from './layout/Chart';
 import { TradePanel } from './layout/TradePanel';
@@ -9,12 +9,9 @@ import { MobileTabs } from './layout/MobileTabs';
 import { CommentsSection } from './layout/CommentsSection';
 import { ResolutionBanner } from './layout/ResolutionBanner';
 import { StickyMarketHeader } from './layout/StickyMarketHeader';
-import { TradeActivity } from './layout/TradeActivity';
 import { MultiOutcomePanel } from './layout/MultiOutcomePanel';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { formatVolume, formatTimeRemaining } from '@/shared/utils';
-import { notificationService } from '@/services/notificationService';
-import { mockSocket } from '@/services/mockSocket';
 
 export function MarketPage() {
   const { id } = useParams<{ id: string }>();
@@ -33,14 +30,6 @@ export function MarketPage() {
     }
   }, [id, currentMarket, subscribeToUpdates]);
 
-  // Subscribe to notifications
-  useEffect(() => {
-    mockSocket.connect();
-    const unsubscribe = notificationService.subscribe();
-    return () => {
-      unsubscribe();
-    };
-  }, []);
 
   if (isLoading) {
     return (
@@ -249,17 +238,6 @@ export function MarketPage() {
                 </p>
               </div>
             )}
-
-            {/* Trade Activity */}
-            <div className="rounded-xl border border-border bg-card">
-              <div className="px-5 py-3 border-b border-border flex items-center gap-2">
-                <Activity className="h-4 w-4 text-muted-foreground" />
-                <h2 className="text-sm font-semibold text-foreground">Recent Trades</h2>
-              </div>
-              <div className="p-3">
-                <TradeActivity />
-              </div>
-            </div>
           </div>
         </div>
       </div>

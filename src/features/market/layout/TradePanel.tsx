@@ -4,7 +4,7 @@ import { useTradeStore } from '@/features/trading/trade.store';
 import { formatCurrency, formatShares } from '@/features/trading/trade.math';
 import { QUICK_AMOUNTS } from '@/shared/constants';
 import { cn } from '@/shared/utils';
-import { toast } from 'sonner';
+import { notificationService } from '@/services/notificationService';
 
 interface TradePanelProps {
   yesPrice: number;
@@ -44,13 +44,9 @@ export function TradePanel({ yesPrice, noPrice, liquidity, priceFlash }: TradePa
     const result = await submitOrder();
     
     if (result.success) {
-      toast.success('Order executed!', {
-        description: `Bought ${formatShares(result.shares)} ${selectedSide.toUpperCase()} shares at ${(result.avgPrice * 100).toFixed(1)}¢`,
-      });
+      notificationService.notifyTradeExecuted(selectedSide, result.shares, result.avgPrice);
     } else {
-      toast.error('Order failed', {
-        description: result.error,
-      });
+      notificationService.notifyTradeFailed(result.error || 'Unknown error');
     }
   };
 
