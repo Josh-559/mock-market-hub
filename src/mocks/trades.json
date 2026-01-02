@@ -1,0 +1,47 @@
+[
+  {
+    "id": "t1",
+    "marketId": "btc-100k-2026",
+    "side": "yes",
+    "type": "buy",
+    "price": 0.72,
+    "quantity": 500,
+    "timestamp": "2026-01-02T10:15:23Z"
+  },
+  {
+    "id": "t2",
+    "marketId": "btc-100k-2026",
+    "side": "no",
+    "type": "buy",
+    "price": 0.28,
+    "quantity": 250,
+    "timestamp": "2026-01-02T10:14:45Z"
+  },
+  {
+    "id": "t3",
+    "marketId": "btc-100k-2026",
+    "side": "yes",
+    "type": "buy",
+    "price": 0.71,
+    "quantity": 1200,
+    "timestamp": "2026-01-02T10:12:30Z"
+  },
+  {
+    "id": "t4",
+    "marketId": "fed-rate-cut-q1",
+    "side": "yes",
+    "type": "buy",
+    "price": 0.45,
+    "quantity": 800,
+    "timestamp": "2026-01-02T10:10:15Z"
+  },
+  {
+    "id": "t5",
+    "marketId": "btc-100k-2026",
+    "side": "yes",
+    "type": "sell",
+    "price": 0.73,
+    "quantity": 350,
+    "timestamp": "2026-01-02T10:08:22Z"
+  }
+]

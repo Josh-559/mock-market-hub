@@ -1,0 +1,44 @@
+{
+  "id": "user-1",
+  "username": "trader_demo",
+  "balance": 10000,
+  "positions": [
+    {
+      "marketId": "btc-100k-2026",
+      "side": "yes",
+      "shares": 500,
+      "avgPrice": 0.68,
+      "currentValue": 360
+    },
+    {
+      "marketId": "fed-rate-cut-q1",
+      "side": "no",
+      "shares": 200,
+      "avgPrice": 0.52,
+      "currentValue": 110
+    }
+  ],
+  "orders": [],
+  "tradeHistory": [
+    {
+      "id": "th1",
+      "marketId": "btc-100k-2026",
+      "side": "yes",
+      "type": "buy",
+      "price": 0.68,
+      "quantity": 500,
+      "total": 340,
+      "timestamp": "2025-12-28T14:30:00Z"
+    },
+    {
+      "id": "th2",
+      "marketId": "fed-rate-cut-q1",
+      "side": "no",
+      "type": "buy",
+      "price": 0.52,
+      "quantity": 200,
+      "total": 104,
+      "timestamp": "2025-12-29T09:15:00Z"
+    }
+  ]
+}
