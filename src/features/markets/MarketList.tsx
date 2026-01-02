@@ -2,10 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { fetchMarkets } from './markets.api';
 import type { Market, MarketCategory } from './markets.types';
-import { formatVolume, formatTimeRemaining, cn } from '@/shared/utils';
+import { formatVolume, cn } from '@/shared/utils';
 import { CATEGORIES, ROUTES } from '@/shared/constants';
 import { useState } from 'react';
-import { Loader2, Plus } from 'lucide-react';
+import { Loader2, Plus, CheckCircle2 } from 'lucide-react';
 import { AppHeader } from '@/components/layout/AppHeader';
 
 // Subcategory pills for each main category
@@ -118,11 +118,8 @@ export function MarketList() {
 }
 
 function MarketCard({ market }: { market: Market }) {
-  // Determine card type based on market structure
-  // For simplicity, we'll use the "binary with options" style like Kalshi
-  const hasMultipleOptions = market.options && market.options.length > 0;
   const yesPercent = Math.round(market.yesPrice * 100);
-  const noPercent = Math.round(market.noPrice * 100);
+  const isResolved = market.status === 'resolved';
 
   return (
     <Link
@@ -147,41 +144,42 @@ function MarketCard({ market }: { market: Market }) {
             {market.title}
           </h3>
           {/* Probability badge */}
-          <span className="text-sm font-semibold text-foreground flex-shrink-0">
-            {yesPercent}%
-          </span>
+          <div className="flex items-center gap-1 flex-shrink-0">
+            {isResolved && (
+              <CheckCircle2 className={cn(
+                'h-4 w-4',
+                market.resolvedOutcome === 'yes' ? 'text-yes' : 'text-no'
+              )} />
+            )}
+            <span className="text-sm font-semibold text-foreground">
+              {yesPercent}%
+            </span>
+          </div>
         </div>
 
-        {/* Options or Simple Yes/No */}
-        {hasMultipleOptions ? (
-          <div className="space-y-2">
-            {market.options!.slice(0, 2).map((option, idx) => (
-              <div key={idx} className="flex items-center justify-between">
-                <span className="text-sm text-foreground">{option.label}</span>
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-foreground">
-                    {Math.round(option.price * 100)}%
-                  </span>
-                  <div className="flex gap-1">
-                    <button className="yes-no-btn yes-no-btn-yes">Yes</button>
-                    <button className="yes-no-btn yes-no-btn-no">No</button>
-                  </div>
-                </div>
-              </div>
-            ))}
+        {/* Yes/No Buttons or Resolution Status */}
+        {isResolved ? (
+          <div className={cn(
+            'flex items-center justify-center py-3 px-4 rounded-lg',
+            market.resolvedOutcome === 'yes' ? 'bg-yes/10 text-yes' : 'bg-no/10 text-no'
+          )}>
+            <CheckCircle2 className="h-4 w-4 mr-2" />
+            <span className="text-sm font-medium">
+              Resolved {market.resolvedOutcome?.toUpperCase()}
+            </span>
           </div>
         ) : (
           <div className="flex gap-2 mt-auto">
             <button className="yes-btn-lg flex flex-col items-center">
               <span>Yes</span>
               <span className="text-xs mt-0.5 opacity-80">
-                ${(100 * market.yesPrice).toFixed(0)} → ${(market.yesPrice < 0.5 ? 100 * (1 - market.yesPrice) : 100).toFixed(0)}
+                ${(100 * market.yesPrice).toFixed(0)} → ${(100).toFixed(0)}
               </span>
             </button>
             <button className="no-btn-lg flex flex-col items-center">
               <span>No</span>
               <span className="text-xs mt-0.5 opacity-80">
-                ${(100 * market.noPrice).toFixed(0)} → ${(market.noPrice < 0.5 ? 100 * (1 - market.noPrice) : 100).toFixed(0)}
+                ${(100 * market.noPrice).toFixed(0)} → ${(100).toFixed(0)}
               </span>
             </button>
           </div>
@@ -190,7 +188,10 @@ function MarketCard({ market }: { market: Market }) {
         {/* Volume */}
         <div className="flex items-center justify-between mt-4 pt-3 border-t border-border">
           <span className="text-xs text-muted-foreground">{formatVolume(market.volume)}</span>
-          <button className="h-6 w-6 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-surface transition-colors">
+          <button 
+            className="h-6 w-6 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-surface transition-colors"
+            onClick={(e) => e.preventDefault()}
+          >
             <Plus className="h-3 w-3" />
           </button>
         </div>

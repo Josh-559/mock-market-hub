@@ -14,7 +14,7 @@ type TabId = 'chart' | 'orderBook' | 'trades';
 const TABS: { id: TabId; label: string }[] = [
   { id: 'chart', label: 'Chart' },
   { id: 'orderBook', label: 'Order Book' },
-  { id: 'trades', label: 'Trades' },
+  { id: 'trades', label: 'Comments' },
 ];
 
 export function MobileTabs({ children }: MobileTabsProps) {

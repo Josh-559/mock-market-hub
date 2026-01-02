@@ -1,3 +1,8 @@
+export interface MarketOption {
+  label: string;
+  price: number;
+}
+
 export interface Market {
   id: string;
   title: string;
@@ -10,7 +15,9 @@ export interface Market {
   noPrice: number;
   createdAt: string;
   endsAt: string;
-  imageUrl: string;
+  imageUrl?: string;
+  options?: MarketOption[];
+  resolvedOutcome?: 'yes' | 'no';
 }
 
 export type MarketCategory = 
