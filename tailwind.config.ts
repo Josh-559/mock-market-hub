@@ -65,11 +65,13 @@ export default {
           DEFAULT: "hsl(var(--yes))",
           foreground: "hsl(var(--yes-foreground))",
           muted: "hsl(var(--yes-muted))",
+          light: "hsl(var(--yes-light))",
         },
         no: {
           DEFAULT: "hsl(var(--no))",
           foreground: "hsl(var(--no-foreground))",
           muted: "hsl(var(--no-muted))",
+          light: "hsl(var(--no-light))",
         },
         success: "hsl(var(--success))",
         warning: "hsl(var(--warning))",

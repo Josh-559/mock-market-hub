@@ -12,15 +12,11 @@ export function OrderBook({ orderBook }: OrderBookProps) {
   );
 
   return (
-    <div className="rounded-xl border border-border bg-card overflow-hidden">
-      <div className="px-4 py-3 border-b border-border">
-        <h3 className="text-sm font-semibold text-foreground">Order Book</h3>
-      </div>
-      
+    <div className="rounded-lg border border-border overflow-hidden">
       {/* Header */}
-      <div className="grid grid-cols-3 px-4 py-2 text-xs text-muted-foreground border-b border-border bg-surface/50">
+      <div className="grid grid-cols-3 px-4 py-2 text-xs font-medium text-muted-foreground border-b border-border bg-surface">
         <span>Price</span>
-        <span className="text-center">Quantity</span>
+        <span className="text-center">Qty</span>
         <span className="text-right">Total</span>
       </div>
       
@@ -38,11 +34,11 @@ export function OrderBook({ orderBook }: OrderBookProps) {
       </div>
       
       {/* Spread indicator */}
-      <div className="px-4 py-2 bg-surface-elevated border-y border-border">
+      <div className="px-4 py-2 bg-surface border-y border-border">
         <div className="flex items-center justify-between text-xs">
           <span className="text-muted-foreground">Spread</span>
           <span className="font-mono text-foreground">
-            {((orderBook.asks[0]?.price || 0) - (orderBook.bids[0]?.price || 0)).toFixed(2)}
+            {((orderBook.asks[0]?.price || 0) - (orderBook.bids[0]?.price || 0)).toFixed(2)}¢
           </span>
         </div>
       </div>

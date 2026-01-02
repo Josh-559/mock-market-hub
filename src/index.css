@@ -2,68 +2,70 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Kalshi-inspired Design System - Clean, Institutional, Professional */
+/* Kalshi-inspired Design System - Clean, Light, Institutional */
 
 @layer base {
   :root {
-    /* Core surfaces - dark institutional theme */
-    --background: 220 16% 8%;
-    --foreground: 210 20% 95%;
+    /* Core surfaces - light institutional theme */
+    --background: 0 0% 100%;
+    --foreground: 220 13% 18%;
     
-    --surface: 220 14% 11%;
-    --surface-elevated: 220 14% 14%;
-    --surface-hover: 220 14% 16%;
+    --surface: 0 0% 98%;
+    --surface-elevated: 0 0% 96%;
+    --surface-hover: 0 0% 94%;
     
     /* Cards */
-    --card: 220 14% 11%;
-    --card-foreground: 210 20% 95%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 13% 18%;
     
     /* Popover */
-    --popover: 220 14% 13%;
-    --popover-foreground: 210 20% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 13% 18%;
     
-    /* Primary - subtle blue accent */
-    --primary: 213 94% 58%;
-    --primary-foreground: 220 16% 8%;
+    /* Primary - Kalshi's purple/violet accent */
+    --primary: 262 83% 58%;
+    --primary-foreground: 0 0% 100%;
     
     /* Secondary */
-    --secondary: 220 14% 18%;
-    --secondary-foreground: 210 20% 85%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 13% 46%;
     
     /* Muted */
-    --muted: 220 14% 16%;
-    --muted-foreground: 215 16% 55%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
     
     /* Accent */
-    --accent: 220 14% 20%;
-    --accent-foreground: 210 20% 95%;
+    --accent: 220 14% 96%;
+    --accent-foreground: 220 13% 18%;
     
     /* Destructive */
-    --destructive: 0 72% 51%;
-    --destructive-foreground: 210 20% 95%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
     
     /* Border & Input */
-    --border: 220 14% 20%;
-    --border-subtle: 220 14% 16%;
-    --input: 220 14% 16%;
-    --ring: 213 94% 58%;
+    --border: 220 13% 91%;
+    --border-subtle: 220 13% 95%;
+    --input: 220 13% 91%;
+    --ring: 262 83% 58%;
     
-    /* Prediction market specific - YES/NO colors */
-    --yes: 142 71% 45%;
-    --yes-foreground: 220 16% 8%;
-    --yes-muted: 142 50% 25%;
+    /* Prediction market specific - YES/NO colors (Kalshi style) */
+    --yes: 152 69% 41%;
+    --yes-foreground: 0 0% 100%;
+    --yes-muted: 152 60% 95%;
+    --yes-light: 152 69% 95%;
     
-    --no: 0 72% 51%;
-    --no-foreground: 210 20% 95%;
-    --no-muted: 0 50% 25%;
+    --no: 0 84% 60%;
+    --no-foreground: 0 0% 100%;
+    --no-muted: 0 60% 95%;
+    --no-light: 0 84% 96%;
     
     /* Chart colors */
-    --chart-line: 213 94% 58%;
-    --chart-area: 213 94% 58%;
-    --chart-grid: 220 14% 18%;
+    --chart-line: 0 84% 60%;
+    --chart-area: 0 84% 60%;
+    --chart-grid: 220 13% 91%;
     
     /* Status colors */
-    --success: 142 71% 45%;
+    --success: 152 69% 41%;
     --warning: 38 92% 50%;
     --info: 213 94% 58%;
     
@@ -71,14 +73,14 @@
     --radius: 0.5rem;
     
     /* Sidebar */
-    --sidebar-background: 220 14% 9%;
-    --sidebar-foreground: 210 20% 85%;
-    --sidebar-primary: 213 94% 58%;
-    --sidebar-primary-foreground: 220 16% 8%;
-    --sidebar-accent: 220 14% 14%;
-    --sidebar-accent-foreground: 210 20% 95%;
-    --sidebar-border: 220 14% 16%;
-    --sidebar-ring: 213 94% 58%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 220 13% 46%;
+    --sidebar-primary: 262 83% 58%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 220 14% 96%;
+    --sidebar-accent-foreground: 220 13% 18%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 262 83% 58%;
   }
 }
 
@@ -95,8 +97,8 @@
   
   /* Custom scrollbar for institutional feel */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
   }
   
   ::-webkit-scrollbar-track {
@@ -105,7 +107,7 @@
   
   ::-webkit-scrollbar-thumb {
     background: hsl(var(--border));
-    border-radius: 4px;
+    border-radius: 3px;
   }
   
   ::-webkit-scrollbar-thumb:hover {
@@ -114,17 +116,44 @@
 }
 
 @layer components {
-  /* Price cards */
-  .price-card {
-    @apply rounded-lg border transition-all duration-150;
+  /* Kalshi-style Yes/No button pills */
+  .yes-no-btn {
+    @apply px-3 py-1 text-xs font-medium rounded-full transition-colors cursor-pointer;
   }
   
-  .price-card-yes {
-    @apply border-yes/30 bg-yes/10 hover:bg-yes/20;
+  .yes-no-btn-yes {
+    @apply bg-yes-light text-yes hover:bg-yes hover:text-yes-foreground;
   }
   
-  .price-card-no {
-    @apply border-no/30 bg-no/10 hover:bg-no/20;
+  .yes-no-btn-no {
+    @apply bg-no-light text-no hover:bg-no hover:text-no-foreground;
+  }
+  
+  .yes-no-btn-yes-active {
+    @apply bg-yes text-yes-foreground;
+  }
+  
+  .yes-no-btn-no-active {
+    @apply bg-no text-no-foreground;
+  }
+  
+  /* Large Yes/No buttons (for trade cards) */
+  .yes-btn-lg {
+    @apply flex-1 py-3 px-6 rounded-lg text-sm font-medium border-2 transition-all;
+    @apply border-yes/30 text-yes bg-yes-light hover:bg-yes hover:text-yes-foreground hover:border-yes;
+  }
+  
+  .no-btn-lg {
+    @apply flex-1 py-3 px-6 rounded-lg text-sm font-medium border-2 transition-all;
+    @apply border-no/30 text-no bg-no-light hover:bg-no hover:text-no-foreground hover:border-no;
+  }
+  
+  .yes-btn-lg-active {
+    @apply bg-yes text-yes-foreground border-yes;
+  }
+  
+  .no-btn-lg-active {
+    @apply bg-no text-no-foreground border-no;
   }
   
   /* Trade button states */
@@ -146,12 +175,22 @@
   }
   
   .orderbook-bar {
-    @apply absolute inset-y-0 right-0 opacity-20;
+    @apply absolute inset-y-0 right-0 opacity-10;
   }
   
-  /* Market card hover effect */
+  /* Market card - Kalshi style */
   .market-card {
-    @apply rounded-xl border border-border bg-card p-4 transition-all duration-200 hover:border-border hover:bg-surface-hover cursor-pointer;
+    @apply rounded-xl border border-border bg-card p-5 transition-all duration-200 hover:shadow-md cursor-pointer;
+  }
+  
+  /* Category pills - Kalshi style */
+  .category-pill {
+    @apply px-4 py-2 text-sm font-medium rounded-full border transition-colors cursor-pointer;
+    @apply border-border text-muted-foreground hover:bg-surface hover:text-foreground;
+  }
+  
+  .category-pill-active {
+    @apply bg-primary text-primary-foreground border-primary;
   }
   
   /* Tab styling */
@@ -161,16 +200,16 @@
   
   /* Input styling for trading */
   .trade-input {
-    @apply h-12 bg-surface border-border text-lg font-mono focus:ring-2 focus:ring-primary/30;
+    @apply h-12 bg-background border-border text-lg font-mono focus:ring-2 focus:ring-primary/30;
   }
   
-  /* Subtle glow effects */
-  .glow-yes {
-    box-shadow: 0 0 20px hsl(var(--yes) / 0.15);
+  /* Navigation link */
+  .nav-link {
+    @apply text-sm font-medium text-muted-foreground hover:text-foreground transition-colors;
   }
   
-  .glow-no {
-    box-shadow: 0 0 20px hsl(var(--no) / 0.15);
+  .nav-link-active {
+    @apply text-primary;
   }
 }
 
@@ -216,5 +255,15 @@
   @keyframes flash-red {
     0% { background-color: hsl(var(--no) / 0.3); }
     100% { background-color: transparent; }
+  }
+  
+  /* Scrollbar hide */
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
   }
 }

@@ -25,9 +25,12 @@ export function TradeButton({
       onClick={onClick}
       disabled={disabled || loading}
       className={cn(
-        'trade-btn w-full py-3 px-4 rounded-lg text-base font-semibold',
-        'flex items-center justify-center gap-2',
-        isYes ? 'trade-btn-yes' : 'trade-btn-no',
+        'w-full py-3 px-4 rounded-lg text-sm font-semibold',
+        'flex items-center justify-center gap-2 transition-all',
+        'disabled:opacity-50 disabled:cursor-not-allowed',
+        isYes 
+          ? 'bg-yes text-yes-foreground hover:bg-yes/90' 
+          : 'bg-no text-no-foreground hover:bg-no/90',
         className,
       )}
     >
