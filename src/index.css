@@ -2,95 +2,83 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Kalshi-inspired Design System - Clean, Institutional, Professional */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
+    /* Core surfaces - dark institutional theme */
+    --background: 220 16% 8%;
+    --foreground: 210 20% 95%;
+    
+    --surface: 220 14% 11%;
+    --surface-elevated: 220 14% 14%;
+    --surface-hover: 220 14% 16%;
+    
+    /* Cards */
+    --card: 220 14% 11%;
+    --card-foreground: 210 20% 95%;
+    
+    /* Popover */
+    --popover: 220 14% 13%;
+    --popover-foreground: 210 20% 95%;
+    
+    /* Primary - subtle blue accent */
+    --primary: 213 94% 58%;
+    --primary-foreground: 220 16% 8%;
+    
+    /* Secondary */
+    --secondary: 220 14% 18%;
+    --secondary-foreground: 210 20% 85%;
+    
+    /* Muted */
+    --muted: 220 14% 16%;
+    --muted-foreground: 215 16% 55%;
+    
+    /* Accent */
+    --accent: 220 14% 20%;
+    --accent-foreground: 210 20% 95%;
+    
+    /* Destructive */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 20% 95%;
+    
+    /* Border & Input */
+    --border: 220 14% 20%;
+    --border-subtle: 220 14% 16%;
+    --input: 220 14% 16%;
+    --ring: 213 94% 58%;
+    
+    /* Prediction market specific - YES/NO colors */
+    --yes: 142 71% 45%;
+    --yes-foreground: 220 16% 8%;
+    --yes-muted: 142 50% 25%;
+    
+    --no: 0 72% 51%;
+    --no-foreground: 210 20% 95%;
+    --no-muted: 0 50% 25%;
+    
+    /* Chart colors */
+    --chart-line: 213 94% 58%;
+    --chart-area: 213 94% 58%;
+    --chart-grid: 220 14% 18%;
+    
+    /* Status colors */
+    --success: 142 71% 45%;
+    --warning: 38 92% 50%;
+    --info: 213 94% 58%;
+    
+    /* Radius */
     --radius: 0.5rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    /* Sidebar */
+    --sidebar-background: 220 14% 9%;
+    --sidebar-foreground: 210 20% 85%;
+    --sidebar-primary: 213 94% 58%;
+    --sidebar-primary-foreground: 220 16% 8%;
+    --sidebar-accent: 220 14% 14%;
+    --sidebar-accent-foreground: 210 20% 95%;
+    --sidebar-border: 220 14% 16%;
+    --sidebar-ring: 213 94% 58%;
   }
 }
 
@@ -98,8 +86,135 @@ All colors MUST be HSL.
   * {
     @apply border-border;
   }
-
+  
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+  
+  /* Custom scrollbar for institutional feel */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--surface));
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--muted-foreground));
+  }
+}
+
+@layer components {
+  /* Price cards */
+  .price-card {
+    @apply rounded-lg border transition-all duration-150;
+  }
+  
+  .price-card-yes {
+    @apply border-yes/30 bg-yes/10 hover:bg-yes/20;
+  }
+  
+  .price-card-no {
+    @apply border-no/30 bg-no/10 hover:bg-no/20;
+  }
+  
+  /* Trade button states */
+  .trade-btn {
+    @apply font-semibold transition-all duration-150 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  
+  .trade-btn-yes {
+    @apply bg-yes text-yes-foreground hover:bg-yes/90 active:scale-[0.98];
+  }
+  
+  .trade-btn-no {
+    @apply bg-no text-no-foreground hover:bg-no/90 active:scale-[0.98];
+  }
+  
+  /* Orderbook styling */
+  .orderbook-row {
+    @apply relative flex items-center justify-between px-3 py-1.5 text-sm font-mono;
+  }
+  
+  .orderbook-bar {
+    @apply absolute inset-y-0 right-0 opacity-20;
+  }
+  
+  /* Market card hover effect */
+  .market-card {
+    @apply rounded-xl border border-border bg-card p-4 transition-all duration-200 hover:border-border hover:bg-surface-hover cursor-pointer;
+  }
+  
+  /* Tab styling */
+  .tab-trigger {
+    @apply px-4 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground data-[state=active]:text-foreground data-[state=active]:border-b-2 data-[state=active]:border-primary;
+  }
+  
+  /* Input styling for trading */
+  .trade-input {
+    @apply h-12 bg-surface border-border text-lg font-mono focus:ring-2 focus:ring-primary/30;
+  }
+  
+  /* Subtle glow effects */
+  .glow-yes {
+    box-shadow: 0 0 20px hsl(var(--yes) / 0.15);
+  }
+  
+  .glow-no {
+    box-shadow: 0 0 20px hsl(var(--no) / 0.15);
+  }
+}
+
+@layer utilities {
+  /* Animation utilities */
+  .animate-pulse-subtle {
+    animation: pulse-subtle 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-subtle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+  
+  .animate-slide-up {
+    animation: slide-up 0.3s ease-out;
+  }
+  
+  @keyframes slide-up {
+    from { 
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-flash-green {
+    animation: flash-green 0.5s ease-out;
+  }
+  
+  @keyframes flash-green {
+    0% { background-color: hsl(var(--yes) / 0.3); }
+    100% { background-color: transparent; }
+  }
+  
+  .animate-flash-red {
+    animation: flash-red 0.5s ease-out;
+  }
+  
+  @keyframes flash-red {
+    0% { background-color: hsl(var(--no) / 0.3); }
+    100% { background-color: transparent; }
   }
 }
