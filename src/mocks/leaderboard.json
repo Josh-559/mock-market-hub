@@ -1,0 +1,104 @@
+{
+  "traders": [
+    {
+      "id": "trader-1",
+      "username": "AlphaTrader",
+      "avatar": null,
+      "totalProfit": 15420.50,
+      "winRate": 72.5,
+      "totalTrades": 156,
+      "winningTrades": 113,
+      "rank": 1
+    },
+    {
+      "id": "trader-2",
+      "username": "MarketMaven",
+      "avatar": null,
+      "totalProfit": 12890.25,
+      "winRate": 68.2,
+      "totalTrades": 203,
+      "winningTrades": 138,
+      "rank": 2
+    },
+    {
+      "id": "trader-3",
+      "username": "PredictorPro",
+      "avatar": null,
+      "totalProfit": 9750.00,
+      "winRate": 71.0,
+      "totalTrades": 100,
+      "winningTrades": 71,
+      "rank": 3
+    },
+    {
+      "id": "trader-4",
+      "username": "OddsOracle",
+      "avatar": null,
+      "totalProfit": 8420.75,
+      "winRate": 65.8,
+      "totalTrades": 180,
+      "winningTrades": 118,
+      "rank": 4
+    },
+    {
+      "id": "trader-5",
+      "username": "ChartChaser",
+      "avatar": null,
+      "totalProfit": 7200.00,
+      "winRate": 69.4,
+      "totalTrades": 85,
+      "winningTrades": 59,
+      "rank": 5
+    },
+    {
+      "id": "trader-6",
+      "username": "BetaBull",
+      "avatar": null,
+      "totalProfit": 6540.30,
+      "winRate": 62.1,
+      "totalTrades": 145,
+      "winningTrades": 90,
+      "rank": 6
+    },
+    {
+      "id": "trader-7",
+      "username": "RiskRunner",
+      "avatar": null,
+      "totalProfit": 5890.00,
+      "winRate": 58.9,
+      "totalTrades": 220,
+      "winningTrades": 130,
+      "rank": 7
+    },
+    {
+      "id": "trader-8",
+      "username": "TrendHunter",
+      "avatar": null,
+      "totalProfit": 4750.45,
+      "winRate": 64.3,
+      "totalTrades": 112,
+      "winningTrades": 72,
+      "rank": 8
+    },
+    {
+      "id": "trader-9",
+      "username": "ValueViper",
+      "avatar": null,
+      "totalProfit": 4200.00,
+      "winRate": 60.0,
+      "totalTrades": 95,
+      "winningTrades": 57,
+      "rank": 9
+    },
+    {
+      "id": "trader-10",
+      "username": "SwingKing",
+      "avatar": null,
+      "totalProfit": 3890.80,
+      "winRate": 55.5,
+      "totalTrades": 200,
+      "winningTrades": 111,
+      "rank": 10
+    }
+  ]
+}
