@@ -5,7 +5,7 @@ import type { Market, MarketCategory } from './markets.types';
 import { formatVolume, cn } from '@/shared/utils';
 import { CATEGORIES, ROUTES } from '@/shared/constants';
 import { useState } from 'react';
-import { Loader2, Plus, CheckCircle2 } from 'lucide-react';
+import { Loader2, Plus } from 'lucide-react';
 import { AppHeader } from '@/components/layout/AppHeader';
 
 // Subcategory pills for each main category
@@ -118,8 +118,16 @@ export function MarketList() {
 }
 
 function MarketCard({ market }: { market: Market }) {
-  const yesPercent = Math.round(market.yesPrice * 100);
   const isResolved = market.status === 'resolved';
+  const isMultiOutcome = market.outcomes && market.outcomes.length > 0;
+
+  // Calculate potential return (buy at current price, win $1)
+  const calcReturn = (price: number) => {
+    const cost = 100; // $100 investment
+    const shares = cost / price;
+    const payout = shares * 1; // $1 per share if wins
+    return Math.round(payout);
+  };
 
   return (
     <Link
@@ -133,66 +141,94 @@ function MarketCard({ market }: { market: Market }) {
             <img
               src={market.imageUrl}
               alt=""
-              className="h-10 w-10 rounded-lg object-cover flex-shrink-0"
+              className="h-12 w-12 rounded-lg object-cover flex-shrink-0"
             />
           ) : (
-            <div className="h-10 w-10 rounded-lg bg-surface flex-shrink-0 flex items-center justify-center">
-              <span className="text-lg">{market.title.charAt(0)}</span>
+            <div className="h-12 w-12 rounded-lg bg-surface flex-shrink-0 flex items-center justify-center">
+              <span className="text-lg font-medium">{market.title.charAt(0)}</span>
             </div>
           )}
-          <h3 className="text-sm font-medium text-foreground line-clamp-2 flex-1">
+          <h3 className="text-sm font-medium text-foreground line-clamp-2 flex-1 leading-snug">
             {market.title}
           </h3>
-          {/* Probability badge */}
-          <div className="flex items-center gap-1 flex-shrink-0">
-            {isResolved && (
-              <CheckCircle2 className={cn(
-                'h-4 w-4',
-                market.resolvedOutcome === 'yes' ? 'text-yes' : 'text-no'
-              )} />
-            )}
-            <span className="text-sm font-semibold text-foreground">
-              {yesPercent}%
-            </span>
-          </div>
         </div>
 
-        {/* Yes/No Buttons or Resolution Status */}
-        {isResolved ? (
-          <div className={cn(
-            'flex items-center justify-center py-3 px-4 rounded-lg',
-            market.resolvedOutcome === 'yes' ? 'bg-yes/10 text-yes' : 'bg-no/10 text-no'
-          )}>
-            <CheckCircle2 className="h-4 w-4 mr-2" />
-            <span className="text-sm font-medium">
-              Resolved {market.resolvedOutcome?.toUpperCase()}
-            </span>
-          </div>
-        ) : (
-          <div className="flex gap-2 mt-auto">
-            <button className="yes-btn-lg flex flex-col items-center">
-              <span>Yes</span>
-              <span className="text-xs mt-0.5 opacity-80">
-                ${(100 * market.yesPrice).toFixed(0)} → ${(100).toFixed(0)}
-              </span>
-            </button>
-            <button className="no-btn-lg flex flex-col items-center">
-              <span>No</span>
-              <span className="text-xs mt-0.5 opacity-80">
-                ${(100 * market.noPrice).toFixed(0)} → ${(100).toFixed(0)}
-              </span>
-            </button>
-          </div>
-        )}
+        {/* Outcomes List */}
+        <div className="space-y-2 flex-1">
+          {isMultiOutcome ? (
+            // Multi-outcome: show top 2 outcomes
+            market.outcomes!.slice(0, 2).map((outcome) => {
+              const percent = Math.round(outcome.yesPrice * 100);
+              return (
+                <div key={outcome.id} className="flex items-center justify-between gap-2">
+                  <span className="text-sm text-muted-foreground truncate flex-1">
+                    {outcome.label}
+                  </span>
+                  <span className="text-sm font-semibold text-foreground w-12 text-right">
+                    {percent}%
+                  </span>
+                  <div className="flex gap-1">
+                    <button
+                      onClick={(e) => e.preventDefault()}
+                      className="px-2.5 py-1 text-xs font-medium rounded bg-yes/10 text-yes hover:bg-yes/20 transition-colors"
+                    >
+                      Yes
+                    </button>
+                    <button
+                      onClick={(e) => e.preventDefault()}
+                      className="px-2.5 py-1 text-xs font-medium rounded bg-no/10 text-no hover:bg-no/20 transition-colors"
+                    >
+                      No
+                    </button>
+                  </div>
+                </div>
+              );
+            })
+          ) : (
+            // Binary outcome: single row with percent and buttons
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <div className="flex gap-2">
+                  <button
+                    onClick={(e) => e.preventDefault()}
+                    className="px-4 py-2 text-sm font-medium rounded-lg bg-yes/10 text-yes hover:bg-yes/20 transition-colors"
+                  >
+                    Yes
+                  </button>
+                  <button
+                    onClick={(e) => e.preventDefault()}
+                    className="px-4 py-2 text-sm font-medium rounded-lg bg-no/10 text-no hover:bg-no/20 transition-colors"
+                  >
+                    No
+                  </button>
+                </div>
+                <span className="text-lg font-bold text-foreground">
+                  {Math.round(market.yesPrice * 100)}%
+                </span>
+              </div>
+              {/* Return calculation */}
+              <div className="flex gap-6 text-xs">
+                <div className="text-muted-foreground">
+                  $100 → <span className="text-yes font-medium">${calcReturn(market.yesPrice)}</span>
+                </div>
+                <div className="text-muted-foreground">
+                  $100 → <span className="text-no font-medium">${calcReturn(market.noPrice)}</span>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
 
-        {/* Volume */}
+        {/* Volume & Add Button */}
         <div className="flex items-center justify-between mt-4 pt-3 border-t border-border">
-          <span className="text-xs text-muted-foreground">{formatVolume(market.volume)}</span>
+          <span className="text-sm text-muted-foreground font-medium">
+            ${formatVolume(market.volume).replace('$', '')}
+          </span>
           <button 
-            className="h-6 w-6 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-surface transition-colors"
+            className="h-7 w-7 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-surface transition-colors"
             onClick={(e) => e.preventDefault()}
           >
-            <Plus className="h-3 w-3" />
+            <Plus className="h-4 w-4" />
           </button>
         </div>
       </div>
