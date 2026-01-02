@@ -29,19 +29,21 @@ export function PriceCard({
   };
   
   const textSizes = {
-    sm: 'text-lg',
-    md: 'text-2xl',
-    lg: 'text-3xl',
+    sm: 'text-base',
+    md: 'text-xl',
+    lg: 'text-2xl',
   };
   
   return (
     <button
       onClick={onClick}
       className={cn(
-        'price-card flex flex-col items-center justify-center rounded-lg transition-all duration-150',
+        'flex-1 flex flex-col items-center justify-center rounded-lg border-2 transition-all duration-150',
         sizeClasses[size],
-        isYes ? 'price-card-yes' : 'price-card-no',
-        isSelected && (isYes ? 'ring-2 ring-yes glow-yes' : 'ring-2 ring-no glow-no'),
+        isYes 
+          ? 'border-yes/30 bg-yes-light hover:bg-yes hover:text-yes-foreground hover:border-yes' 
+          : 'border-no/30 bg-no-light hover:bg-no hover:text-no-foreground hover:border-no',
+        isSelected && (isYes ? 'bg-yes text-yes-foreground border-yes' : 'bg-no text-no-foreground border-no'),
         onClick && 'cursor-pointer',
         flash === 'up' && 'animate-flash-green',
         flash === 'down' && 'animate-flash-red',
@@ -49,8 +51,10 @@ export function PriceCard({
     >
       {showLabel && (
         <span className={cn(
-          'text-xs font-semibold uppercase tracking-wider mb-1',
-          isYes ? 'text-yes' : 'text-no'
+          'text-xs font-semibold uppercase tracking-wider mb-0.5',
+          isSelected 
+            ? (isYes ? 'text-yes-foreground' : 'text-no-foreground')
+            : (isYes ? 'text-yes' : 'text-no')
         )}>
           {isYes ? 'Yes' : 'No'}
         </span>
@@ -58,7 +62,9 @@ export function PriceCard({
       <span className={cn(
         'font-bold tabular-nums',
         textSizes[size],
-        isYes ? 'text-yes' : 'text-no'
+        isSelected 
+          ? (isYes ? 'text-yes-foreground' : 'text-no-foreground')
+          : (isYes ? 'text-yes' : 'text-no')
       )}>
         {percentage}¢
       </span>
