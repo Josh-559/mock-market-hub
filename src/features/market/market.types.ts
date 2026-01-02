@@ -11,6 +11,9 @@ export interface MarketDetail {
   createdAt: string;
   endsAt: string;
   priceHistory: PricePoint[];
+  imageUrl?: string;
+  resolvedOutcome?: 'yes' | 'no';
+  resolutionDate?: string;
 }
 
 export interface PricePoint {
@@ -36,4 +39,15 @@ export interface Trade {
   price: number;
   quantity: number;
   timestamp: string;
+}
+
+export interface Comment {
+  id: string;
+  userId: string;
+  username: string;
+  avatar?: string;
+  content: string;
+  timestamp: string;
+  likes: number;
+  replies?: Comment[];
 }
