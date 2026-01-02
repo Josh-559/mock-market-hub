@@ -49,5 +49,7 @@ export interface Comment {
   content: string;
   timestamp: string;
   likes: number;
+  holderPosition?: number;
+  holderDate?: string;
   replies?: Comment[];
 }

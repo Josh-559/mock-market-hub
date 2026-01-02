@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Trophy, TrendingUp, Target, Medal } from 'lucide-react';
 import { AppHeader } from '@/components/layout/AppHeader';
 import {
@@ -10,23 +11,45 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { cn } from '@/shared/utils';
 import type { Trader } from './leaderboard.types';
 import leaderboardData from '@/mocks/leaderboard.json';
+
+type TimePeriod = 'daily' | 'weekly' | 'monthly' | 'all-time';
 
 export function LeaderboardPage() {
   const [traders, setTraders] = useState<Trader[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [sortBy, setSortBy] = useState<'profit' | 'winRate'>('profit');
+  const [timePeriod, setTimePeriod] = useState<TimePeriod>('all-time');
 
   useEffect(() => {
-    // Simulate loading
     setTimeout(() => {
       setTraders(leaderboardData.traders);
       setIsLoading(false);
     }, 300);
   }, []);
 
-  const sortedTraders = [...traders].sort((a, b) => {
+  // Simulate different data for time periods
+  const getFilteredTraders = () => {
+    const multipliers: Record<TimePeriod, number> = {
+      'daily': 0.05,
+      'weekly': 0.15,
+      'monthly': 0.4,
+      'all-time': 1,
+    };
+    
+    return traders.map(trader => ({
+      ...trader,
+      totalProfit: trader.totalProfit * multipliers[timePeriod],
+      totalTrades: Math.floor(trader.totalTrades * multipliers[timePeriod]),
+      winningTrades: Math.floor(trader.winningTrades * multipliers[timePeriod]),
+    }));
+  };
+
+  const filteredTraders = getFilteredTraders();
+
+  const sortedTraders = [...filteredTraders].sort((a, b) => {
     if (sortBy === 'profit') {
       return b.totalProfit - a.totalProfit;
     }
@@ -71,6 +94,25 @@ export function LeaderboardPage() {
     }).format(profit);
   };
 
+  const getAvatarGradient = (username: string) => {
+    const gradients = [
+      'from-orange-400 to-pink-500',
+      'from-green-400 to-cyan-500',
+      'from-purple-400 to-pink-500',
+      'from-yellow-400 to-orange-500',
+      'from-blue-400 to-purple-500',
+    ];
+    const index = username.charCodeAt(0) % gradients.length;
+    return gradients[index];
+  };
+
+  const timePeriods: { value: TimePeriod; label: string }[] = [
+    { value: 'daily', label: 'Today' },
+    { value: 'weekly', label: 'This Week' },
+    { value: 'monthly', label: 'This Month' },
+    { value: 'all-time', label: 'All Time' },
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <AppHeader />
@@ -82,6 +124,24 @@ export function LeaderboardPage() {
           <p className="text-muted-foreground">Top traders ranked by performance</p>
         </div>
 
+        {/* Time Period Filter */}
+        <div className="flex gap-2 mb-6">
+          {timePeriods.map((period) => (
+            <button
+              key={period.value}
+              onClick={() => setTimePeriod(period.value)}
+              className={cn(
+                'px-4 py-2 rounded-full text-sm font-medium transition-colors',
+                timePeriod === period.value
+                  ? 'bg-foreground text-background'
+                  : 'bg-surface border border-border text-muted-foreground hover:text-foreground hover:bg-muted'
+              )}
+            >
+              {period.label}
+            </button>
+          ))}
+        </div>
+
         {/* Stats Cards */}
         <div className="grid grid-cols-3 gap-4 mb-8">
           <div className="bg-card border border-border rounded-lg p-4">
@@ -90,7 +150,7 @@ export function LeaderboardPage() {
               <span>Top Profit</span>
             </div>
             <p className="text-xl font-semibold text-success">
-              {traders[0] ? formatProfit(traders[0].totalProfit) : '-'}
+              {sortedTraders[0] ? formatProfit(sortedTraders[0].totalProfit) : '-'}
             </p>
           </div>
           <div className="bg-card border border-border rounded-lg p-4">
@@ -134,10 +194,22 @@ export function LeaderboardPage() {
             </div>
 
             <TabsContent value="profit" className="mt-0">
-              <LeaderboardTable traders={sortedTraders} isLoading={isLoading} getRankBadge={getRankBadge} formatProfit={formatProfit} />
+              <LeaderboardTable 
+                traders={sortedTraders} 
+                isLoading={isLoading} 
+                getRankBadge={getRankBadge} 
+                formatProfit={formatProfit}
+                getAvatarGradient={getAvatarGradient}
+              />
             </TabsContent>
             <TabsContent value="winRate" className="mt-0">
-              <LeaderboardTable traders={sortedTraders} isLoading={isLoading} getRankBadge={getRankBadge} formatProfit={formatProfit} />
+              <LeaderboardTable 
+                traders={sortedTraders} 
+                isLoading={isLoading} 
+                getRankBadge={getRankBadge} 
+                formatProfit={formatProfit}
+                getAvatarGradient={getAvatarGradient}
+              />
             </TabsContent>
           </Tabs>
         </div>
@@ -151,9 +223,10 @@ interface LeaderboardTableProps {
   isLoading: boolean;
   getRankBadge: (rank: number) => React.ReactNode;
   formatProfit: (profit: number) => string;
+  getAvatarGradient: (username: string) => string;
 }
 
-function LeaderboardTable({ traders, isLoading, getRankBadge, formatProfit }: LeaderboardTableProps) {
+function LeaderboardTable({ traders, isLoading, getRankBadge, formatProfit, getAvatarGradient }: LeaderboardTableProps) {
   if (isLoading) {
     return (
       <div className="p-8 text-center text-muted-foreground">
@@ -178,12 +251,15 @@ function LeaderboardTable({ traders, isLoading, getRankBadge, formatProfit }: Le
           <TableRow key={trader.id} className="hover:bg-muted/50">
             <TableCell>{getRankBadge(index + 1)}</TableCell>
             <TableCell>
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-sm font-medium text-muted-foreground">
-                  {trader.username.charAt(0).toUpperCase()}
-                </div>
-                <span className="font-medium text-foreground">{trader.username}</span>
-              </div>
+              <Link 
+                to={`/trader/${trader.id}`}
+                className="flex items-center gap-3 hover:opacity-80 transition-opacity"
+              >
+                <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${getAvatarGradient(trader.username)}`} />
+                <span className="font-medium text-foreground hover:text-primary transition-colors">
+                  {trader.username}
+                </span>
+              </Link>
             </TableCell>
             <TableCell className="text-right">
               <span className="text-success font-medium">{formatProfit(trader.totalProfit)}</span>
