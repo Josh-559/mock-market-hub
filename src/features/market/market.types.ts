@@ -1,9 +1,14 @@
+import type { MarketOutcome } from '@/features/markets/markets.types';
+
+export type MarketType = 'binary' | 'multi_outcome';
+
 export interface MarketDetail {
   id: string;
   title: string;
   description: string;
   category: string;
   status: 'active' | 'resolved' | 'pending';
+  type?: MarketType;
   volume: number;
   liquidity: number;
   yesPrice: number;
@@ -12,8 +17,9 @@ export interface MarketDetail {
   endsAt: string;
   priceHistory: PricePoint[];
   imageUrl?: string;
-  resolvedOutcome?: 'yes' | 'no';
+  resolvedOutcome?: 'yes' | 'no' | string;
   resolutionDate?: string;
+  outcomes?: MarketOutcome[];
 }
 
 export interface PricePoint {

@@ -1,3 +1,23 @@
+export type MarketCategory = 
+  | 'crypto'
+  | 'economics'
+  | 'politics'
+  | 'sports'
+  | 'science'
+  | 'tech'
+  | 'entertainment'
+  | 'other';
+
+export type MarketType = 'binary' | 'multi_outcome';
+
+export interface MarketOutcome {
+  id: string;
+  label: string;
+  yesPrice: number;
+  noPrice: number;
+  volume?: number;
+}
+
 export interface MarketOption {
   label: string;
   price: number;
@@ -9,6 +29,7 @@ export interface Market {
   description: string;
   category: MarketCategory;
   status: 'active' | 'resolved' | 'pending';
+  type?: MarketType;
   volume: number;
   liquidity: number;
   yesPrice: number;
@@ -17,18 +38,9 @@ export interface Market {
   endsAt: string;
   imageUrl?: string;
   options?: MarketOption[];
-  resolvedOutcome?: 'yes' | 'no';
+  outcomes?: MarketOutcome[];
+  resolvedOutcome?: 'yes' | 'no' | string;
 }
-
-export type MarketCategory = 
-  | 'crypto'
-  | 'economics'
-  | 'politics'
-  | 'sports'
-  | 'science'
-  | 'tech'
-  | 'entertainment'
-  | 'other';
 
 export interface MarketFilters {
   category?: MarketCategory;
