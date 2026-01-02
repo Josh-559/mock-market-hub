@@ -1,6 +1,9 @@
 import { mockFetch } from '@/services/mockHttp';
-import { mockMarkets } from './markets.mock';
+import marketsData from '@/mocks/markets.json';
 import type { Market, MarketFilters } from './markets.types';
+
+// Use the JSON file with 50+ markets
+const mockMarkets: Market[] = marketsData as Market[];
 
 export async function fetchMarkets(filters?: MarketFilters): Promise<Market[]> {
   let markets = [...mockMarkets];

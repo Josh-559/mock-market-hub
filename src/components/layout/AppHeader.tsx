@@ -13,7 +13,6 @@ export function AppHeader() {
 
   const navLinks = [
     { href: '/', label: 'Markets' },
-    { href: '/categories', label: 'Categories' },
     { href: '/leaderboard', label: 'Leaderboard' },
     { href: '/portfolio', label: 'Portfolio', requiresAuth: true },
   ];
