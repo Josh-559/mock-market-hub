@@ -16,6 +16,7 @@ export interface MarketOutcome {
   yesPrice: number;
   noPrice: number;
   volume?: number;
+  imageUrl?: string;
 }
 
 export interface MarketOption {
