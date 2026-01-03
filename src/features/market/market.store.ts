@@ -1,7 +1,56 @@
 import { create } from 'zustand';
-import type { MarketDetail, OrderBook, Trade } from './market.types';
-import { mockMarketDetails, generatePriceHistory, mockOrderBooks } from './market.mock';
+import type { MarketDetail, OrderBook, Trade, PricePoint } from './market.types';
+import type { Market } from '@/features/markets/markets.types';
+import marketsData from '@/mocks/markets.json';
 import { mockSocket } from '@/services/mockSocket';
+
+// Load markets from JSON
+const allMarkets: Market[] = marketsData as Market[];
+
+// Generate price history for a market
+function generatePriceHistory(basePrice: number, points: number = 50): PricePoint[] {
+  const history: PricePoint[] = [];
+  const now = Date.now();
+  const interval = 3600 * 1000; // 1 hour in ms
+  
+  let currentPrice = basePrice - 0.1 + Math.random() * 0.05;
+  
+  for (let i = points; i >= 0; i--) {
+    // Random walk with slight upward bias toward current price
+    const drift = (basePrice - currentPrice) * 0.1;
+    const randomness = (Math.random() - 0.5) * 0.04;
+    currentPrice = Math.max(0.01, Math.min(0.99, currentPrice + drift + randomness));
+    
+    history.push({
+      time: now - i * interval,
+      value: currentPrice,
+    });
+  }
+  
+  // Ensure last point matches current price
+  history[history.length - 1].value = basePrice;
+  
+  return history;
+}
+
+// Generate mock orderbook
+function generateOrderBook(yesPrice: number): OrderBook {
+  const bids: { price: number; quantity: number }[] = [];
+  const asks: { price: number; quantity: number }[] = [];
+  
+  for (let i = 1; i <= 7; i++) {
+    bids.push({
+      price: Math.max(0.01, yesPrice - i * 0.01),
+      quantity: Math.floor(5000 + Math.random() * 20000),
+    });
+    asks.push({
+      price: Math.min(0.99, yesPrice + i * 0.01),
+      quantity: Math.floor(5000 + Math.random() * 20000),
+    });
+  }
+  
+  return { bids, asks };
+}
 
 interface MarketState {
   currentMarket: MarketDetail | null;
@@ -32,7 +81,7 @@ export const useMarketStore = create<MarketState>((set, get) => ({
     // Simulate API delay
     await new Promise((resolve) => setTimeout(resolve, 200));
     
-    const marketBase = mockMarketDetails[marketId];
+    const marketBase = allMarkets.find((m) => m.id === marketId);
     
     if (!marketBase) {
       set({ 
@@ -45,14 +94,25 @@ export const useMarketStore = create<MarketState>((set, get) => ({
     }
     
     const market: MarketDetail = {
-      ...marketBase,
+      id: marketBase.id,
+      title: marketBase.title,
+      description: marketBase.description,
+      category: marketBase.category,
+      status: marketBase.status,
+      type: marketBase.type,
+      volume: marketBase.volume,
+      liquidity: marketBase.liquidity,
+      yesPrice: marketBase.yesPrice,
+      noPrice: marketBase.noPrice,
+      createdAt: marketBase.createdAt,
+      endsAt: marketBase.endsAt,
+      imageUrl: marketBase.imageUrl,
+      outcomes: marketBase.outcomes,
+      resolvedOutcome: marketBase.resolvedOutcome,
       priceHistory: generatePriceHistory(marketBase.yesPrice),
     };
     
-    const orderBook = mockOrderBooks[marketId] || {
-      bids: [],
-      asks: [],
-    };
+    const orderBook = generateOrderBook(marketBase.yesPrice);
     
     set({
       currentMarket: market,

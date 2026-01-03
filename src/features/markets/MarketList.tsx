@@ -5,8 +5,9 @@ import type { Market, MarketCategory } from './markets.types';
 import { formatVolume, cn } from '@/shared/utils';
 import { CATEGORIES, ROUTES } from '@/shared/constants';
 import { useState } from 'react';
-import { Loader2, Plus } from 'lucide-react';
+import { Loader2, Plus, Check } from 'lucide-react';
 import { AppHeader } from '@/components/layout/AppHeader';
+import { useWatchlistStore } from '@/features/watchlist/watchlist.store';
 
 // Subcategory pills for each main category
 const SUBCATEGORIES: Record<string, string[]> = {
@@ -18,9 +19,14 @@ const SUBCATEGORIES: Record<string, string[]> = {
   tech: ['AI', 'Startups', 'Big Tech', 'Regulation'],
 };
 
+type TabType = 'all' | 'watchlist';
+
 export function MarketList() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<TabType>('all');
+  
+  const { watchedMarketIds } = useWatchlistStore();
   
   const { data: markets, isLoading } = useQuery({
     queryKey: ['markets', selectedCategory],
@@ -32,37 +38,79 @@ export function MarketList() {
 
   const subcategories = SUBCATEGORIES[selectedCategory] || [];
 
+  // Filter markets based on active tab
+  const displayedMarkets = activeTab === 'watchlist'
+    ? markets?.filter(m => watchedMarketIds.includes(m.id))
+    : markets;
+
   return (
     <div className="min-h-screen bg-background">
       <AppHeader />
 
-      {/* Categories - Main */}
+      {/* Tabs: All Markets / Watchlist */}
       <div className="border-b border-border">
         <div className="container">
-          <div className="flex items-center gap-1 overflow-x-auto py-3 scrollbar-none">
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => {
-                  setSelectedCategory(cat.id);
-                  setSelectedSubcategory(null);
-                }}
-                className={cn(
-                  'px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors rounded-lg',
-                  selectedCategory === cat.id
-                    ? 'text-foreground font-semibold'
-                    : 'text-muted-foreground hover:text-foreground'
-                )}
-              >
-                {cat.label}
-              </button>
-            ))}
+          <div className="flex items-center gap-6 py-3">
+            <button
+              onClick={() => setActiveTab('all')}
+              className={cn(
+                'text-sm font-medium pb-3 -mb-3 border-b-2 transition-colors',
+                activeTab === 'all'
+                  ? 'text-foreground border-primary'
+                  : 'text-muted-foreground border-transparent hover:text-foreground'
+              )}
+            >
+              All Markets
+            </button>
+            <button
+              onClick={() => setActiveTab('watchlist')}
+              className={cn(
+                'text-sm font-medium pb-3 -mb-3 border-b-2 transition-colors flex items-center gap-2',
+                activeTab === 'watchlist'
+                  ? 'text-foreground border-primary'
+                  : 'text-muted-foreground border-transparent hover:text-foreground'
+              )}
+            >
+              Watchlist
+              {watchedMarketIds.length > 0 && (
+                <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded-full">
+                  {watchedMarketIds.length}
+                </span>
+              )}
+            </button>
           </div>
         </div>
       </div>
 
+      {/* Categories - Main (only show when on "All Markets" tab) */}
+      {activeTab === 'all' && (
+        <div className="border-b border-border">
+          <div className="container">
+            <div className="flex items-center gap-1 overflow-x-auto py-3 scrollbar-none">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => {
+                    setSelectedCategory(cat.id);
+                    setSelectedSubcategory(null);
+                  }}
+                  className={cn(
+                    'px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors rounded-lg',
+                    selectedCategory === cat.id
+                      ? 'text-foreground font-semibold'
+                      : 'text-muted-foreground hover:text-foreground'
+                  )}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Subcategories Pills */}
-      {subcategories.length > 0 && (
+      {activeTab === 'all' && subcategories.length > 0 && (
         <div className="border-b border-border bg-background">
           <div className="container">
             <div className="flex items-center gap-2 overflow-x-auto py-3 scrollbar-none">
@@ -101,15 +149,20 @@ export function MarketList() {
           <div className="flex items-center justify-center py-20">
             <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
           </div>
-        ) : markets && markets.length > 0 ? (
+        ) : displayedMarkets && displayedMarkets.length > 0 ? (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {markets.map((market) => (
+            {displayedMarkets.map((market) => (
               <MarketCard key={market.id} market={market} />
             ))}
           </div>
         ) : (
           <div className="text-center py-20">
-            <p className="text-muted-foreground">No markets found</p>
+            <p className="text-muted-foreground">
+              {activeTab === 'watchlist' 
+                ? 'No markets in your watchlist. Click the + button on any market to add it.'
+                : 'No markets found'
+              }
+            </p>
           </div>
         )}
       </main>
@@ -118,6 +171,8 @@ export function MarketList() {
 }
 
 function MarketCard({ market }: { market: Market }) {
+  const { isWatched, toggleWatchlist } = useWatchlistStore();
+  const watched = isWatched(market.id);
   const isResolved = market.status === 'resolved';
   const isMultiOutcome = market.outcomes && market.outcomes.length > 0;
 
@@ -127,6 +182,12 @@ function MarketCard({ market }: { market: Market }) {
     const shares = cost / price;
     const payout = shares * 1; // $1 per share if wins
     return Math.round(payout);
+  };
+
+  const handleWatchlistClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    toggleWatchlist(market.id);
   };
 
   return (
@@ -225,10 +286,19 @@ function MarketCard({ market }: { market: Market }) {
             ${formatVolume(market.volume).replace('$', '')}
           </span>
           <button 
-            className="h-7 w-7 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-surface transition-colors"
-            onClick={(e) => e.preventDefault()}
+            className={cn(
+              'h-7 w-7 rounded-full border flex items-center justify-center transition-colors',
+              watched
+                ? 'border-primary bg-primary text-primary-foreground'
+                : 'border-border text-muted-foreground hover:text-foreground hover:bg-surface'
+            )}
+            onClick={handleWatchlistClick}
           >
-            <Plus className="h-4 w-4" />
+            {watched ? (
+              <Check className="h-3.5 w-3.5" />
+            ) : (
+              <Plus className="h-4 w-4" />
+            )}
           </button>
         </div>
       </div>
