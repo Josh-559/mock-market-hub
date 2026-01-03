@@ -93,6 +93,8 @@ export const useMarketStore = create<MarketState>((set, get) => ({
       return;
     }
     
+    const orderBook = generateOrderBook(marketBase.yesPrice);
+    
     const market: MarketDetail = {
       id: marketBase.id,
       title: marketBase.title,
@@ -110,9 +112,8 @@ export const useMarketStore = create<MarketState>((set, get) => ({
       outcomes: marketBase.outcomes,
       resolvedOutcome: marketBase.resolvedOutcome,
       priceHistory: generatePriceHistory(marketBase.yesPrice),
+      orderBook: orderBook,
     };
-    
-    const orderBook = generateOrderBook(marketBase.yesPrice);
     
     set({
       currentMarket: market,

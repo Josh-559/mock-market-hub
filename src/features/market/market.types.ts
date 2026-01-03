@@ -20,6 +20,7 @@ export interface MarketDetail {
   resolvedOutcome?: 'yes' | 'no' | string;
   resolutionDate?: string;
   outcomes?: MarketOutcome[];
+  orderBook?: OrderBook;
 }
 
 export interface PricePoint {

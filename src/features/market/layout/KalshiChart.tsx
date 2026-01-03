@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useCallback } from 'react';
 import {
   LineChart,
   Line,
@@ -9,6 +9,7 @@ import {
   ReferenceLine,
   Area,
   AreaChart,
+  Dot,
 } from 'recharts';
 import type { PricePoint } from '../market.types';
 import type { MarketOutcome } from '@/features/markets/markets.types';
@@ -21,9 +22,9 @@ interface KalshiChartProps {
   volume?: number;
 }
 
-type TimeRange = '1D' | '1W' | '1M' | 'ALL';
+type TimeRange = '1H' | '6H' | '1D' | '1W' | '1M' | 'ALL';
 
-const TIME_RANGES: TimeRange[] = ['1D', '1W', '1M', 'ALL'];
+const TIME_RANGES: TimeRange[] = ['1H', '6H', '1D', '1W', '1M', 'ALL'];
 
 // Generate colors for multi-outcome lines
 const OUTCOME_COLORS = [
@@ -52,8 +53,45 @@ function generateOutcomePriceHistory(basePrice: number, points: number = 51): nu
   return history;
 }
 
+// Pulsing dot component for the end of lines
+function PulsingDot(props: any) {
+  const { cx, cy, fill, isLast } = props;
+  if (!isLast || !cx || !cy) return null;
+  
+  return (
+    <g>
+      {/* Outer pulsing ring */}
+      <circle
+        cx={cx}
+        cy={cy}
+        r={8}
+        fill={fill}
+        opacity={0.3}
+        className="animate-ping"
+        style={{ transformOrigin: `${cx}px ${cy}px`, animationDuration: '2s' }}
+      />
+      {/* Middle ring */}
+      <circle
+        cx={cx}
+        cy={cy}
+        r={5}
+        fill={fill}
+        opacity={0.5}
+      />
+      {/* Inner solid dot */}
+      <circle
+        cx={cx}
+        cy={cy}
+        r={3}
+        fill={fill}
+      />
+    </g>
+  );
+}
+
 export function KalshiChart({ priceHistory, currentPrice, outcomes, volume }: KalshiChartProps) {
   const [selectedRange, setSelectedRange] = useState<TimeRange>('ALL');
+  const [hoveredOutcome, setHoveredOutcome] = useState<string | null>(null);
   
   const isMultiOutcome = outcomes && outcomes.length > 0;
   
@@ -63,6 +101,8 @@ export function KalshiChart({ priceHistory, currentPrice, outcomes, volume }: Ka
     
     const now = Date.now();
     const ranges: Record<TimeRange, number> = {
+      '1H': 60 * 60 * 1000,
+      '6H': 6 * 60 * 60 * 1000,
       '1D': 24 * 60 * 60 * 1000,
       '1W': 7 * 24 * 60 * 60 * 1000,
       '1M': 30 * 24 * 60 * 60 * 1000,
@@ -93,12 +133,13 @@ export function KalshiChart({ priceHistory, currentPrice, outcomes, volume }: Ka
     if (!isMultiOutcome || filteredData.length === 0) return [];
     
     return filteredData.map((point, idx) => {
-      const dataPoint: Record<string, number | string> = {
+      const dataPoint: Record<string, number | string | boolean> = {
         time: point.time,
         date: new Date(point.time).toLocaleDateString('en-US', { 
           month: 'short', 
-          year: 'numeric' 
+          day: 'numeric'
         }),
+        isLast: idx === filteredData.length - 1,
       };
       
       outcomes!.forEach((outcome) => {
@@ -116,13 +157,14 @@ export function KalshiChart({ priceHistory, currentPrice, outcomes, volume }: Ka
 
   // Format data for single-outcome chart
   const singleOutcomeData = useMemo(() => {
-    return filteredData.map((point) => ({
+    return filteredData.map((point, idx) => ({
       time: point.time,
       value: Math.round(point.value * 100),
       date: new Date(point.time).toLocaleDateString('en-US', { 
         month: 'short', 
-        year: 'numeric' 
+        day: 'numeric'
       }),
+      isLast: idx === filteredData.length - 1,
     }));
   }, [filteredData]);
 
@@ -156,6 +198,15 @@ export function KalshiChart({ priceHistory, currentPrice, outcomes, volume }: Ka
     };
   }, [singleOutcomeData, multiOutcomeData, outcomes, isMultiOutcome]);
 
+  // Handle legend hover
+  const handleLegendMouseEnter = useCallback((outcomeId: string) => {
+    setHoveredOutcome(outcomeId);
+  }, []);
+
+  const handleLegendMouseLeave = useCallback(() => {
+    setHoveredOutcome(null);
+  }, []);
+
   if (priceHistory.length === 0) {
     return (
       <div className="w-full h-[350px] flex items-center justify-center text-muted-foreground">
@@ -166,6 +217,38 @@ export function KalshiChart({ priceHistory, currentPrice, outcomes, volume }: Ka
 
   return (
     <div className="w-full">
+      {/* Outcome Legend (for multi-outcome) */}
+      {isMultiOutcome && (
+        <div className="flex items-center gap-6 mb-4 text-sm">
+          {outcomes!.slice(0, 5).map((outcome, idx) => {
+            const color = OUTCOME_COLORS[idx % OUTCOME_COLORS.length];
+            const isHovered = hoveredOutcome === outcome.id;
+            const isDimmed = hoveredOutcome && !isHovered;
+            
+            return (
+              <div 
+                key={outcome.id} 
+                className={cn(
+                  "flex items-center gap-2 cursor-pointer transition-opacity duration-200",
+                  isDimmed && "opacity-30"
+                )}
+                onMouseEnter={() => handleLegendMouseEnter(outcome.id)}
+                onMouseLeave={handleLegendMouseLeave}
+              >
+                <div 
+                  className="w-2 h-2 rounded-full"
+                  style={{ backgroundColor: color }}
+                />
+                <span className="text-muted-foreground">{outcome.label}</span>
+                <span className="font-semibold text-foreground">
+                  {Math.round(outcome.yesPrice * 100)}%
+                </span>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
       {/* Chart */}
       <div className="h-[280px] w-full">
         <ResponsiveContainer width="100%" height="100%">
@@ -224,18 +307,33 @@ export function KalshiChart({ priceHistory, currentPrice, outcomes, volume }: Ka
                   return null;
                 }}
               />
-              {outcomes!.map((outcome, idx) => (
-                <Line
-                  key={outcome.id}
-                  type="stepAfter"
-                  dataKey={outcome.id}
-                  stroke={OUTCOME_COLORS[idx % OUTCOME_COLORS.length]}
-                  strokeWidth={2}
-                  dot={false}
-                  activeDot={{ r: 4, fill: OUTCOME_COLORS[idx % OUTCOME_COLORS.length] }}
-                  animationDuration={300}
-                />
-              ))}
+              {outcomes!.map((outcome, idx) => {
+                const color = OUTCOME_COLORS[idx % OUTCOME_COLORS.length];
+                const isHovered = hoveredOutcome === outcome.id;
+                const isDimmed = hoveredOutcome && !isHovered;
+                
+                return (
+                  <Line
+                    key={outcome.id}
+                    type="stepAfter"
+                    dataKey={outcome.id}
+                    stroke={color}
+                    strokeWidth={isHovered ? 3 : 2}
+                    strokeOpacity={isDimmed ? 0.2 : 1}
+                    dot={(props: any) => {
+                      const { payload } = props;
+                      if (payload?.isLast && !isDimmed) {
+                        return <PulsingDot {...props} fill={color} isLast={true} />;
+                      }
+                      return null;
+                    }}
+                    activeDot={{ r: 4, fill: color }}
+                    animationDuration={300}
+                    onMouseEnter={() => setHoveredOutcome(outcome.id)}
+                    onMouseLeave={() => setHoveredOutcome(null)}
+                  />
+                );
+              })}
             </LineChart>
           ) : (
             // Single area chart for binary markets
@@ -302,13 +400,20 @@ export function KalshiChart({ priceHistory, currentPrice, outcomes, volume }: Ka
                 strokeWidth={2}
                 fill="url(#chartGradient)"
                 animationDuration={300}
+                activeDot={(props: any) => {
+                  const { payload } = props;
+                  if (payload?.isLast) {
+                    return <PulsingDot {...props} fill="hsl(152, 69%, 41%)" isLast={true} />;
+                  }
+                  return <Dot {...props} r={4} fill="hsl(152, 69%, 41%)" />;
+                }}
               />
             </AreaChart>
           )}
         </ResponsiveContainer>
       </div>
 
-      {/* Bottom bar: Volume + Time Range */}
+      {/* Bottom bar: Time Range */}
       <div className="flex items-center justify-between mt-4 pt-3 border-t border-border">
         {volume !== undefined && (
           <span className="text-sm text-muted-foreground">
@@ -323,7 +428,7 @@ export function KalshiChart({ priceHistory, currentPrice, outcomes, volume }: Ka
               className={cn(
                 'px-2.5 py-1 text-xs font-medium rounded transition-colors',
                 selectedRange === range
-                  ? 'text-foreground'
+                  ? 'bg-surface text-foreground'
                   : 'text-muted-foreground hover:text-foreground'
               )}
             >
