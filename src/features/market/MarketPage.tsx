@@ -177,122 +177,85 @@ export function MarketPage() {
     <div className="min-h-screen bg-background">
       <AppHeader />
 
-      {/* Market Header - Kalshi Style */}
-      <div className="border-b border-border">
-        <div className="container py-4">
-          {/* Back link */}
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground mb-4 transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Back
-          </Link>
-
-          <div className="flex flex-col lg:flex-row lg:items-start gap-6">
-            {/* Left: Image + Title */}
-            <div className="flex gap-4 flex-1">
-              {marketImage ? (
-                <img
-                  src={marketImage}
-                  alt=""
-                  className="h-16 w-16 rounded-xl object-cover flex-shrink-0"
-                />
-              ) : (
-                <div className="h-16 w-16 rounded-xl bg-surface flex-shrink-0 flex items-center justify-center">
-                  <span className="text-2xl font-bold">
-                    {currentMarket.title.charAt(0)}
-                  </span>
-                </div>
-              )}
-              <div>
-                <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
-                  {currentMarket.category}
-                </p>
-                <h1 className="text-xl font-bold text-foreground">
-                  {currentMarket.title}
-                </h1>
-              </div>
-            </div>
-
-            {/* Right: Action buttons */}
-            <div className="flex items-center gap-2">
-              <button className="h-9 w-9 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-surface transition-colors relative">
-                <RefreshCw className="h-4 w-4" />
-                <span className="absolute -top-1 -right-1 text-[10px] bg-primary text-primary-foreground px-1 rounded">
-                  247
-                </span>
-              </button>
-              <button className="h-9 w-9 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-surface transition-colors">
-                <Share2 className="h-4 w-4" />
-              </button>
-              <button className="h-9 w-9 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-surface transition-colors">
-                <Download className="h-4 w-4" />
-              </button>
-              <button
-                onClick={() => id && toggleWatchlist(id)}
-                className={cn(
-                  "h-9 w-9 rounded-lg border flex items-center justify-center transition-colors",
-                  watched
-                    ? "border-primary bg-primary text-primary-foreground"
-                    : "border-border text-muted-foreground hover:text-foreground hover:bg-surface"
-                )}
-              >
-                {watched ? (
-                  <Check className="h-4 w-4" />
-                ) : (
-                  <Plus className="h-4 w-4" />
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Resolution Banner */}
-      {isResolved && (
-        <div className="container py-4">
-          <ResolutionBanner
-            market={currentMarket}
-            userPosition={mockUserPosition}
-          />
-        </div>
-      )}
-
       {/* Main Content */}
       <div className="container py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
           {/* Left Column: Chart + Outcomes */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Outcome Legend above chart (for multi-outcome) */}
-            {hasOutcomes && (
-              <div className="flex items-center gap-6 text-sm">
-                {sortedOutcomes.slice(0, 3).map((outcome, idx) => {
-                  const colors = [
-                    "hsl(152, 69%, 41%)",
-                    "hsl(213, 94%, 58%)",
-                    "hsl(220, 13%, 46%)",
-                  ];
-                  return (
-                    <div key={outcome.id} className="flex items-center gap-2">
-                      <div
-                        className="w-2 h-2 rounded-full"
-                        style={{ backgroundColor: colors[idx] }}
+          <div className="lg:col-span-3 space-y-6">
+            {/* Market Header - Kalshi Style */}
+            <div className="border-b border-border">
+              <div className="py-0">
+                <div className="flex flex-col lg:flex-row lg:items-start gap-6">
+                  {/* Left: Image + Title */}
+                  <div className="flex gap-4 flex-1">
+                    {marketImage ? (
+                      <img
+                        src={marketImage}
+                        alt=""
+                        className="h-16 w-16 rounded-xl object-cover flex-shrink-0"
                       />
-                      <span className="text-muted-foreground">
-                        {outcome.label}
-                      </span>
-                      <span className="font-semibold text-foreground">
-                        {Math.round(outcome.yesPrice * 100)}%
-                      </span>
+                    ) : (
+                      <div className="h-16 w-16 rounded-xl bg-surface flex-shrink-0 flex items-center justify-center">
+                        <span className="text-2xl font-bold">
+                          {currentMarket.title.charAt(0)}
+                        </span>
+                      </div>
+                    )}
+                    <div>
+                      <p className="text-xs text-muted-foreground uppercase tracking-wide mb-1">
+                        {currentMarket.category}
+                      </p>
+                      <h1 className="text-xl font-bold text-foreground">
+                        {currentMarket.title}
+                      </h1>
                     </div>
-                  );
-                })}
+                  </div>
+
+                  {/* Right: Action buttons */}
+                  <div className="flex items-center gap-2">
+                    <button className="h-9 w-9 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-surface transition-colors relative">
+                      <RefreshCw className="h-4 w-4" />
+                      <span className="absolute -top-1 -right-1 text-[10px] bg-primary text-primary-foreground px-1 rounded">
+                        247
+                      </span>
+                    </button>
+                    <button className="h-9 w-9 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-surface transition-colors">
+                      <Share2 className="h-4 w-4" />
+                    </button>
+                    <button className="h-9 w-9 rounded-lg border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-surface transition-colors">
+                      <Download className="h-4 w-4" />
+                    </button>
+                    <button
+                      onClick={() => id && toggleWatchlist(id)}
+                      className={cn(
+                        "h-9 w-9 rounded-lg border flex items-center justify-center transition-colors",
+                        watched
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-border text-muted-foreground hover:text-foreground hover:bg-surface"
+                      )}
+                    >
+                      {watched ? (
+                        <Check className="h-4 w-4" />
+                      ) : (
+                        <Plus className="h-4 w-4" />
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Resolution Banner */}
+            {isResolved && (
+              <div className="container py-4">
+                <ResolutionBanner
+                  market={currentMarket}
+                  userPosition={mockUserPosition}
+                />
               </div>
             )}
-
             {/* Chart */}
-            <div className="rounded-xl border border-border bg-card p-5">
+            <div className=" bg-card p-0 mb-[40px]">
               <KalshiChart
                 priceHistory={currentMarket.priceHistory}
                 currentPrice={currentMarket.yesPrice}
@@ -369,7 +332,7 @@ export function MarketPage() {
           </div>
 
           {/* Right Column: Trade Panel */}
-          <div className="space-y-6">
+          <div className="space-y-6 lg:col-span-1">
             {!isResolved && (
               <PolymarketTradePanel
                 yesPrice={tradePanelProps.yesPrice}

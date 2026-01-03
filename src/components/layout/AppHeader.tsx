@@ -1,10 +1,19 @@
-import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { TrendingUp, Search, Bell, Menu, User, LogOut, Wallet, Settings } from 'lucide-react';
-import { useAuthStore } from '@/features/auth/auth.store';
-import { DepositWithdrawModal } from '@/components/modals/DepositWithdrawModal';
-import { NotificationPanel } from '@/components/panels/NotificationPanel';
-import { cn } from '@/shared/utils';
+import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import {
+  TrendingUp,
+  Search,
+  Bell,
+  Menu,
+  User,
+  LogOut,
+  Wallet,
+  Settings,
+} from "lucide-react";
+import { useAuthStore } from "@/features/auth/auth.store";
+import { DepositWithdrawModal } from "@/components/modals/DepositWithdrawModal";
+import { NotificationPanel } from "@/components/panels/NotificationPanel";
+import { cn } from "@/shared/utils";
 
 export function AppHeader() {
   const location = useLocation();
@@ -14,9 +23,9 @@ export function AppHeader() {
   const [showNotifications, setShowNotifications] = useState(false);
 
   const navLinks = [
-    { href: '/', label: 'Markets' },
-    { href: '/leaderboard', label: 'Leaderboard' },
-    { href: '/portfolio', label: 'Portfolio', requiresAuth: true },
+    { href: "/", label: "Markets" },
+    { href: "/leaderboard", label: "Leaderboard" },
+    { href: "/portfolio", label: "Wallet", requiresAuth: true },
   ];
 
   return (
@@ -30,7 +39,9 @@ export function AppHeader() {
                 <div className="h-7 w-7 rounded-lg bg-primary flex items-center justify-center">
                   <TrendingUp className="h-4 w-4 text-primary-foreground" />
                 </div>
-                <span className="text-lg font-bold text-foreground">Kalshi</span>
+                <span className="text-lg font-bold text-foreground">
+                  ContiSX
+                </span>
               </Link>
 
               {/* Navigation */}
@@ -43,8 +54,8 @@ export function AppHeader() {
                       key={link.href}
                       to={link.href}
                       className={cn(
-                        'nav-link',
-                        isActive && 'nav-link-active text-foreground'
+                        "nav-link",
+                        isActive && "nav-link-active text-foreground"
                       )}
                     >
                       {link.label}
@@ -73,27 +84,30 @@ export function AppHeader() {
                     onClick={() => setShowDepositModal(true)}
                     className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
                   >
-                    <Wallet className="h-4 w-4" />
-                    ${balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    <Wallet className="h-4 w-4" />$
+                    {balance.toLocaleString("en-US", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
                   </button>
 
                   {/* Notifications */}
                   <div className="relative">
-                    <button 
+                    <button
                       onClick={() => setShowNotifications(!showNotifications)}
                       className={cn(
-                        'h-9 w-9 rounded-full border flex items-center justify-center transition-colors relative',
+                        "h-9 w-9 rounded-full border flex items-center justify-center transition-colors relative",
                         showNotifications
-                          ? 'border-primary bg-primary/10 text-primary'
-                          : 'border-border text-muted-foreground hover:text-foreground hover:bg-surface'
+                          ? "border-primary bg-primary/10 text-primary"
+                          : "border-border text-muted-foreground hover:text-foreground hover:bg-surface"
                       )}
                     >
                       <Bell className="h-4 w-4" />
                       {/* Unread indicator */}
                       <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-primary rounded-full" />
                     </button>
-                    
-                    <NotificationPanel 
+
+                    <NotificationPanel
                       isOpen={showNotifications}
                       onClose={() => setShowNotifications(false)}
                     />
@@ -116,8 +130,12 @@ export function AppHeader() {
                         />
                         <div className="absolute right-0 top-full mt-2 w-48 rounded-lg border border-border bg-card shadow-lg z-50 overflow-hidden">
                           <div className="px-4 py-3 border-b border-border">
-                            <p className="text-sm font-medium text-foreground">{user?.username}</p>
-                            <p className="text-xs text-muted-foreground">{user?.email}</p>
+                            <p className="text-sm font-medium text-foreground">
+                              {user?.username}
+                            </p>
+                            <p className="text-xs text-muted-foreground">
+                              {user?.email}
+                            </p>
                           </div>
                           <div className="py-1">
                             <Link
@@ -126,7 +144,7 @@ export function AppHeader() {
                               onClick={() => setShowUserMenu(false)}
                             >
                               <User className="h-4 w-4" />
-                              Portfolio
+                              Wallet
                             </Link>
                             <Link
                               to="/settings"

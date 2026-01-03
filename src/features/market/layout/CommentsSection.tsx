@@ -1,78 +1,86 @@
-import { useState, useEffect } from 'react';
-import { Heart, MoreHorizontal, ChevronDown, ChevronUp, AlertCircle, ExternalLink } from 'lucide-react';
-import { cn } from '@/shared/utils';
-import { useAuthStore } from '@/features/auth/auth.store';
-import { mockSocket } from '@/services/mockSocket';
-import type { Comment } from '../market.types';
-import type { MarketOutcome } from '@/features/markets/markets.types';
-import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+import { useState, useEffect } from "react";
+import {
+  Heart,
+  MoreHorizontal,
+  ChevronDown,
+  ChevronUp,
+  AlertCircle,
+  ExternalLink,
+} from "lucide-react";
+import { cn } from "@/shared/utils";
+import { useAuthStore } from "@/features/auth/auth.store";
+import { mockSocket } from "@/services/mockSocket";
+import type { Comment } from "../market.types";
+import type { MarketOutcome } from "@/features/markets/markets.types";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
+} from "@/components/ui/select";
+import { Checkbox } from "@/components/ui/checkbox";
 
 dayjs.extend(relativeTime);
 
 // Mock comments data with holder positions
 const MOCK_COMMENTS: Comment[] = [
   {
-    id: '1',
-    userId: 'user-1',
-    username: 'VeneconPower',
-    content: 'Just gambling',
-    timestamp: '2025-12-31T12:30:00Z',
+    id: "1",
+    userId: "user-1",
+    username: "VeneconPower",
+    content: "Just gambling",
+    timestamp: "2025-12-31T12:30:00Z",
     likes: 1,
     holderPosition: 7300,
-    holderDate: 'December 31',
+    holderDate: "December 31",
     replies: [],
   },
   {
-    id: '2',
-    userId: 'user-2',
-    username: 'Bshef',
-    content: 'There was no strike by u.s',
-    timestamp: '2025-12-31T09:15:00Z',
+    id: "2",
+    userId: "user-2",
+    username: "Bshef",
+    content: "There was no strike by u.s",
+    timestamp: "2025-12-31T09:15:00Z",
     likes: 3,
     holderPosition: 1000,
-    holderDate: 'December 31',
+    holderDate: "December 31",
     replies: [],
   },
   {
-    id: '3',
-    userId: 'user-3',
-    username: 'PrinceofPredicti...',
-    content: 'can any yes holder tell me when usa strike the yemen',
-    timestamp: '2025-12-31T08:00:00Z',
+    id: "3",
+    userId: "user-3",
+    username: "PrinceofPredicti...",
+    content: "can any yes holder tell me when usa strike the yemen",
+    timestamp: "2025-12-31T08:00:00Z",
     likes: 2,
     holderPosition: 500,
-    holderDate: 'December 31',
+    holderDate: "December 31",
     replies: [
       {
-        id: '3-1',
-        userId: 'user-4',
-        username: 'ImpossibleAk12',
-        content: '@PrinceofPred... 😂',
-        timestamp: '2025-12-31T09:00:00Z',
+        id: "3-1",
+        userId: "user-4",
+        username: "ImpossibleAk12",
+        content: "@PrinceofPred... 😂",
+        timestamp: "2025-12-31T09:00:00Z",
         likes: 1,
         holderPosition: 7200,
-        holderDate: 'December 31',
+        holderDate: "December 31",
       },
     ],
   },
   {
-    id: '4',
-    userId: 'user-5',
-    username: 'CryptoTrader',
-    content: 'I think this has a high probability of happening based on recent market trends.',
-    timestamp: '2025-12-30T14:30:00Z',
+    id: "4",
+    userId: "user-5",
+    username: "CryptoTrader",
+    content:
+      "I think this has a high probability of happening based on recent market trends.",
+    timestamp: "2025-12-30T14:30:00Z",
     likes: 24,
     holderPosition: 3500,
-    holderDate: 'December 30',
+    holderDate: "December 30",
     replies: [],
   },
 ];
@@ -82,9 +90,9 @@ interface TradeActivityEvent {
   id: string;
   username: string;
   avatarGradient: string;
-  action: 'bought' | 'sold';
+  action: "bought" | "sold";
   quantity: number;
-  side: 'Yes' | 'No';
+  side: "Yes" | "No";
   outcome?: string;
   price: number;
   total: number;
@@ -92,14 +100,102 @@ interface TradeActivityEvent {
 }
 
 const MOCK_ACTIVITY: TradeActivityEvent[] = [
-  { id: '1', username: 'kunsect7', avatarGradient: 'from-purple-400 to-pink-500', action: 'sold', quantity: 11, side: 'Yes', outcome: 'Kevin Hassett', price: 41.0, total: 5, timestamp: Date.now() - 60000 },
-  { id: '2', username: 'annapugh', avatarGradient: 'from-pink-300 to-rose-400', action: 'sold', quantity: 14, side: 'No', outcome: 'Kevin Hassett', price: 58.0, total: 8, timestamp: Date.now() - 60000 },
-  { id: '3', username: 'axiol', avatarGradient: 'from-orange-400 to-red-500', action: 'sold', quantity: 77, side: 'Yes', outcome: 'Christopher Waller', price: 13.0, total: 10, timestamp: Date.now() - 60000 },
-  { id: '4', username: 'mariawallet', avatarGradient: 'from-red-400 to-orange-500', action: 'bought', quantity: 55, side: 'No', outcome: 'Stephen Miran', price: 99.7, total: 55, timestamp: Date.now() - 120000 },
-  { id: '5', username: 'mariawallet', avatarGradient: 'from-red-400 to-orange-500', action: 'bought', quantity: 41, side: 'No', outcome: 'Judy Shelton', price: 97.4, total: 40, timestamp: Date.now() - 120000 },
-  { id: '6', username: 'xxxxMan', avatarGradient: 'from-green-400 to-lime-500', action: 'bought', quantity: 5, side: 'Yes', outcome: 'Kevin Hassett', price: 42.0, total: 2, timestamp: Date.now() - 120000 },
-  { id: '7', username: 'andreeva', avatarGradient: 'from-amber-400 to-orange-500', action: 'bought', quantity: 4, side: 'Yes', outcome: 'Kevin Hassett', price: 42.0, total: 2, timestamp: Date.now() - 120000 },
-  { id: '8', username: 'sbimbg', avatarGradient: 'from-gray-400 to-slate-500', action: 'sold', quantity: 1843, side: 'Yes', outcome: 'Christopher Waller', price: 13.0, total: 240, timestamp: Date.now() - 180000 },
+  {
+    id: "1",
+    username: "kunsect7",
+    avatarGradient: "from-purple-400 to-pink-500",
+    action: "sold",
+    quantity: 11,
+    side: "Yes",
+    outcome: "Kevin Hassett",
+    price: 41.0,
+    total: 5,
+    timestamp: Date.now() - 60000,
+  },
+  {
+    id: "2",
+    username: "annapugh",
+    avatarGradient: "from-pink-300 to-rose-400",
+    action: "sold",
+    quantity: 14,
+    side: "No",
+    outcome: "Kevin Hassett",
+    price: 58.0,
+    total: 8,
+    timestamp: Date.now() - 60000,
+  },
+  {
+    id: "3",
+    username: "axiol",
+    avatarGradient: "from-orange-400 to-red-500",
+    action: "sold",
+    quantity: 77,
+    side: "Yes",
+    outcome: "Christopher Waller",
+    price: 13.0,
+    total: 10,
+    timestamp: Date.now() - 60000,
+  },
+  {
+    id: "4",
+    username: "mariawallet",
+    avatarGradient: "from-red-400 to-orange-500",
+    action: "bought",
+    quantity: 55,
+    side: "No",
+    outcome: "Stephen Miran",
+    price: 99.7,
+    total: 55,
+    timestamp: Date.now() - 120000,
+  },
+  {
+    id: "5",
+    username: "mariawallet",
+    avatarGradient: "from-red-400 to-orange-500",
+    action: "bought",
+    quantity: 41,
+    side: "No",
+    outcome: "Judy Shelton",
+    price: 97.4,
+    total: 40,
+    timestamp: Date.now() - 120000,
+  },
+  {
+    id: "6",
+    username: "xxxxMan",
+    avatarGradient: "from-green-400 to-lime-500",
+    action: "bought",
+    quantity: 5,
+    side: "Yes",
+    outcome: "Kevin Hassett",
+    price: 42.0,
+    total: 2,
+    timestamp: Date.now() - 120000,
+  },
+  {
+    id: "7",
+    username: "andreeva",
+    avatarGradient: "from-amber-400 to-orange-500",
+    action: "bought",
+    quantity: 4,
+    side: "Yes",
+    outcome: "Kevin Hassett",
+    price: 42.0,
+    total: 2,
+    timestamp: Date.now() - 120000,
+  },
+  {
+    id: "8",
+    username: "sbimbg",
+    avatarGradient: "from-gray-400 to-slate-500",
+    action: "sold",
+    quantity: 1843,
+    side: "Yes",
+    outcome: "Christopher Waller",
+    price: 13.0,
+    total: 240,
+    timestamp: Date.now() - 180000,
+  },
 ];
 
 interface CommentsSectionProps {
@@ -110,24 +206,28 @@ interface CommentsSectionProps {
 export function CommentsSection({ marketId, outcomes }: CommentsSectionProps) {
   const { isAuthenticated, user } = useAuthStore();
   const [comments, setComments] = useState<Comment[]>(MOCK_COMMENTS);
-  const [newComment, setNewComment] = useState('');
-  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'top'>('newest');
+  const [newComment, setNewComment] = useState("");
+  const [sortBy, setSortBy] = useState<"newest" | "oldest" | "top">("newest");
   const [holdersOnly, setHoldersOnly] = useState(false);
-  const [activeTab, setActiveTab] = useState<'comments' | 'holders' | 'activity'>('comments');
+  const [activeTab, setActiveTab] = useState<
+    "comments" | "holders" | "activity"
+  >("comments");
   const [activity, setActivity] = useState<TradeActivityEvent[]>(MOCK_ACTIVITY);
-  const [activityFilter, setActivityFilter] = useState<'all' | 'bought' | 'sold'>('all');
+  const [activityFilter, setActivityFilter] = useState<
+    "all" | "bought" | "sold"
+  >("all");
   const [minAmount, setMinAmount] = useState<number | null>(null);
 
   // Listen for trade activity
   useEffect(() => {
-    const unsubscribe = mockSocket.on('TRADE_EXECUTED', (payload: any) => {
+    const unsubscribe = mockSocket.on("TRADE_EXECUTED", (payload: any) => {
       const newTrade: TradeActivityEvent = {
         id: `${Date.now()}-${Math.random()}`,
-        username: user?.username || 'anonymous',
-        avatarGradient: 'from-blue-400 to-cyan-500',
+        username: user?.username || "anonymous",
+        avatarGradient: "from-blue-400 to-cyan-500",
         action: payload.type,
         quantity: payload.quantity,
-        side: payload.side === 'yes' ? 'Yes' : 'No',
+        side: payload.side === "yes" ? "Yes" : "No",
         price: payload.price * 100,
         total: payload.quantity * payload.price,
         timestamp: payload.timestamp,
@@ -144,41 +244,43 @@ export function CommentsSection({ marketId, outcomes }: CommentsSectionProps) {
 
     const comment: Comment = {
       id: `comment-${Date.now()}`,
-      userId: user?.id || '',
-      username: user?.username || 'Anonymous',
+      userId: user?.id || "",
+      username: user?.username || "Anonymous",
       content: newComment.trim(),
       timestamp: new Date().toISOString(),
       likes: 0,
       holderPosition: 1000,
-      holderDate: dayjs().format('MMMM D'),
+      holderDate: dayjs().format("MMMM D"),
     };
 
     setComments([comment, ...comments]);
-    setNewComment('');
+    setNewComment("");
   };
 
   const handleLike = (commentId: string) => {
-    setComments(comments.map(c => 
-      c.id === commentId ? { ...c, likes: c.likes + 1 } : c
-    ));
+    setComments(
+      comments.map((c) =>
+        c.id === commentId ? { ...c, likes: c.likes + 1 } : c
+      )
+    );
   };
 
-  const filteredComments = holdersOnly 
-    ? comments.filter(c => c.holderPosition && c.holderPosition > 0)
+  const filteredComments = holdersOnly
+    ? comments.filter((c) => c.holderPosition && c.holderPosition > 0)
     : comments;
 
   const sortedComments = [...filteredComments].sort((a, b) => {
-    if (sortBy === 'top') {
+    if (sortBy === "top") {
       return b.likes - a.likes;
     }
-    if (sortBy === 'oldest') {
+    if (sortBy === "oldest") {
       return new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime();
     }
     return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
   });
 
-  const filteredActivity = activity.filter(a => {
-    if (activityFilter !== 'all' && a.action !== activityFilter) return false;
+  const filteredActivity = activity.filter((a) => {
+    if (activityFilter !== "all" && a.action !== activityFilter) return false;
     if (minAmount && a.total < minAmount) return false;
     return true;
   });
@@ -205,17 +307,17 @@ export function CommentsSection({ marketId, outcomes }: CommentsSectionProps) {
       <div className="border-b border-border">
         <div className="flex gap-6">
           <button
-            onClick={() => setActiveTab('comments')}
+            onClick={() => setActiveTab("comments")}
             className={cn(
-              'pb-3 text-sm font-medium border-b-2 -mb-px transition-colors',
-              activeTab === 'comments'
-                ? 'border-foreground text-foreground'
-                : 'border-transparent text-muted-foreground hover:text-foreground'
+              "pb-3 text-sm font-medium border-b-2 -mb-px transition-colors",
+              activeTab === "comments"
+                ? "border-foreground text-foreground"
+                : "border-transparent text-muted-foreground hover:text-foreground"
             )}
           >
             Comments ({comments.length})
           </button>
-          <button
+          {/* <button
             onClick={() => setActiveTab('holders')}
             className={cn(
               'pb-3 text-sm font-medium border-b-2 -mb-px transition-colors',
@@ -225,14 +327,14 @@ export function CommentsSection({ marketId, outcomes }: CommentsSectionProps) {
             )}
           >
             Top Holders
-          </button>
+          </button> */}
           <button
-            onClick={() => setActiveTab('activity')}
+            onClick={() => setActiveTab("activity")}
             className={cn(
-              'pb-3 text-sm font-medium border-b-2 -mb-px transition-colors',
-              activeTab === 'activity'
-                ? 'border-foreground text-foreground'
-                : 'border-transparent text-muted-foreground hover:text-foreground'
+              "pb-3 text-sm font-medium border-b-2 -mb-px transition-colors",
+              activeTab === "activity"
+                ? "border-foreground text-foreground"
+                : "border-transparent text-muted-foreground hover:text-foreground"
             )}
           >
             Activity
@@ -240,10 +342,13 @@ export function CommentsSection({ marketId, outcomes }: CommentsSectionProps) {
         </div>
       </div>
 
-      {activeTab === 'comments' && (
+      {activeTab === "comments" && (
         <>
           {/* New Comment Input */}
-          <form onSubmit={handleSubmitComment} className="flex items-center gap-2 border border-border rounded-lg px-4 py-3">
+          <form
+            onSubmit={handleSubmitComment}
+            className="flex items-center gap-2 border border-border rounded-lg px-4 py-3"
+          >
             <input
               type="text"
               value={newComment}
@@ -263,7 +368,10 @@ export function CommentsSection({ marketId, outcomes }: CommentsSectionProps) {
           {/* Sort & Filter Controls */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <Select value={sortBy} onValueChange={(v) => setSortBy(v as typeof sortBy)}>
+              <Select
+                value={sortBy}
+                onValueChange={(v) => setSortBy(v as typeof sortBy)}
+              >
                 <SelectTrigger className="w-28 h-8 text-sm bg-surface border-border">
                   <SelectValue />
                 </SelectTrigger>
@@ -292,9 +400,9 @@ export function CommentsSection({ marketId, outcomes }: CommentsSectionProps) {
           {/* Comments List */}
           <div className="space-y-1">
             {sortedComments.map((comment) => (
-              <CommentCard 
-                key={comment.id} 
-                comment={comment} 
+              <CommentCard
+                key={comment.id}
+                comment={comment}
                 onLike={() => handleLike(comment.id)}
                 formatPosition={formatPosition}
               />
@@ -303,17 +411,22 @@ export function CommentsSection({ marketId, outcomes }: CommentsSectionProps) {
         </>
       )}
 
-      {activeTab === 'holders' && (
+      {activeTab === "holders" && (
         <div className="py-8 text-center text-muted-foreground text-sm">
           Top holders data coming soon
         </div>
       )}
 
-      {activeTab === 'activity' && (
+      {activeTab === "activity" && (
         <div className="space-y-4">
           {/* Activity Filters */}
           <div className="flex items-center gap-3">
-            <Select value={activityFilter} onValueChange={(v) => setActivityFilter(v as typeof activityFilter)}>
+            <Select
+              value={activityFilter}
+              onValueChange={(v) =>
+                setActivityFilter(v as typeof activityFilter)
+              }
+            >
               <SelectTrigger className="w-20 h-8 text-sm bg-background border-border">
                 <SelectValue />
               </SelectTrigger>
@@ -324,7 +437,12 @@ export function CommentsSection({ marketId, outcomes }: CommentsSectionProps) {
               </SelectContent>
             </Select>
 
-            <Select value={minAmount?.toString() || 'any'} onValueChange={(v) => setMinAmount(v === 'any' ? null : parseInt(v))}>
+            <Select
+              value={minAmount?.toString() || "any"}
+              onValueChange={(v) =>
+                setMinAmount(v === "any" ? null : parseInt(v))
+              }
+            >
               <SelectTrigger className="w-32 h-8 text-sm bg-background border-border">
                 <SelectValue placeholder="Min amount" />
               </SelectTrigger>
@@ -346,35 +464,51 @@ export function CommentsSection({ marketId, outcomes }: CommentsSectionProps) {
               </div>
             ) : (
               filteredActivity.map((event) => (
-                <div 
+                <div
                   key={event.id}
                   className="flex items-center justify-between py-4 hover:bg-surface/50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
                     {/* Avatar */}
-                    <div className={cn(
-                      'w-8 h-8 rounded-full bg-gradient-to-br flex-shrink-0',
-                      event.avatarGradient
-                    )} />
-                    
+                    <div
+                      className={cn(
+                        "w-8 h-8 rounded-full bg-gradient-to-br flex-shrink-0",
+                        event.avatarGradient
+                      )}
+                    />
+
                     {/* Trade info */}
                     <div className="text-sm">
-                      <span className="font-medium text-foreground">{event.username}</span>
-                      <span className="text-muted-foreground"> {event.action} </span>
-                      <span className={cn(
-                        'font-medium',
-                        event.side === 'Yes' ? 'text-yes' : 'text-no'
-                      )}>
+                      <span className="font-medium text-foreground">
+                        {event.username}
+                      </span>
+                      <span className="text-muted-foreground">
+                        {" "}
+                        {event.action}{" "}
+                      </span>
+                      <span
+                        className={cn(
+                          "font-medium",
+                          event.side === "Yes" ? "text-yes" : "text-no"
+                        )}
+                      >
                         {event.quantity} {event.side}
                       </span>
                       {event.outcome && (
                         <>
                           <span className="text-muted-foreground"> for </span>
-                          <span className="font-medium text-foreground">{event.outcome}</span>
+                          <span className="font-medium text-foreground">
+                            {event.outcome}
+                          </span>
                         </>
                       )}
-                      <span className="text-muted-foreground"> at {event.price.toFixed(1)}¢ </span>
-                      <span className="text-muted-foreground">(${event.total})</span>
+                      <span className="text-muted-foreground">
+                        {" "}
+                        at {event.price.toFixed(1)}¢{" "}
+                      </span>
+                      <span className="text-muted-foreground">
+                        (${event.total})
+                      </span>
                     </div>
                   </div>
 
@@ -399,39 +533,53 @@ interface CommentCardProps {
   isReply?: boolean;
 }
 
-function CommentCard({ comment, onLike, formatPosition, isReply = false }: CommentCardProps) {
+function CommentCard({
+  comment,
+  onLike,
+  formatPosition,
+  isReply = false,
+}: CommentCardProps) {
   const [showReplies, setShowReplies] = useState(true);
 
   const getAvatarGradient = (username: string) => {
     const gradients = [
-      'from-orange-400 to-pink-500',
-      'from-green-400 to-cyan-500',
-      'from-purple-400 to-pink-500',
-      'from-yellow-400 to-orange-500',
-      'from-blue-400 to-purple-500',
+      "from-orange-400 to-pink-500",
+      "from-green-400 to-cyan-500",
+      "from-purple-400 to-pink-500",
+      "from-yellow-400 to-orange-500",
+      "from-blue-400 to-purple-500",
     ];
     const index = username.charCodeAt(0) % gradients.length;
     return gradients[index];
   };
 
   return (
-    <div className={cn('py-4', !isReply && 'border-b border-border last:border-b-0')}>
+    <div
+      className={cn(
+        "py-4",
+        !isReply && "border-b border-border last:border-b-0"
+      )}
+    >
       <div className="flex gap-3">
         {/* Avatar */}
-        <div className={cn(
-          'rounded-full bg-gradient-to-br flex-shrink-0',
-          getAvatarGradient(comment.username),
-          isReply ? 'h-7 w-7' : 'h-9 w-9'
-        )} />
+        <div
+          className={cn(
+            "rounded-full bg-gradient-to-br flex-shrink-0",
+            getAvatarGradient(comment.username),
+            isReply ? "h-7 w-7" : "h-9 w-9"
+          )}
+        />
 
         {/* Content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className={cn(
-                'font-medium text-foreground',
-                isReply ? 'text-sm' : 'text-sm'
-              )}>
+              <span
+                className={cn(
+                  "font-medium text-foreground",
+                  isReply ? "text-sm" : "text-sm"
+                )}
+              >
                 {comment.username}
               </span>
               {comment.holderPosition && (
@@ -447,14 +595,16 @@ function CommentCard({ comment, onLike, formatPosition, isReply = false }: Comme
               <MoreHorizontal className="h-4 w-4" />
             </button>
           </div>
-          
-          <p className={cn(
-            'text-foreground leading-relaxed mt-1',
-            isReply ? 'text-sm' : 'text-sm'
-          )}>
+
+          <p
+            className={cn(
+              "text-foreground leading-relaxed mt-1",
+              isReply ? "text-sm" : "text-sm"
+            )}
+          >
             {comment.content}
           </p>
-          
+
           {/* Actions */}
           <div className="flex items-center gap-4 mt-2">
             <button
@@ -478,12 +628,14 @@ function CommentCard({ comment, onLike, formatPosition, isReply = false }: Comme
               {showReplies ? (
                 <>
                   <ChevronUp className="h-3.5 w-3.5" />
-                  Hide {comment.replies.length} {comment.replies.length === 1 ? 'Reply' : 'Replies'}
+                  Hide {comment.replies.length}{" "}
+                  {comment.replies.length === 1 ? "Reply" : "Replies"}
                 </>
               ) : (
                 <>
                   <ChevronDown className="h-3.5 w-3.5" />
-                  Show {comment.replies.length} {comment.replies.length === 1 ? 'Reply' : 'Replies'}
+                  Show {comment.replies.length}{" "}
+                  {comment.replies.length === 1 ? "Reply" : "Replies"}
                 </>
               )}
             </button>
