@@ -1,21 +1,26 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Loader2, ArrowLeft, Share2, Plus, Check, Download, RefreshCw, SlidersHorizontal } from 'lucide-react';
 import { useMarketStore } from './market.store';
 import { KalshiChart } from './layout/KalshiChart';
-import { TradePanel } from './layout/TradePanel';
+import { PolymarketTradePanel } from './layout/PolymarketTradePanel';
 import { KalshiOutcomeRow } from './layout/KalshiOutcomeRow';
 import { RulesSummary } from './layout/RulesSummary';
 import { CommentsSection } from './layout/CommentsSection';
 import { ResolutionBanner } from './layout/ResolutionBanner';
+import { OrderBook } from './layout/OrderBook';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { useWatchlistStore } from '@/features/watchlist/watchlist.store';
 import { cn } from '@/shared/utils';
+import type { MarketOutcome } from '@/features/markets/markets.types';
 
 export function MarketPage() {
   const { id } = useParams<{ id: string }>();
   const { currentMarket, isLoading, error, priceFlash, loadMarket, subscribeToUpdates } = useMarketStore();
   const { isWatched, toggleWatchlist } = useWatchlistStore();
+  
+  // Selected outcome for trade panel (multi-outcome markets)
+  const [selectedOutcome, setSelectedOutcome] = useState<MarketOutcome | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -29,6 +34,13 @@ export function MarketPage() {
       return unsubscribe;
     }
   }, [id, currentMarket, subscribeToUpdates]);
+  
+  // Set default selected outcome for multi-outcome markets
+  useEffect(() => {
+    if (currentMarket?.outcomes && currentMarket.outcomes.length > 0 && !selectedOutcome) {
+      setSelectedOutcome(currentMarket.outcomes[0]);
+    }
+  }, [currentMarket, selectedOutcome]);
 
   if (isLoading) {
     return (
@@ -62,6 +74,11 @@ export function MarketPage() {
   const sortedOutcomes = hasOutcomes 
     ? [...currentMarket.outcomes!].sort((a, b) => b.yesPrice - a.yesPrice)
     : [];
+  
+  // Get current prices for trade panel
+  const tradePanelProps = selectedOutcome 
+    ? { yesPrice: selectedOutcome.yesPrice, noPrice: selectedOutcome.noPrice }
+    : { yesPrice: currentMarket.yesPrice, noPrice: currentMarket.noPrice };
 
   return (
     <div className="min-h-screen bg-background">
@@ -248,10 +265,16 @@ export function MarketPage() {
           {/* Right Column: Trade Panel */}
           <div className="space-y-6">
             {!isResolved && (
-              <TradePanel
-                yesPrice={currentMarket.yesPrice}
-                noPrice={currentMarket.noPrice}
+              <PolymarketTradePanel
+                yesPrice={tradePanelProps.yesPrice}
+                noPrice={tradePanelProps.noPrice}
                 liquidity={currentMarket.liquidity}
+                orderBook={currentMarket.orderBook}
+                selectedOutcome={selectedOutcome ? { 
+                  id: selectedOutcome.id, 
+                  label: selectedOutcome.label,
+                  imageUrl: selectedOutcome.imageUrl 
+                } : null}
                 priceFlash={priceFlash}
               />
             )}
