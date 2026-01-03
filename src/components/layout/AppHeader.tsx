@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { TrendingUp, Search, Bell, Menu, User, LogOut, Wallet } from 'lucide-react';
+import { TrendingUp, Search, Bell, Menu, User, LogOut, Wallet, Settings } from 'lucide-react';
 import { useAuthStore } from '@/features/auth/auth.store';
 import { DepositWithdrawModal } from '@/components/modals/DepositWithdrawModal';
+import { NotificationPanel } from '@/components/panels/NotificationPanel';
 import { cn } from '@/shared/utils';
 
 export function AppHeader() {
@@ -10,6 +11,7 @@ export function AppHeader() {
   const { isAuthenticated, user, balance, logout } = useAuthStore();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showDepositModal, setShowDepositModal] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   const navLinks = [
     { href: '/', label: 'Markets' },
@@ -76,9 +78,26 @@ export function AppHeader() {
                   </button>
 
                   {/* Notifications */}
-                  <button className="h-9 w-9 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-surface transition-colors">
-                    <Bell className="h-4 w-4" />
-                  </button>
+                  <div className="relative">
+                    <button 
+                      onClick={() => setShowNotifications(!showNotifications)}
+                      className={cn(
+                        'h-9 w-9 rounded-full border flex items-center justify-center transition-colors relative',
+                        showNotifications
+                          ? 'border-primary bg-primary/10 text-primary'
+                          : 'border-border text-muted-foreground hover:text-foreground hover:bg-surface'
+                      )}
+                    >
+                      <Bell className="h-4 w-4" />
+                      {/* Unread indicator */}
+                      <span className="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-primary rounded-full" />
+                    </button>
+                    
+                    <NotificationPanel 
+                      isOpen={showNotifications}
+                      onClose={() => setShowNotifications(false)}
+                    />
+                  </div>
 
                   {/* User Menu */}
                   <div className="relative">
@@ -108,6 +127,14 @@ export function AppHeader() {
                             >
                               <User className="h-4 w-4" />
                               Portfolio
+                            </Link>
+                            <Link
+                              to="/settings"
+                              className="flex items-center gap-2 px-4 py-2 text-sm text-foreground hover:bg-surface transition-colors"
+                              onClick={() => setShowUserMenu(false)}
+                            >
+                              <Settings className="h-4 w-4" />
+                              Settings
                             </Link>
                             <button
                               onClick={() => {
