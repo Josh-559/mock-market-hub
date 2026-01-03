@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Heart, MoreHorizontal, ChevronDown, ChevronUp, AlertCircle, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { Heart, MoreHorizontal, ChevronDown, ChevronUp, AlertCircle, ExternalLink } from 'lucide-react';
 import { cn } from '@/shared/utils';
 import { useAuthStore } from '@/features/auth/auth.store';
 import { mockSocket } from '@/services/mockSocket';
 import type { Comment } from '../market.types';
+import type { MarketOutcome } from '@/features/markets/markets.types';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import {
@@ -76,44 +77,66 @@ const MOCK_COMMENTS: Comment[] = [
   },
 ];
 
-interface TradeEvent {
+// Mock trade activity events
+interface TradeActivityEvent {
   id: string;
-  side: 'yes' | 'no';
-  type: 'buy' | 'sell';
-  price: number;
+  username: string;
+  avatarGradient: string;
+  action: 'bought' | 'sold';
   quantity: number;
+  side: 'Yes' | 'No';
+  outcome?: string;
+  price: number;
+  total: number;
   timestamp: number;
 }
 
+const MOCK_ACTIVITY: TradeActivityEvent[] = [
+  { id: '1', username: 'kunsect7', avatarGradient: 'from-purple-400 to-pink-500', action: 'sold', quantity: 11, side: 'Yes', outcome: 'Kevin Hassett', price: 41.0, total: 5, timestamp: Date.now() - 60000 },
+  { id: '2', username: 'annapugh', avatarGradient: 'from-pink-300 to-rose-400', action: 'sold', quantity: 14, side: 'No', outcome: 'Kevin Hassett', price: 58.0, total: 8, timestamp: Date.now() - 60000 },
+  { id: '3', username: 'axiol', avatarGradient: 'from-orange-400 to-red-500', action: 'sold', quantity: 77, side: 'Yes', outcome: 'Christopher Waller', price: 13.0, total: 10, timestamp: Date.now() - 60000 },
+  { id: '4', username: 'mariawallet', avatarGradient: 'from-red-400 to-orange-500', action: 'bought', quantity: 55, side: 'No', outcome: 'Stephen Miran', price: 99.7, total: 55, timestamp: Date.now() - 120000 },
+  { id: '5', username: 'mariawallet', avatarGradient: 'from-red-400 to-orange-500', action: 'bought', quantity: 41, side: 'No', outcome: 'Judy Shelton', price: 97.4, total: 40, timestamp: Date.now() - 120000 },
+  { id: '6', username: 'xxxxMan', avatarGradient: 'from-green-400 to-lime-500', action: 'bought', quantity: 5, side: 'Yes', outcome: 'Kevin Hassett', price: 42.0, total: 2, timestamp: Date.now() - 120000 },
+  { id: '7', username: 'andreeva', avatarGradient: 'from-amber-400 to-orange-500', action: 'bought', quantity: 4, side: 'Yes', outcome: 'Kevin Hassett', price: 42.0, total: 2, timestamp: Date.now() - 120000 },
+  { id: '8', username: 'sbimbg', avatarGradient: 'from-gray-400 to-slate-500', action: 'sold', quantity: 1843, side: 'Yes', outcome: 'Christopher Waller', price: 13.0, total: 240, timestamp: Date.now() - 180000 },
+];
+
 interface CommentsSectionProps {
   marketId: string;
+  outcomes?: MarketOutcome[];
 }
 
-export function CommentsSection({ marketId }: CommentsSectionProps) {
+export function CommentsSection({ marketId, outcomes }: CommentsSectionProps) {
   const { isAuthenticated, user } = useAuthStore();
   const [comments, setComments] = useState<Comment[]>(MOCK_COMMENTS);
   const [newComment, setNewComment] = useState('');
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'top'>('newest');
   const [holdersOnly, setHoldersOnly] = useState(false);
   const [activeTab, setActiveTab] = useState<'comments' | 'holders' | 'activity'>('comments');
-  const [trades, setTrades] = useState<TradeEvent[]>([]);
+  const [activity, setActivity] = useState<TradeActivityEvent[]>(MOCK_ACTIVITY);
+  const [activityFilter, setActivityFilter] = useState<'all' | 'bought' | 'sold'>('all');
+  const [minAmount, setMinAmount] = useState<number | null>(null);
 
   // Listen for trade activity
   useEffect(() => {
     const unsubscribe = mockSocket.on('TRADE_EXECUTED', (payload: any) => {
-      const newTrade: TradeEvent = {
+      const newTrade: TradeActivityEvent = {
         id: `${Date.now()}-${Math.random()}`,
-        side: payload.side,
-        type: payload.type,
-        price: payload.price,
+        username: user?.username || 'anonymous',
+        avatarGradient: 'from-blue-400 to-cyan-500',
+        action: payload.type,
         quantity: payload.quantity,
+        side: payload.side === 'yes' ? 'Yes' : 'No',
+        price: payload.price * 100,
+        total: payload.quantity * payload.price,
         timestamp: payload.timestamp,
       };
-      setTrades((prev) => [newTrade, ...prev].slice(0, 20));
+      setActivity((prev) => [newTrade, ...prev].slice(0, 20));
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [user]);
 
   const handleSubmitComment = (e: React.FormEvent) => {
     e.preventDefault();
@@ -154,11 +177,26 @@ export function CommentsSection({ marketId }: CommentsSectionProps) {
     return new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime();
   });
 
+  const filteredActivity = activity.filter(a => {
+    if (activityFilter !== 'all' && a.action !== activityFilter) return false;
+    if (minAmount && a.total < minAmount) return false;
+    return true;
+  });
+
   const formatPosition = (position: number) => {
     if (position >= 1000) {
       return `${(position / 1000).toFixed(1)}K`;
     }
     return position.toString();
+  };
+
+  const formatTimeAgo = (timestamp: number) => {
+    const diff = Date.now() - timestamp;
+    const minutes = Math.floor(diff / 60000);
+    if (minutes < 60) return `${minutes}m ago`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours}h ago`;
+    return `${Math.floor(hours / 24)}d ago`;
   };
 
   return (
@@ -272,54 +310,82 @@ export function CommentsSection({ marketId }: CommentsSectionProps) {
       )}
 
       {activeTab === 'activity' && (
-        <div className="space-y-1">
-          {trades.length === 0 ? (
-            <div className="text-center py-8 text-sm text-muted-foreground">
-              Waiting for trades...
-            </div>
-          ) : (
-            <>
-              <div className="grid grid-cols-4 gap-2 px-3 py-2 text-xs font-medium text-muted-foreground border-b border-border">
-                <span>Time</span>
-                <span>Side</span>
-                <span className="text-right">Price</span>
-                <span className="text-right">Qty</span>
+        <div className="space-y-4">
+          {/* Activity Filters */}
+          <div className="flex items-center gap-3">
+            <Select value={activityFilter} onValueChange={(v) => setActivityFilter(v as typeof activityFilter)}>
+              <SelectTrigger className="w-20 h-8 text-sm bg-background border-border">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All</SelectItem>
+                <SelectItem value="bought">Bought</SelectItem>
+                <SelectItem value="sold">Sold</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Select value={minAmount?.toString() || 'any'} onValueChange={(v) => setMinAmount(v === 'any' ? null : parseInt(v))}>
+              <SelectTrigger className="w-32 h-8 text-sm bg-background border-border">
+                <SelectValue placeholder="Min amount" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="any">Min amount</SelectItem>
+                <SelectItem value="10">$10+</SelectItem>
+                <SelectItem value="100">$100+</SelectItem>
+                <SelectItem value="1000">$1,000+</SelectItem>
+                <SelectItem value="10000">$10,000+</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Activity List - Polymarket Style */}
+          <div className="divide-y divide-border">
+            {filteredActivity.length === 0 ? (
+              <div className="py-8 text-center text-sm text-muted-foreground">
+                No activity matching filters
               </div>
-              <div className="max-h-64 overflow-y-auto">
-                {trades.map((trade, index) => {
-                  const isNew = index === 0;
-                  const isBuy = trade.type === 'buy';
-                  return (
-                    <div
-                      key={trade.id}
-                      className={cn(
-                        'grid grid-cols-4 gap-2 px-3 py-2 text-sm',
-                        isNew && 'animate-flash-green',
-                        'hover:bg-surface transition-colors'
-                      )}
-                    >
-                      <span className="text-muted-foreground text-xs">
-                        {new Date(trade.timestamp).toLocaleTimeString()}
-                      </span>
+            ) : (
+              filteredActivity.map((event) => (
+                <div 
+                  key={event.id}
+                  className="flex items-center justify-between py-4 hover:bg-surface/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3">
+                    {/* Avatar */}
+                    <div className={cn(
+                      'w-8 h-8 rounded-full bg-gradient-to-br flex-shrink-0',
+                      event.avatarGradient
+                    )} />
+                    
+                    {/* Trade info */}
+                    <div className="text-sm">
+                      <span className="font-medium text-foreground">{event.username}</span>
+                      <span className="text-muted-foreground"> {event.action} </span>
                       <span className={cn(
-                        'flex items-center gap-1 font-medium',
-                        trade.side === 'yes' ? 'text-yes' : 'text-no'
+                        'font-medium',
+                        event.side === 'Yes' ? 'text-yes' : 'text-no'
                       )}>
-                        {isBuy ? <ArrowUpRight className="h-3 w-3" /> : <ArrowDownRight className="h-3 w-3" />}
-                        {trade.side.toUpperCase()}
+                        {event.quantity} {event.side}
                       </span>
-                      <span className="text-right font-mono">
-                        {(trade.price * 100).toFixed(0)}¢
-                      </span>
-                      <span className="text-right font-mono text-muted-foreground">
-                        {trade.quantity}
-                      </span>
+                      {event.outcome && (
+                        <>
+                          <span className="text-muted-foreground"> for </span>
+                          <span className="font-medium text-foreground">{event.outcome}</span>
+                        </>
+                      )}
+                      <span className="text-muted-foreground"> at {event.price.toFixed(1)}¢ </span>
+                      <span className="text-muted-foreground">(${event.total})</span>
                     </div>
-                  );
-                })}
-              </div>
-            </>
-          )}
+                  </div>
+
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <span>{formatTimeAgo(event.timestamp)}</span>
+                    <ExternalLink className="h-3 w-3" />
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
         </div>
       )}
     </div>
