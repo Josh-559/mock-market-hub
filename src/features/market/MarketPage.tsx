@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Loader2, ArrowLeft, Share2, Plus, Check, Download, RefreshCw, SlidersHorizontal } from 'lucide-react';
 import { useMarketStore } from './market.store';
@@ -9,10 +9,44 @@ import { RulesSummary } from './layout/RulesSummary';
 import { CommentsSection } from './layout/CommentsSection';
 import { ResolutionBanner } from './layout/ResolutionBanner';
 import { OrderBook } from './layout/OrderBook';
+import { OutcomeOrderBook, generateMockOrderBook } from './layout/OutcomeOrderBook';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { useWatchlistStore } from '@/features/watchlist/watchlist.store';
 import { cn } from '@/shared/utils';
 import type { MarketOutcome } from '@/features/markets/markets.types';
+import type { OrderBook as OrderBookType } from './market.types';
+
+// Import market images
+import politicsImg from '@/assets/markets/politics.jpg';
+import cryptoImg from '@/assets/markets/crypto.jpg';
+import economicsImg from '@/assets/markets/economics.jpg';
+import sportsImg from '@/assets/markets/sports.jpg';
+import techImg from '@/assets/markets/tech.jpg';
+import ukraineImg from '@/assets/markets/ukraine.jpg';
+
+// Map categories/markets to images
+const MARKET_IMAGES: Record<string, string> = {
+  politics: politicsImg,
+  crypto: cryptoImg,
+  economics: economicsImg,
+  sports: sportsImg,
+  tech: techImg,
+  ukraine: ukraineImg,
+};
+
+function getMarketImage(market: { id: string; category: string; title: string }): string | undefined {
+  // Check if market title contains key words
+  const titleLower = market.title.toLowerCase();
+  if (titleLower.includes('ukraine') || titleLower.includes('ceasefire')) return ukraineImg;
+  if (titleLower.includes('bitcoin') || titleLower.includes('crypto')) return cryptoImg;
+  if (titleLower.includes('fed') || titleLower.includes('rate') || titleLower.includes('inflation')) return economicsImg;
+  if (titleLower.includes('trump') || titleLower.includes('election') || titleLower.includes('president')) return politicsImg;
+  if (titleLower.includes('nfl') || titleLower.includes('nba') || titleLower.includes('sports')) return sportsImg;
+  if (titleLower.includes('ai') || titleLower.includes('tech')) return techImg;
+  
+  // Fallback to category
+  return MARKET_IMAGES[market.category.toLowerCase()];
+}
 
 export function MarketPage() {
   const { id } = useParams<{ id: string }>();
@@ -42,6 +76,15 @@ export function MarketPage() {
     }
   }, [currentMarket, selectedOutcome]);
 
+  // Generate order book for each outcome
+  const generateOrderBookForOutcome = useMemo(() => {
+    return (outcomeId: string): OrderBookType => {
+      const outcome = currentMarket?.outcomes?.find(o => o.id === outcomeId);
+      const basePrice = outcome?.yesPrice || 0.5;
+      return generateMockOrderBook(basePrice);
+    };
+  }, [currentMarket?.outcomes]);
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
@@ -62,6 +105,7 @@ export function MarketPage() {
   const watched = id ? isWatched(id) : false;
   const isResolved = currentMarket.status === 'resolved';
   const hasOutcomes = currentMarket.outcomes && currentMarket.outcomes.length > 0;
+  const marketImage = getMarketImage(currentMarket);
 
   // Mock user position for demo
   const mockUserPosition = {
@@ -99,9 +143,9 @@ export function MarketPage() {
           <div className="flex flex-col lg:flex-row lg:items-start gap-6">
             {/* Left: Image + Title */}
             <div className="flex gap-4 flex-1">
-              {currentMarket.imageUrl ? (
+              {marketImage ? (
                 <img
-                  src={currentMarket.imageUrl}
+                  src={marketImage}
                   alt=""
                   className="h-16 w-16 rounded-xl object-cover flex-shrink-0"
                 />
@@ -189,33 +233,20 @@ export function MarketPage() {
               />
             </div>
 
-            {/* Outcomes Table */}
-            {hasOutcomes && (
-              <div className="rounded-xl border border-border bg-card overflow-hidden">
-                {/* Header */}
-                <div className="flex items-center justify-between px-5 py-3 border-b border-border">
-                  <span className="text-sm text-muted-foreground">Chance</span>
-                  <SlidersHorizontal className="h-4 w-4 text-muted-foreground" />
-                </div>
-                {/* Rows */}
-                <div className="divide-y divide-border">
-                  {sortedOutcomes.map((outcome) => (
-                    <KalshiOutcomeRow
-                      key={outcome.id}
-                      outcome={outcome}
-                      isResolved={isResolved}
-                      isWinner={currentMarket.resolvedOutcome === outcome.id}
-                      priceChange={Math.floor(Math.random() * 5) - 2} // Mock price change
-                    />
-                  ))}
-                </div>
-                {/* More markets link */}
-                <div className="px-5 py-3 border-t border-border">
-                  <Link to="/" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                    More markets
-                  </Link>
-                </div>
+            {/* Order Book for Binary Markets - under chart */}
+            {!hasOutcomes && !isResolved && currentMarket.orderBook && (
+              <div className="rounded-xl border border-border bg-card p-5">
+                <h3 className="text-sm font-medium text-foreground mb-4">Order Book</h3>
+                <OrderBook orderBook={currentMarket.orderBook} />
               </div>
+            )}
+
+            {/* Per-outcome Order Books for Multi-outcome Markets */}
+            {hasOutcomes && !isResolved && (
+              <OutcomeOrderBook 
+                outcomes={sortedOutcomes}
+                generateOrderBook={generateOrderBookForOutcome}
+              />
             )}
 
             {/* Binary Outcome Section */}
@@ -257,7 +288,10 @@ export function MarketPage() {
             {/* Comments Section */}
             <div className="rounded-xl border border-border bg-card">
               <div className="p-5">
-                <CommentsSection marketId={currentMarket.id} />
+                <CommentsSection 
+                  marketId={currentMarket.id} 
+                  outcomes={currentMarket.outcomes}
+                />
               </div>
             </div>
           </div>
@@ -269,13 +303,14 @@ export function MarketPage() {
                 yesPrice={tradePanelProps.yesPrice}
                 noPrice={tradePanelProps.noPrice}
                 liquidity={currentMarket.liquidity}
-                orderBook={currentMarket.orderBook}
+                orderBook={hasOutcomes ? undefined : currentMarket.orderBook}
                 selectedOutcome={selectedOutcome ? { 
                   id: selectedOutcome.id, 
                   label: selectedOutcome.label,
                   imageUrl: selectedOutcome.imageUrl 
                 } : null}
                 priceFlash={priceFlash}
+                showOrderBook={false}
               />
             )}
             {isResolved && (

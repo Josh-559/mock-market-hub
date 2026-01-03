@@ -5,6 +5,7 @@ import { AuthPage } from '@/features/auth/AuthPage';
 import { PortfolioPage } from '@/features/portfolio/PortfolioPage';
 import { LeaderboardPage } from '@/features/leaderboard/LeaderboardPage';
 import { TraderProfilePage } from '@/features/leaderboard/TraderProfilePage';
+import { SettingsPage } from '@/features/settings/SettingsPage';
 import NotFound from '@/pages/NotFound';
 
 export function AppRouter() {
@@ -17,6 +18,7 @@ export function AppRouter() {
         <Route path="/portfolio" element={<PortfolioPage />} />
         <Route path="/leaderboard" element={<LeaderboardPage />} />
         <Route path="/trader/:traderId" element={<TraderProfilePage />} />
+        <Route path="/settings" element={<SettingsPage />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
