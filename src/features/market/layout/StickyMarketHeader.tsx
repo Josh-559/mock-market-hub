@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
-import type { MarketDetail } from '../market.types';
-import { cn } from '@/shared/utils';
+import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import type { MarketDetail } from "../market.types";
+import { cn } from "@/shared/utils";
 
 interface StickyMarketHeaderProps {
   market: MarketDetail;
@@ -22,7 +22,7 @@ export function StickyMarketHeader({ market }: StickyMarketHeaderProps) {
       ([entry]) => {
         setIsSticky(!entry.isIntersecting);
       },
-      { threshold: 0, rootMargin: '-64px 0px 0px 0px' }
+      { threshold: 0, rootMargin: "-24px 0px 0px 0px" }
     );
 
     observer.observe(sentinel);
@@ -40,10 +40,10 @@ export function StickyMarketHeader({ market }: StickyMarketHeaderProps) {
       <div
         ref={headerRef}
         className={cn(
-          'fixed top-16 left-0 right-0 z-40 transition-all duration-300 ease-out',
+          "fixed top-15 left-0 right-0 z-40 transition-all duration-300 ease-out",
           isSticky
-            ? 'opacity-100 translate-y-0 border-b border-border bg-background/95 backdrop-blur-sm shadow-sm'
-            : 'opacity-0 -translate-y-full pointer-events-none'
+            ? "opacity-100 translate-y-0 border-b border-border bg-background/95 backdrop-blur-sm shadow-sm"
+            : "opacity-0 -translate-y-full pointer-events-none"
         )}
       >
         <div className="container py-3">
@@ -54,7 +54,7 @@ export function StickyMarketHeader({ market }: StickyMarketHeaderProps) {
             >
               <ArrowLeft className="h-4 w-4" />
             </Link>
-            
+
             {market.imageUrl ? (
               <img
                 src={market.imageUrl}
@@ -63,7 +63,9 @@ export function StickyMarketHeader({ market }: StickyMarketHeaderProps) {
               />
             ) : (
               <div className="h-8 w-8 rounded-lg bg-surface flex-shrink-0 flex items-center justify-center">
-                <span className="text-sm font-medium">{market.title.charAt(0)}</span>
+                <span className="text-sm font-medium">
+                  {market.title.charAt(0)}
+                </span>
               </div>
             )}
 
@@ -72,7 +74,9 @@ export function StickyMarketHeader({ market }: StickyMarketHeaderProps) {
             </h1>
 
             <div className="flex items-center gap-2 flex-shrink-0">
-              <span className="text-lg font-bold text-foreground">{yesPercent}%</span>
+              <span className="text-lg font-bold text-foreground">
+                {yesPercent}%
+              </span>
               <span className="text-xs text-muted-foreground">Yes</span>
             </div>
           </div>
