@@ -12,7 +12,7 @@
     "noPrice": 0.28,
     "createdAt": "2025-06-15T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://cryptologos.cc/logos/bitcoin-btc-logo.png"
   },
   {
     "id": "us-election-2026",
@@ -27,7 +27,7 @@
     "noPrice": 0.48,
     "createdAt": "2025-01-01T00:00:00Z",
     "endsAt": "2026-11-15T23:59:59Z",
-    "imageUrl": "/placeholder.svg",
+    "imageUrl": "https://cdn.freebiesupply.com/logos/large/2x/united-states-of-america-logo-png-transparent.png",
     "outcomes": [
       {
         "id": "republicans",
@@ -65,7 +65,7 @@
     "noPrice": 0.32,
     "createdAt": "2025-03-15T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg",
+    "imageUrl": "https://img.freepik.com/free-vector/illustration-uk-flag_53876-18166.jpg?semt=ais_user_personalization&w=740&q=80",
     "outcomes": [
       {
         "id": "starmer",
@@ -110,7 +110,7 @@
     "noPrice": 0.55,
     "createdAt": "2025-11-01T00:00:00Z",
     "endsAt": "2026-03-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgt4_zRGoIe3ApEHjcY6NGluszxnfI3vzOldh4MCA2EiR1PLn2X4vwg_ovi9Bf9Ng5LBqtwbTcgmOcSeRQA0Kk6W5hpIAm22714B6diNqpkzd523d25BT2b7W-9xrjao1-0cBrbc4qA-so0k0qNHZV7awYUKfEz6CdsDCaFR6Su_l2SD96V3XL6a1M2jkU/s400/547528661_122230872818255308_8474042282474995184_n.jpg"
   },
   {
     "id": "spacex-mars-2026",
@@ -125,7 +125,7 @@
     "noPrice": 0.88,
     "createdAt": "2025-08-20T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMRrjxgNg8qaHqoQ5JBf_7o23NgV3pa-tunQ&s"
   },
   {
     "id": "ai-regulation-2026",
@@ -140,7 +140,7 @@
     "noPrice": 0.62,
     "createdAt": "2025-09-10T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://www.logo.wine/a/logo/SpaceX/SpaceX-White-Dark-Background-Logo.wine.svg"
   },
   {
     "id": "nfl-superbowl-chiefs",
@@ -155,7 +155,7 @@
     "noPrice": 0.76,
     "createdAt": "2025-10-01T00:00:00Z",
     "endsAt": "2026-02-15T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/a/a2/National_Football_League_logo.svg/250px-National_Football_League_logo.svg.png"
   },
   {
     "id": "superbowl-winner-2026",
@@ -170,7 +170,7 @@
     "noPrice": 0.76,
     "createdAt": "2025-09-01T00:00:00Z",
     "endsAt": "2026-02-15T23:59:59Z",
-    "imageUrl": "/placeholder.svg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/a/a2/National_Football_League_logo.svg/250px-National_Football_League_logo.svg.png",
     "outcomes": [
       {
         "id": "chiefs",
@@ -229,7 +229,7 @@
     "noPrice": 0.69,
     "createdAt": "2025-07-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://i.pinimg.com/736x/60/6b/c0/606bc0717982547e555a514b479365a0.jpg"
   },
   {
     "id": "eth-merge-staking",
@@ -244,7 +244,7 @@
     "noPrice": 0.44,
     "createdAt": "2025-11-15T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://cryptologos.cc/logos/ethereum-eth-logo.png"
   },
   {
     "id": "recession-2026",
@@ -259,7 +259,7 @@
     "noPrice": 0.71,
     "createdAt": "2025-06-01T00:00:00Z",
     "endsAt": "2027-06-30T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://cdn.freebiesupply.com/logos/large/2x/united-states-of-america-logo-png-transparent.png"
   },
   {
     "id": "tesla-fsd-2026",
@@ -274,7 +274,7 @@
     "noPrice": 0.78,
     "createdAt": "2025-04-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Tesla_logo.png/500px-Tesla_logo.png"
   },
   {
     "id": "openai-gpt5-2026",
@@ -289,7 +289,7 @@
     "noPrice": 0.22,
     "createdAt": "2025-05-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://us1.discourse-cdn.com/openai1/original/4X/3/2/1/321a1ba297482d3d4060d114860de1aa5610f8a9.png"
   },
   {
     "id": "btc-etf-outflows",
@@ -304,7 +304,7 @@
     "noPrice": 0.65,
     "createdAt": "2025-10-01T00:00:00Z",
     "endsAt": "2026-03-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://cryptologos.cc/logos/bitcoin-btc-logo.png"
   },
   {
     "id": "solana-eth-flip",
@@ -319,12 +319,12 @@
     "noPrice": 0.92,
     "createdAt": "2025-08-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/en/b/b9/Solana_logo.png"
   },
   {
     "id": "inflation-under-3",
     "title": "US inflation to stay under 3% for all of 2026?",
-    "description": "Will the US CPI year-over-year remain below 3% for every month of 2026?",
+    "description": "Will the NG CPI year-over-year remain below 3% for every month of 2026?",
     "category": "economics",
     "status": "active",
     "type": "binary",
@@ -334,12 +334,12 @@
     "noPrice": 0.38,
     "createdAt": "2025-07-15T00:00:00Z",
     "endsAt": "2027-01-15T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://img.freepik.com/free-vector/illustration-nigeria-flag_53876-27148.jpg?semt=ais_hybrid&w=740&q=80"
   },
   {
     "id": "unemployment-above-5",
-    "title": "US unemployment to exceed 5% in 2026?",
-    "description": "Will the US unemployment rate exceed 5% at any point during 2026?",
+    "title": "NG unemployment to exceed 5% in 2026?",
+    "description": "Will the NG unemployment rate exceed 5% at any point during 2026?",
     "category": "economics",
     "status": "active",
     "type": "binary",
@@ -349,12 +349,12 @@
     "noPrice": 0.72,
     "createdAt": "2025-09-01T00:00:00Z",
     "endsAt": "2027-01-15T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://img.freepik.com/free-vector/illustration-nigeria-flag_53876-27148.jpg?semt=ais_hybrid&w=740&q=80"
   },
   {
-    "id": "sp500-6000",
-    "title": "S&P 500 to reach 6000 in 2026?",
-    "description": "Will the S&P 500 index close at or above 6000 at any point during 2026?",
+    "id": "DANGECM",
+    "title": "DANGECM to reach 6000 in 2026?",
+    "description": "Will the DANGECM index close at or above 6000 at any point during 2026?",
     "category": "economics",
     "status": "active",
     "type": "binary",
@@ -364,7 +364,7 @@
     "noPrice": 0.29,
     "createdAt": "2025-06-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXqt1dnr1w880KkUuMrs9T3jYl837NXRSyzg&s"
   },
   {
     "id": "trump-conviction-appeal",
@@ -379,7 +379,7 @@
     "noPrice": 0.58,
     "createdAt": "2025-05-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://cdn.freebiesupply.com/logos/large/2x/united-states-of-america-logo-png-transparent.png"
   },
   {
     "id": "ukraine-ceasefire",
@@ -394,7 +394,7 @@
     "noPrice": 0.65,
     "createdAt": "2025-03-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lesser_Coat_of_Arms_of_Ukraine.svg/330px-Lesser_Coat_of_Arms_of_Ukraine.svg.png?20220118191201"
   },
   {
     "id": "china-taiwan-2026",
@@ -409,7 +409,7 @@
     "noPrice": 0.95,
     "createdAt": "2025-01-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://cdn.freebiesupply.com/logos/thumbs/2x/china-2-logo.png"
   },
   {
     "id": "nba-finals-2026",
@@ -424,7 +424,7 @@
     "noPrice": 0.78,
     "createdAt": "2025-10-15T00:00:00Z",
     "endsAt": "2026-06-30T23:59:59Z",
-    "imageUrl": "/placeholder.svg",
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTu1iwFhBT8ANLSreOSR73fAN4gNU1x2p0-LQ&s",
     "outcomes": [
       {
         "id": "celtics",
@@ -476,7 +476,7 @@
     "noPrice": 0.82,
     "createdAt": "2025-01-01T00:00:00Z",
     "endsAt": "2026-07-20T23:59:59Z",
-    "imageUrl": "/placeholder.svg",
+    "imageUrl": "https://static.vecteezy.com/system/resources/previews/014/470/969/non_2x/fifa-official-logo-white-and-blue-symbol-design-abstract-illustration-free-vector.jpg",
     "outcomes": [
       {
         "id": "france",
@@ -542,7 +542,7 @@
     "noPrice": 0.72,
     "createdAt": "2025-12-01T00:00:00Z",
     "endsAt": "2026-07-15T23:59:59Z",
-    "imageUrl": "/placeholder.svg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/en/thumb/b/b9/Wimbledon.svg/250px-Wimbledon.svg.png",
     "outcomes": [
       {
         "id": "sinner",
@@ -587,7 +587,7 @@
     "noPrice": 0.42,
     "createdAt": "2025-08-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://cdn.worldvectorlogo.com/logos/nvidia-image-logo.svg"
   },
   {
     "id": "meta-layoffs-2026",
@@ -602,7 +602,7 @@
     "noPrice": 0.78,
     "createdAt": "2025-11-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://cdn.pixabay.com/photo/2021/12/14/22/29/meta-6871457_1280.png"
   },
   {
     "id": "google-antitrust-breakup",
@@ -617,7 +617,7 @@
     "noPrice": 0.85,
     "createdAt": "2025-09-15T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/500px-Google_%22G%22_logo.svg.png"
   },
   {
     "id": "amazon-drone-delivery",
@@ -632,7 +632,7 @@
     "noPrice": 0.68,
     "createdAt": "2025-07-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://pngimg.com/d/amazon_PNG27.png"
   },
   {
     "id": "xrp-sec-settlement",
@@ -647,7 +647,7 @@
     "noPrice": 0.25,
     "createdAt": "2025-06-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ050STDN9zDIEbLe6aKtla6JcdqB5NjBpP7g&s"
   },
   {
     "id": "dogecoin-1-dollar",
@@ -662,7 +662,7 @@
     "noPrice": 0.82,
     "createdAt": "2025-10-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/en/d/d0/Dogecoin_Logo.png"
   },
   {
     "id": "btc-halving-price",
@@ -677,7 +677,7 @@
     "noPrice": 0.18,
     "createdAt": "2025-11-01T00:00:00Z",
     "endsAt": "2028-10-15T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Bitcoin.svg/250px-Bitcoin.svg.png"
   },
   {
     "id": "ecb-rate-cut-2026",
@@ -692,7 +692,7 @@
     "noPrice": 0.45,
     "createdAt": "2025-08-15T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cb/Logo_European_Central_Bank.svg/500px-Logo_European_Central_Bank.svg.png"
   },
   {
     "id": "japan-rate-hike",
@@ -707,7 +707,7 @@
     "noPrice": 0.58,
     "createdAt": "2025-09-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Flag_of_Japan.svg/1280px-Flag_of_Japan.svg.png"
   },
   {
     "id": "housing-crash-2026",
@@ -722,7 +722,7 @@
     "noPrice": 0.88,
     "createdAt": "2025-07-01T00:00:00Z",
     "endsAt": "2027-02-28T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://t4.ftcdn.net/jpg/06/16/12/61/360_F_616126121_mrm5owYNMcio51TsqSisoL6T4NfPHV95.jpg"
   },
   {
     "id": "oil-100-barrel",
@@ -737,7 +737,7 @@
     "noPrice": 0.62,
     "createdAt": "2025-10-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://static.vecteezy.com/system/resources/thumbnails/038/107/712/small/engine-oil-icon-logo-design-template-vector.jpg"
   },
   {
     "id": "france-election-2027",
@@ -752,7 +752,7 @@
     "noPrice": 0.65,
     "createdAt": "2025-06-01T00:00:00Z",
     "endsAt": "2027-05-15T23:59:59Z",
-    "imageUrl": "/placeholder.svg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/1280px-Flag_of_France.svg.png",
     "outcomes": [
       {
         "id": "macron-successor",
@@ -797,7 +797,7 @@
     "noPrice": 0.42,
     "createdAt": "2025-08-01T00:00:00Z",
     "endsAt": "2027-03-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://t4.ftcdn.net/jpg/07/72/22/61/360_F_772226143_BiDGUmtZ0xZ2UYBIcm9EjkTVH9mvbYss.jpg"
   },
   {
     "id": "elon-twitter-ceo",
@@ -812,7 +812,7 @@
     "noPrice": 0.35,
     "createdAt": "2025-05-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://hips.hearstapps.com/hmg-prod/images/elon-musk-gettyimages-2147789844-web-675b2c17301ea.jpg?crop=0.6666666666666666xw:1xh;center,top&resize=640:*"
   },
   {
     "id": "spotify-profitable-2026",
@@ -827,7 +827,7 @@
     "noPrice": 0.28,
     "createdAt": "2025-11-01T00:00:00Z",
     "endsAt": "2027-02-28T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Spotify_App_Logo.svg/960px-Spotify_App_Logo.svg.png"
   },
   {
     "id": "spacex-ipo-2026",
@@ -842,7 +842,7 @@
     "noPrice": 0.85,
     "createdAt": "2025-04-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMRrjxgNg8qaHqoQ5JBf_7o23NgV3pa-tunQ&s"
   },
   {
     "id": "climate-15-degrees",
@@ -857,7 +857,7 @@
     "noPrice": 0.32,
     "createdAt": "2025-06-01T00:00:00Z",
     "endsAt": "2027-02-28T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://www.nicepng.com/png/detail/389-3898899_globe-transparent-background-png-global-logo.png"
   },
   {
     "id": "fusion-breakthrough",
@@ -872,7 +872,7 @@
     "noPrice": 0.75,
     "createdAt": "2025-09-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://static.vecteezy.com/system/resources/thumbnails/007/264/787/small_2x/business-finance-logo-template-illustration-free-vector.jpg"
   },
   {
     "id": "covid-new-variant",
@@ -887,7 +887,7 @@
     "noPrice": 0.92,
     "createdAt": "2025-10-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://www.chclubbock.org/wp-content/uploads/2020/11/Covid19.png"
   },
   {
     "id": "artemis-moon-landing",
@@ -902,7 +902,7 @@
     "noPrice": 0.78,
     "createdAt": "2025-03-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT1jnGO-IXMZU6UjdqXEydLxwt5ChYgx-Ii1Q&s"
   },
   {
     "id": "champions-league-2026",
@@ -917,7 +917,7 @@
     "noPrice": 0.78,
     "createdAt": "2025-09-01T00:00:00Z",
     "endsAt": "2026-06-01T23:59:59Z",
-    "imageUrl": "/placeholder.svg",
+    "imageUrl": "https://static.vecteezy.com/system/resources/previews/010/994/306/non_2x/champions-league-logo-symbol-white-design-football-european-countries-football-teams-illustration-with-blue-background-free-vector.jpg",
     "outcomes": [
       {
         "id": "real-madrid",
@@ -969,7 +969,7 @@
     "noPrice": 0.65,
     "createdAt": "2025-11-01T00:00:00Z",
     "endsAt": "2026-12-15T23:59:59Z",
-    "imageUrl": "/placeholder.svg",
+    "imageUrl": "https://creativereview.imgix.net/uploads/2017/11/F1-logo-red-on-white.png?auto=compress,format&crop=faces,entropy,edges&fit=crop&q=60&w=1200&h=750",
     "outcomes": [
       {
         "id": "verstappen",
@@ -1021,7 +1021,7 @@
     "noPrice": 0.58,
     "createdAt": "2025-10-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://static.vecteezy.com/system/resources/previews/041/942/904/non_2x/boxing-logo-white-background-logos-silhouette-6-vector.jpg"
   },
   {
     "id": "oscar-best-picture-2026",
@@ -1036,7 +1036,7 @@
     "noPrice": 0.75,
     "createdAt": "2025-12-01T00:00:00Z",
     "endsAt": "2026-03-15T23:59:59Z",
-    "imageUrl": "/placeholder.svg",
+    "imageUrl": "https://cdn.aptoide.com/imgs/b/c/8/bc87071060372ad5bbd0ee5470c05dda_icon.jpg",
     "outcomes": [
       {
         "id": "anora",
@@ -1081,7 +1081,7 @@
     "noPrice": 0.72,
     "createdAt": "2025-11-15T00:00:00Z",
     "endsAt": "2026-02-10T23:59:59Z",
-    "imageUrl": "/placeholder.svg",
+    "imageUrl": "https://images.seeklogo.com/logo-png/33/1/55th-grammy-awards-logo-png_seeklogo-330581.png",
     "outcomes": [
       {
         "id": "beyonce",
@@ -1126,7 +1126,7 @@
     "noPrice": 0.48,
     "createdAt": "2025-01-15T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://img.freepik.com/premium-psd/tiktok-logo_1131634-487.jpg?semt=ais_hybrid&w=740&q=80"
   },
   {
     "id": "apple-ai-iphone",
@@ -1141,6 +1141,6 @@
     "noPrice": 0.32,
     "createdAt": "2025-09-01T00:00:00Z",
     "endsAt": "2026-12-31T23:59:59Z",
-    "imageUrl": "/placeholder.svg"
+    "imageUrl": "https://i.pinimg.com/736x/60/6b/c0/606bc0717982547e555a514b479365a0.jpg"
   }
 ]

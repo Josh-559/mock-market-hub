@@ -95,7 +95,7 @@ export function MarketPage() {
 
   // Selected outcome for trade panel (multi-outcome markets)
   const [selectedOutcome, setSelectedOutcome] = useState<MarketOutcome | null>(
-    null
+    null,
   );
 
   useEffect(() => {
@@ -154,7 +154,7 @@ export function MarketPage() {
   const isResolved = currentMarket.status === "resolved";
   const hasOutcomes =
     currentMarket.outcomes && currentMarket.outcomes.length > 0;
-  const marketImage = getMarketImage(currentMarket);
+  const marketImage = currentMarket.imageUrl;
 
   // Mock user position for demo
   const mockUserPosition = {
@@ -184,7 +184,7 @@ export function MarketPage() {
           <div className="lg:col-span-3 space-y-6">
             {/* Market Header - Kalshi Style */}
             <div className="border-b border-border">
-              <div className="py-0">
+              <div className="py-0 pb-5">
                 <div className="flex flex-col lg:flex-row lg:items-start gap-6">
                   {/* Left: Image + Title */}
                   <div className="flex gap-4 flex-1">
@@ -231,7 +231,7 @@ export function MarketPage() {
                         "h-9 w-9 rounded-lg border flex items-center justify-center transition-colors",
                         watched
                           ? "border-primary bg-primary text-primary-foreground"
-                          : "border-border text-muted-foreground hover:text-foreground hover:bg-surface"
+                          : "border-border text-muted-foreground hover:text-foreground hover:bg-surface",
                       )}
                     >
                       {watched ? (

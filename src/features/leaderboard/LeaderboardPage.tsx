@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Trophy, TrendingUp, Target, Medal } from 'lucide-react';
-import { AppHeader } from '@/components/layout/AppHeader';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Trophy, TrendingUp, Target, Medal } from "lucide-react";
+import { AppHeader } from "@/components/layout/AppHeader";
 import {
   Table,
   TableBody,
@@ -9,19 +9,19 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { cn } from '@/shared/utils';
-import type { Trader } from './leaderboard.types';
-import leaderboardData from '@/mocks/leaderboard.json';
+} from "@/components/ui/table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/shared/utils";
+import type { Trader } from "./leaderboard.types";
+import leaderboardData from "@/mocks/leaderboard.json";
 
-type TimePeriod = 'daily' | 'weekly' | 'monthly' | 'all-time';
+type TimePeriod = "daily" | "weekly" | "monthly" | "all-time";
 
 export function LeaderboardPage() {
   const [traders, setTraders] = useState<Trader[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [sortBy, setSortBy] = useState<'profit' | 'winRate'>('profit');
-  const [timePeriod, setTimePeriod] = useState<TimePeriod>('all-time');
+  const [sortBy, setSortBy] = useState<"profit" | "winRate">("profit");
+  const [timePeriod, setTimePeriod] = useState<TimePeriod>("all-time");
 
   useEffect(() => {
     setTimeout(() => {
@@ -33,13 +33,13 @@ export function LeaderboardPage() {
   // Simulate different data for time periods
   const getFilteredTraders = () => {
     const multipliers: Record<TimePeriod, number> = {
-      'daily': 0.05,
-      'weekly': 0.15,
-      'monthly': 0.4,
-      'all-time': 1,
+      daily: 0.05,
+      weekly: 0.15,
+      monthly: 0.4,
+      "all-time": 1,
     };
-    
-    return traders.map(trader => ({
+
+    return traders.map((trader) => ({
       ...trader,
       totalProfit: trader.totalProfit * multipliers[timePeriod],
       totalTrades: Math.floor(trader.totalTrades * multipliers[timePeriod]),
@@ -50,7 +50,7 @@ export function LeaderboardPage() {
   const filteredTraders = getFilteredTraders();
 
   const sortedTraders = [...filteredTraders].sort((a, b) => {
-    if (sortBy === 'profit') {
+    if (sortBy === "profit") {
       return b.totalProfit - a.totalProfit;
     }
     return b.winRate - a.winRate;
@@ -86,9 +86,9 @@ export function LeaderboardPage() {
   };
 
   const formatProfit = (profit: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
+    return new Intl.NumberFormat("en-NG", {
+      style: "currency",
+      currency: "NGN",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(profit);
@@ -96,21 +96,21 @@ export function LeaderboardPage() {
 
   const getAvatarGradient = (username: string) => {
     const gradients = [
-      'from-orange-400 to-pink-500',
-      'from-green-400 to-cyan-500',
-      'from-purple-400 to-pink-500',
-      'from-yellow-400 to-orange-500',
-      'from-blue-400 to-purple-500',
+      "from-orange-400 to-pink-500",
+      "from-green-400 to-cyan-500",
+      "from-purple-400 to-pink-500",
+      "from-yellow-400 to-orange-500",
+      "from-blue-400 to-purple-500",
     ];
     const index = username.charCodeAt(0) % gradients.length;
     return gradients[index];
   };
 
   const timePeriods: { value: TimePeriod; label: string }[] = [
-    { value: 'daily', label: 'Today' },
-    { value: 'weekly', label: 'This Week' },
-    { value: 'monthly', label: 'This Month' },
-    { value: 'all-time', label: 'All Time' },
+    { value: "daily", label: "Today" },
+    { value: "weekly", label: "This Week" },
+    { value: "monthly", label: "This Month" },
+    { value: "all-time", label: "All Time" },
   ];
 
   return (
@@ -120,8 +120,12 @@ export function LeaderboardPage() {
       <main className="max-w-4xl mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-2xl font-semibold text-foreground mb-2">Leaderboard</h1>
-          <p className="text-muted-foreground">Top traders ranked by performance</p>
+          <h1 className="text-2xl font-semibold text-foreground mb-2">
+            Leaderboard
+          </h1>
+          <p className="text-muted-foreground">
+            Top traders ranked by performance
+          </p>
         </div>
 
         {/* Time Period Filter */}
@@ -131,10 +135,10 @@ export function LeaderboardPage() {
               key={period.value}
               onClick={() => setTimePeriod(period.value)}
               className={cn(
-                'px-4 py-2 rounded-full text-sm font-medium transition-colors',
+                "px-4 py-2 rounded-full text-sm font-medium transition-colors",
                 timePeriod === period.value
-                  ? 'bg-foreground text-background'
-                  : 'bg-surface border border-border text-muted-foreground hover:text-foreground hover:bg-muted'
+                  ? "bg-foreground text-background"
+                  : "bg-surface border border-border text-muted-foreground hover:text-foreground hover:bg-muted",
               )}
             >
               {period.label}
@@ -150,7 +154,9 @@ export function LeaderboardPage() {
               <span>Top Profit</span>
             </div>
             <p className="text-xl font-semibold text-success">
-              {sortedTraders[0] ? formatProfit(sortedTraders[0].totalProfit) : '-'}
+              {sortedTraders[0]
+                ? formatProfit(sortedTraders[0].totalProfit)
+                : "-"}
             </p>
           </div>
           <div className="bg-card border border-border rounded-lg p-4">
@@ -161,7 +167,7 @@ export function LeaderboardPage() {
             <p className="text-xl font-semibold text-foreground">
               {traders.length > 0
                 ? `${Math.max(...traders.map((t) => t.winRate)).toFixed(1)}%`
-                : '-'}
+                : "-"}
             </p>
           </div>
           <div className="bg-card border border-border rounded-lg p-4">
@@ -169,13 +175,18 @@ export function LeaderboardPage() {
               <TrendingUp className="w-4 h-4" />
               <span>Total Traders</span>
             </div>
-            <p className="text-xl font-semibold text-foreground">{traders.length}</p>
+            <p className="text-xl font-semibold text-foreground">
+              {traders.length}
+            </p>
           </div>
         </div>
 
         {/* Leaderboard Table */}
         <div className="bg-card border border-border rounded-lg overflow-hidden">
-          <Tabs value={sortBy} onValueChange={(v) => setSortBy(v as 'profit' | 'winRate')}>
+          <Tabs
+            value={sortBy}
+            onValueChange={(v) => setSortBy(v as "profit" | "winRate")}
+          >
             <div className="border-b border-border px-4">
               <TabsList className="bg-transparent h-12">
                 <TabsTrigger
@@ -194,19 +205,19 @@ export function LeaderboardPage() {
             </div>
 
             <TabsContent value="profit" className="mt-0">
-              <LeaderboardTable 
-                traders={sortedTraders} 
-                isLoading={isLoading} 
-                getRankBadge={getRankBadge} 
+              <LeaderboardTable
+                traders={sortedTraders}
+                isLoading={isLoading}
+                getRankBadge={getRankBadge}
                 formatProfit={formatProfit}
                 getAvatarGradient={getAvatarGradient}
               />
             </TabsContent>
             <TabsContent value="winRate" className="mt-0">
-              <LeaderboardTable 
-                traders={sortedTraders} 
-                isLoading={isLoading} 
-                getRankBadge={getRankBadge} 
+              <LeaderboardTable
+                traders={sortedTraders}
+                isLoading={isLoading}
+                getRankBadge={getRankBadge}
                 formatProfit={formatProfit}
                 getAvatarGradient={getAvatarGradient}
               />
@@ -226,7 +237,13 @@ interface LeaderboardTableProps {
   getAvatarGradient: (username: string) => string;
 }
 
-function LeaderboardTable({ traders, isLoading, getRankBadge, formatProfit, getAvatarGradient }: LeaderboardTableProps) {
+function LeaderboardTable({
+  traders,
+  isLoading,
+  getRankBadge,
+  formatProfit,
+  getAvatarGradient,
+}: LeaderboardTableProps) {
   if (isLoading) {
     return (
       <div className="p-8 text-center text-muted-foreground">
@@ -243,7 +260,9 @@ function LeaderboardTable({ traders, isLoading, getRankBadge, formatProfit, getA
           <TableHead>Trader</TableHead>
           <TableHead className="text-right">Profit</TableHead>
           <TableHead className="text-right">Win Rate</TableHead>
-          <TableHead className="text-right hidden sm:table-cell">Trades</TableHead>
+          <TableHead className="text-right hidden sm:table-cell">
+            Trades
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -251,21 +270,27 @@ function LeaderboardTable({ traders, isLoading, getRankBadge, formatProfit, getA
           <TableRow key={trader.id} className="hover:bg-muted/50">
             <TableCell>{getRankBadge(index + 1)}</TableCell>
             <TableCell>
-              <Link 
+              <Link
                 to={`/trader/${trader.id}`}
                 className="flex items-center gap-3 hover:opacity-80 transition-opacity"
               >
-                <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${getAvatarGradient(trader.username)}`} />
+                <div
+                  className={`w-8 h-8 rounded-full bg-gradient-to-br ${getAvatarGradient(trader.username)}`}
+                />
                 <span className="font-medium text-foreground hover:text-primary transition-colors">
                   {trader.username}
                 </span>
               </Link>
             </TableCell>
             <TableCell className="text-right">
-              <span className="text-success font-medium">{formatProfit(trader.totalProfit)}</span>
+              <span className="text-success font-medium">
+                {formatProfit(trader.totalProfit)}
+              </span>
             </TableCell>
             <TableCell className="text-right">
-              <span className="text-foreground">{trader.winRate.toFixed(1)}%</span>
+              <span className="text-foreground">
+                {trader.winRate.toFixed(1)}%
+              </span>
             </TableCell>
             <TableCell className="text-right hidden sm:table-cell">
               <span className="text-muted-foreground">
