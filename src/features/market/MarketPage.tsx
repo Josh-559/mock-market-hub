@@ -208,6 +208,14 @@ export function MarketPage() {
                       <h1 className="text-xl font-bold text-foreground">
                         {currentMarket.title}
                       </h1>
+                      <p className="text-[11px] text-muted-foreground flex items-center gap-2">
+                        Sponsored By:{" "}
+                        <img
+                          src="https://cdn.thenationonlineng.net/wp-content/uploads/2023/04/10070230/Tekedia-Logo.png"
+                          alt=""
+                          className="w-18"
+                        />
+                      </p>
                     </div>
                   </div>
 
@@ -312,6 +320,10 @@ export function MarketPage() {
               </div>
             )}
 
+            {/* ========================= */}
+            {/* ========================= */}
+            {/* ========================= */}
+            {/* ========================= */}
             {/* Rules Summary */}
             <RulesSummary
               title={currentMarket.title}
