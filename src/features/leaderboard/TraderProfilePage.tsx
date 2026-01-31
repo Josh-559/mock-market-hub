@@ -1,8 +1,15 @@
-import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Trophy, Target, TrendingUp, TrendingDown, Calendar } from 'lucide-react';
-import { AppHeader } from '@/components/layout/AppHeader';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import {
+  ArrowLeft,
+  Trophy,
+  Target,
+  TrendingUp,
+  TrendingDown,
+  Calendar,
+} from "lucide-react";
+import { AppHeader } from "@/components/layout/AppHeader";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Table,
   TableBody,
@@ -10,16 +17,16 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table';
-import type { Trader } from './leaderboard.types';
-import leaderboardData from '@/mocks/leaderboard.json';
-import dayjs from 'dayjs';
+} from "@/components/ui/table";
+import type { Trader } from "./leaderboard.types";
+import leaderboardData from "@/mocks/leaderboard.json";
+import dayjs from "dayjs";
 
 interface TraderPosition {
   id: string;
   marketId: string;
   marketTitle: string;
-  side: 'yes' | 'no';
+  side: "yes" | "no";
   shares: number;
   avgPrice: number;
   currentPrice: number;
@@ -30,8 +37,8 @@ interface TraderPosition {
 interface TraderTrade {
   id: string;
   marketTitle: string;
-  side: 'yes' | 'no';
-  type: 'buy' | 'sell';
+  side: "yes" | "no";
+  type: "buy" | "sell";
   price: number;
   quantity: number;
   timestamp: string;
@@ -40,10 +47,10 @@ interface TraderTrade {
 // Mock trader positions and trades
 const MOCK_POSITIONS: TraderPosition[] = [
   {
-    id: '1',
-    marketId: 'btc-100k-2026',
-    marketTitle: 'Will Bitcoin reach $100k in 2026?',
-    side: 'yes',
+    id: "1",
+    marketId: "btc-100k-2026",
+    marketTitle: "Will Bitcoin reach ₦100k in 2026?",
+    side: "yes",
     shares: 1200,
     avgPrice: 0.65,
     currentPrice: 0.72,
@@ -51,10 +58,10 @@ const MOCK_POSITIONS: TraderPosition[] = [
     pnlPercent: 10.77,
   },
   {
-    id: '2',
-    marketId: 'fed-rate-cut-q1',
-    marketTitle: 'Fed rate cut in Q1 2026?',
-    side: 'no',
+    id: "2",
+    marketId: "fed-rate-cut-q1",
+    marketTitle: "Fed rate cut in Q1 2026?",
+    side: "no",
     shares: 800,
     avgPrice: 0.48,
     currentPrice: 0.52,
@@ -65,31 +72,31 @@ const MOCK_POSITIONS: TraderPosition[] = [
 
 const MOCK_TRADES: TraderTrade[] = [
   {
-    id: '1',
-    marketTitle: 'Will Bitcoin reach $100k in 2026?',
-    side: 'yes',
-    type: 'buy',
+    id: "1",
+    marketTitle: "Will Bitcoin reach ₦100k in 2026?",
+    side: "yes",
+    type: "buy",
     price: 0.65,
     quantity: 1200,
-    timestamp: '2025-12-30T14:30:00Z',
+    timestamp: "2025-12-30T14:30:00Z",
   },
   {
-    id: '2',
-    marketTitle: 'Fed rate cut in Q1 2026?',
-    side: 'no',
-    type: 'buy',
+    id: "2",
+    marketTitle: "Fed rate cut in Q1 2026?",
+    side: "no",
+    type: "buy",
     price: 0.48,
     quantity: 800,
-    timestamp: '2025-12-29T10:15:00Z',
+    timestamp: "2025-12-29T10:15:00Z",
   },
   {
-    id: '3',
-    marketTitle: 'Trump wins 2028 election?',
-    side: 'yes',
-    type: 'sell',
+    id: "3",
+    marketTitle: "Trump wins 2028 election?",
+    side: "yes",
+    type: "sell",
     price: 0.55,
     quantity: 500,
-    timestamp: '2025-12-28T16:45:00Z',
+    timestamp: "2025-12-28T16:45:00Z",
   },
 ];
 
@@ -100,16 +107,16 @@ export function TraderProfilePage() {
 
   useEffect(() => {
     setTimeout(() => {
-      const found = leaderboardData.traders.find(t => t.id === traderId);
+      const found = leaderboardData.traders.find((t) => t.id === traderId);
       setTrader(found || null);
       setIsLoading(false);
     }, 300);
   }, [traderId]);
 
   const formatProfit = (profit: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(profit);
@@ -117,11 +124,11 @@ export function TraderProfilePage() {
 
   const getAvatarGradient = (username: string) => {
     const gradients = [
-      'from-orange-400 to-pink-500',
-      'from-green-400 to-cyan-500',
-      'from-purple-400 to-pink-500',
-      'from-yellow-400 to-orange-500',
-      'from-blue-400 to-purple-500',
+      "from-orange-400 to-pink-500",
+      "from-green-400 to-cyan-500",
+      "from-purple-400 to-pink-500",
+      "from-yellow-400 to-orange-500",
+      "from-blue-400 to-purple-500",
     ];
     const index = username.charCodeAt(0) % gradients.length;
     return gradients[index];
@@ -132,7 +139,9 @@ export function TraderProfilePage() {
       <div className="min-h-screen bg-background">
         <AppHeader />
         <main className="max-w-4xl mx-auto px-4 py-8">
-          <div className="text-center text-muted-foreground">Loading profile...</div>
+          <div className="text-center text-muted-foreground">
+            Loading profile...
+          </div>
         </main>
       </div>
     );
@@ -144,7 +153,9 @@ export function TraderProfilePage() {
         <AppHeader />
         <main className="max-w-4xl mx-auto px-4 py-8">
           <div className="text-center">
-            <h1 className="text-xl font-semibold text-foreground mb-2">Trader not found</h1>
+            <h1 className="text-xl font-semibold text-foreground mb-2">
+              Trader not found
+            </h1>
             <Link to="/leaderboard" className="text-primary hover:underline">
               Back to leaderboard
             </Link>
@@ -170,18 +181,23 @@ export function TraderProfilePage() {
 
         {/* Profile Header */}
         <div className="flex items-start gap-4 mb-8">
-          <div className={`h-16 w-16 rounded-full bg-gradient-to-br ${getAvatarGradient(trader.username)}`} />
+          <div
+            className={`h-16 w-16 rounded-full bg-gradient-to-br ${getAvatarGradient(trader.username)}`}
+          />
           <div className="flex-1">
             <div className="flex items-center gap-3">
-              <h1 className="text-2xl font-semibold text-foreground">{trader.username}</h1>
+              <h1 className="text-2xl font-semibold text-foreground">
+                {trader.username}
+              </h1>
               {trader.rank <= 3 && (
                 <div className="flex items-center gap-1 px-2 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium">
-                  <Trophy className="h-3 w-3" />
-                  #{trader.rank}
+                  <Trophy className="h-3 w-3" />#{trader.rank}
                 </div>
               )}
             </div>
-            <p className="text-muted-foreground mt-1">Active trader since Dec 2025</p>
+            <p className="text-muted-foreground mt-1">
+              Active trader since Dec 2025
+            </p>
           </div>
         </div>
 
@@ -210,20 +226,26 @@ export function TraderProfilePage() {
               <Calendar className="w-4 h-4" />
               <span>Total Trades</span>
             </div>
-            <p className="text-xl font-semibold text-foreground">{trader.totalTrades}</p>
+            <p className="text-xl font-semibold text-foreground">
+              {trader.totalTrades}
+            </p>
           </div>
           <div className="bg-card border border-border rounded-lg p-4">
             <div className="flex items-center gap-2 text-muted-foreground text-sm mb-1">
               <Trophy className="w-4 h-4" />
               <span>Winning Trades</span>
             </div>
-            <p className="text-xl font-semibold text-foreground">{trader.winningTrades}</p>
+            <p className="text-xl font-semibold text-foreground">
+              {trader.winningTrades}
+            </p>
           </div>
         </div>
 
         {/* Performance Chart Placeholder */}
         <div className="bg-card border border-border rounded-lg p-6 mb-8">
-          <h3 className="text-sm font-medium text-foreground mb-4">Performance</h3>
+          <h3 className="text-sm font-medium text-foreground mb-4">
+            Performance
+          </h3>
           <div className="h-48 flex items-center justify-center border border-dashed border-border rounded-lg">
             <div className="text-center">
               <TrendingUp className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
@@ -275,12 +297,22 @@ export function TraderProfilePage() {
                         </Link>
                       </TableCell>
                       <TableCell>
-                        <span className={position.side === 'yes' ? 'text-success' : 'text-destructive'}>
+                        <span
+                          className={
+                            position.side === "yes"
+                              ? "text-success"
+                              : "text-destructive"
+                          }
+                        >
                           {position.side.toUpperCase()}
                         </span>
                       </TableCell>
-                      <TableCell className="text-right">{position.shares}</TableCell>
-                      <TableCell className="text-right">${position.avgPrice.toFixed(2)}</TableCell>
+                      <TableCell className="text-right">
+                        {position.shares}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        ₦{position.avgPrice.toFixed(2)}
+                      </TableCell>
                       <TableCell className="text-right">
                         <div className="flex items-center justify-end gap-1">
                           {position.pnl >= 0 ? (
@@ -288,8 +320,16 @@ export function TraderProfilePage() {
                           ) : (
                             <TrendingDown className="h-3 w-3 text-destructive" />
                           )}
-                          <span className={position.pnl >= 0 ? 'text-success' : 'text-destructive'}>
-                            ${Math.abs(position.pnl).toFixed(0)} ({position.pnlPercent >= 0 ? '+' : ''}{position.pnlPercent.toFixed(1)}%)
+                          <span
+                            className={
+                              position.pnl >= 0
+                                ? "text-success"
+                                : "text-destructive"
+                            }
+                          >
+                            ₦{Math.abs(position.pnl).toFixed(0)} (
+                            {position.pnlPercent >= 0 ? "+" : ""}
+                            {position.pnlPercent.toFixed(1)}%)
                           </span>
                         </div>
                       </TableCell>
@@ -317,14 +357,24 @@ export function TraderProfilePage() {
                         {trade.marketTitle}
                       </TableCell>
                       <TableCell>
-                        <span className={trade.type === 'buy' ? 'text-success' : 'text-destructive'}>
+                        <span
+                          className={
+                            trade.type === "buy"
+                              ? "text-success"
+                              : "text-destructive"
+                          }
+                        >
                           {trade.type.toUpperCase()} {trade.side.toUpperCase()}
                         </span>
                       </TableCell>
-                      <TableCell className="text-right">${trade.price.toFixed(2)}</TableCell>
-                      <TableCell className="text-right">{trade.quantity}</TableCell>
+                      <TableCell className="text-right">
+                        ₦{trade.price.toFixed(2)}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        {trade.quantity}
+                      </TableCell>
                       <TableCell className="text-right text-muted-foreground">
-                        {dayjs(trade.timestamp).format('MMM D, HH:mm')}
+                        {dayjs(trade.timestamp).format("MMM D, HH:mm")}
                       </TableCell>
                     </TableRow>
                   ))}

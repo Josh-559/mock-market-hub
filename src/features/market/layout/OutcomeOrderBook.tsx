@@ -53,7 +53,7 @@ export function OutcomeOrderBook({
   // Calculate max quantity for bar widths
   const maxQuantity = Math.max(
     ...orderBook.bids.map((b) => b.quantity),
-    ...orderBook.asks.map((a) => a.quantity)
+    ...orderBook.asks.map((a) => a.quantity),
   );
 
   return (
@@ -73,7 +73,7 @@ export function OutcomeOrderBook({
                 "flex items-center justify-between px-4 py-3 rounded-lg cursor-pointer transition-colors",
                 isSelected
                   ? "bg-surface border-2 border-primary"
-                  : "hover:bg-surface/50"
+                  : "hover:bg-surface/50",
               )}
             >
               <div className="flex items-center gap-3">
@@ -93,7 +93,7 @@ export function OutcomeOrderBook({
                     {outcome.label}
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    $
+                    ₦
                     {(
                       outcome.volume || Math.floor(Math.random() * 5000000)
                     ).toLocaleString()}{" "}
@@ -111,7 +111,7 @@ export function OutcomeOrderBook({
                     <span
                       className={cn(
                         "text-xs ml-1",
-                        priceChange > 0 ? "text-yes" : "text-no"
+                        priceChange > 0 ? "text-yes" : "text-no",
                       )}
                     >
                       {priceChange > 0 ? "▲" : "▼"}
@@ -144,7 +144,7 @@ export function OutcomeOrderBook({
                 "py-3 text-sm font-medium border-b-2 -mb-px transition-colors",
                 activeTab === "orderbook"
                   ? "text-foreground border-foreground"
-                  : "text-muted-foreground border-transparent hover:text-foreground"
+                  : "text-muted-foreground border-transparent hover:text-foreground",
               )}
             >
               Order Book
@@ -223,7 +223,7 @@ export function OutcomeOrderBook({
                           })}
                         </span>
                         <span className="relative text-right text-muted-foreground font-mono">
-                          $
+                          ₦
                           {(total / 100).toLocaleString(undefined, {
                             minimumFractionDigits: 2,
                             maximumFractionDigits: 2,
@@ -269,7 +269,7 @@ export function OutcomeOrderBook({
                         })}
                       </span>
                       <span className="relative text-right text-muted-foreground font-mono">
-                        $
+                        ₦
                         {(total / 100).toLocaleString(undefined, {
                           minimumFractionDigits: 2,
                           maximumFractionDigits: 2,

@@ -92,7 +92,7 @@ export function PolymarketTradePanel({
       notificationService.notifyTradeExecuted(
         selectedSide,
         result.shares,
-        result.avgPrice
+        result.avgPrice,
       );
     } else {
       notificationService.notifyTradeFailed(result.error || "Unknown error");
@@ -139,7 +139,7 @@ export function PolymarketTradePanel({
                 "px-4 py-1.5 text-sm font-semibold rounded-md transition-all",
                 tradeMode === "buy"
                   ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               Buy
@@ -150,7 +150,7 @@ export function PolymarketTradePanel({
                 "px-4 py-1.5 text-sm font-semibold rounded-md transition-all",
                 tradeMode === "sell"
                   ? "bg-background text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               Sell
@@ -194,7 +194,7 @@ export function PolymarketTradePanel({
               "py-3 rounded-lg text-sm font-semibold transition-all",
               selectedSide === "yes"
                 ? "bg-yes text-yes-foreground"
-                : "bg-yes/10 text-yes hover:bg-yes/20"
+                : "bg-yes/10 text-yes hover:bg-yes/20",
             )}
           >
             Yes {(yesPrice * 100).toFixed(0)}¢
@@ -205,7 +205,7 @@ export function PolymarketTradePanel({
               "py-3 rounded-lg text-sm font-semibold transition-all",
               selectedSide === "no"
                 ? "bg-no text-no-foreground"
-                : "bg-no/10 text-no hover:bg-no/20"
+                : "bg-no/10 text-no hover:bg-no/20",
             )}
           >
             No {(noPrice * 100).toFixed(0)}¢
@@ -246,7 +246,7 @@ export function PolymarketTradePanel({
               {tradeMode === "buy" ? "Amount" : "Shares to sell"}
             </label>
             <span className="text-2xl font-bold text-muted-foreground">
-              {tradeMode === "buy" ? `$${amount || "0"}` : amount || "0"}
+              {tradeMode === "buy" ? `₦${amount || "0"}` : amount || "0"}
             </span>
           </div>
 
@@ -260,7 +260,7 @@ export function PolymarketTradePanel({
                  border-border text-muted-foreground
                  hover:text-foreground hover:bg-surface"
               >
-                +${quickAmount}
+                +₦{quickAmount}
               </button>
             ))}
             <button className="px-2 py-2 text-sm rounded-lg border">Max</button>
@@ -277,7 +277,7 @@ export function PolymarketTradePanel({
               <span className="text-foreground font-medium">
                 {tradeMode === "buy"
                   ? formatShares(shares)
-                  : `$${potentialReturn.toFixed(2)}`}
+                  : `₦${potentialReturn.toFixed(2)}`}
               </span>
             </div>
             <div className="flex items-center justify-between">
@@ -296,7 +296,7 @@ export function PolymarketTradePanel({
                   <span
                     className={cn(
                       "font-bold text-2xl",
-                      potentialReturn >= 0 ? "text-yes" : "text-no"
+                      potentialReturn >= 0 ? "text-yes" : "text-no",
                     )}
                   >
                     {formatCurrency(potentialReturn)}
@@ -332,14 +332,14 @@ export function PolymarketTradePanel({
               ? selectedSide === "yes"
                 ? "bg-yes text-yes-foreground hover:bg-yes/90"
                 : "bg-no text-no-foreground hover:bg-no/90"
-              : "bg-primary text-primary-foreground hover:bg-primary/90"
+              : "bg-primary text-primary-foreground hover:bg-primary/90",
           )}
         >
           {isSubmitting
             ? "Submitting..."
             : tradeMode === "buy"
-            ? `Buy ${selectedSide.toUpperCase()}`
-            : `Sell ${selectedSide.toUpperCase()}`}
+              ? `Buy ${selectedSide.toUpperCase()}`
+              : `Sell ${selectedSide.toUpperCase()}`}
         </button>
 
         {/* Terms */}

@@ -55,7 +55,7 @@ export function AppHeader() {
                       to={link.href}
                       className={cn(
                         "nav-link",
-                        isActive && "nav-link-active text-foreground"
+                        isActive && "nav-link-active text-foreground",
                       )}
                     >
                       {link.label}
@@ -84,7 +84,7 @@ export function AppHeader() {
                     onClick={() => setShowDepositModal(true)}
                     className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
                   >
-                    <Wallet className="h-4 w-4" />$
+                    <Wallet className="h-4 w-4" />₦
                     {balance.toLocaleString("en-US", {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
@@ -99,7 +99,7 @@ export function AppHeader() {
                         "h-9 w-9 rounded-full border flex items-center justify-center transition-colors relative",
                         showNotifications
                           ? "border-primary bg-primary/10 text-primary"
-                          : "border-border text-muted-foreground hover:text-foreground hover:bg-surface"
+                          : "border-border text-muted-foreground hover:text-foreground hover:bg-surface",
                       )}
                     >
                       <Bell className="h-4 w-4" />

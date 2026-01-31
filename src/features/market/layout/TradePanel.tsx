@@ -1,19 +1,24 @@
-import { useState } from 'react';
-import { Lock, AlertTriangle } from 'lucide-react';
-import { useTradeStore } from '@/features/trading/trade.store';
-import { formatCurrency, formatShares } from '@/features/trading/trade.math';
-import { QUICK_AMOUNTS } from '@/shared/constants';
-import { cn } from '@/shared/utils';
-import { notificationService } from '@/services/notificationService';
+import { useState } from "react";
+import { Lock, AlertTriangle } from "lucide-react";
+import { useTradeStore } from "@/features/trading/trade.store";
+import { formatCurrency, formatShares } from "@/features/trading/trade.math";
+import { QUICK_AMOUNTS } from "@/shared/constants";
+import { cn } from "@/shared/utils";
+import { notificationService } from "@/services/notificationService";
 
 interface TradePanelProps {
   yesPrice: number;
   noPrice: number;
   liquidity: number;
-  priceFlash?: 'up' | 'down' | null;
+  priceFlash?: "up" | "down" | null;
 }
 
-export function TradePanel({ yesPrice, noPrice, liquidity, priceFlash }: TradePanelProps) {
+export function TradePanel({
+  yesPrice,
+  noPrice,
+  liquidity,
+  priceFlash,
+}: TradePanelProps) {
   const {
     selectedSide,
     amount,
@@ -35,18 +40,22 @@ export function TradePanel({ yesPrice, noPrice, liquidity, priceFlash }: TradePa
     setCurrentMarket(yesPrice, noPrice, liquidity);
   });
 
-  const currentPrice = selectedSide === 'yes' ? yesPrice : noPrice;
+  const currentPrice = selectedSide === "yes" ? yesPrice : noPrice;
   const hasAmount = amount && parseFloat(amount) > 0;
 
   const handleSubmit = async () => {
     if (!hasAmount) return;
-    
+
     const result = await submitOrder();
-    
+
     if (result.success) {
-      notificationService.notifyTradeExecuted(selectedSide, result.shares, result.avgPrice);
+      notificationService.notifyTradeExecuted(
+        selectedSide,
+        result.shares,
+        result.avgPrice,
+      );
     } else {
-      notificationService.notifyTradeFailed(result.error || 'Unknown error');
+      notificationService.notifyTradeFailed(result.error || "Unknown error");
     }
   };
 
@@ -55,40 +64,48 @@ export function TradePanel({ yesPrice, noPrice, liquidity, priceFlash }: TradePa
       {/* Side Selection - Kalshi style */}
       <div className="grid grid-cols-2 gap-2 mb-5">
         <button
-          onClick={() => setSelectedSide('yes')}
+          onClick={() => setSelectedSide("yes")}
           className={cn(
-            'py-3 px-4 rounded-lg text-sm font-medium border-2 transition-all',
-            selectedSide === 'yes'
-              ? 'yes-btn-lg-active'
-              : 'border-border text-muted-foreground hover:border-yes/50 hover:text-yes'
+            "py-3 px-4 rounded-lg text-sm font-medium border-2 transition-all",
+            selectedSide === "yes"
+              ? "yes-btn-lg-active"
+              : "border-border text-muted-foreground hover:border-yes/50 hover:text-yes",
           )}
         >
           <div className="text-center">
             <div className="font-semibold">Yes</div>
-            <div className="text-xs mt-0.5 opacity-80">{(yesPrice * 100).toFixed(0)}¢</div>
+            <div className="text-xs mt-0.5 opacity-80">
+              {(yesPrice * 100).toFixed(0)}¢
+            </div>
           </div>
         </button>
         <button
-          onClick={() => setSelectedSide('no')}
+          onClick={() => setSelectedSide("no")}
           className={cn(
-            'py-3 px-4 rounded-lg text-sm font-medium border-2 transition-all',
-            selectedSide === 'no'
-              ? 'no-btn-lg-active'
-              : 'border-border text-muted-foreground hover:border-no/50 hover:text-no'
+            "py-3 px-4 rounded-lg text-sm font-medium border-2 transition-all",
+            selectedSide === "no"
+              ? "no-btn-lg-active"
+              : "border-border text-muted-foreground hover:border-no/50 hover:text-no",
           )}
         >
           <div className="text-center">
             <div className="font-semibold">No</div>
-            <div className="text-xs mt-0.5 opacity-80">{(noPrice * 100).toFixed(0)}¢</div>
+            <div className="text-xs mt-0.5 opacity-80">
+              {(noPrice * 100).toFixed(0)}¢
+            </div>
           </div>
         </button>
       </div>
 
       {/* Amount Input */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-foreground mb-2">Amount</label>
+        <label className="block text-sm font-medium text-foreground mb-2">
+          Amount
+        </label>
         <div className="relative">
-          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-medium">$</span>
+          <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground font-medium">
+            ₦
+          </span>
           <input
             type="number"
             value={amount}
@@ -97,7 +114,7 @@ export function TradePanel({ yesPrice, noPrice, liquidity, priceFlash }: TradePa
             className="w-full h-12 pl-8 pr-4 rounded-lg border border-border bg-background text-lg font-medium text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30"
           />
         </div>
-        
+
         {/* Quick amounts */}
         <div className="flex flex-wrap gap-2 mt-3">
           {QUICK_AMOUNTS.map((quickAmount) => (
@@ -105,13 +122,13 @@ export function TradePanel({ yesPrice, noPrice, liquidity, priceFlash }: TradePa
               key={quickAmount}
               onClick={() => setAmount(quickAmount.toString())}
               className={cn(
-                'px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors',
+                "px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors",
                 amount === quickAmount.toString()
-                  ? 'border-primary bg-primary/10 text-primary'
-                  : 'border-border text-muted-foreground hover:text-foreground hover:bg-surface'
+                  ? "border-primary bg-primary/10 text-primary"
+                  : "border-border text-muted-foreground hover:text-foreground hover:bg-surface",
               )}
             >
-              ${quickAmount}
+              ₦{quickAmount}
             </button>
           ))}
         </div>
@@ -121,14 +138,19 @@ export function TradePanel({ yesPrice, noPrice, liquidity, priceFlash }: TradePa
       {hasAmount && (
         <div className="space-y-2 mb-5 p-4 rounded-lg bg-surface">
           <DetailRow label="Contracts" value={formatShares(shares)} />
-          <DetailRow label="Avg price" value={`${(currentPrice * 100).toFixed(1)}¢`} />
-          <div className="border-t border-border my-2 pt-2" />
-          <DetailRow 
-            label="Potential return" 
-            value={`${profit >= 0 ? '+' : ''}${formatCurrency(profit)} (${returnPercent >= 0 ? '+' : ''}${returnPercent.toFixed(0)}%)`}
-            valueClass={profit >= 0 ? 'text-yes font-medium' : 'text-no font-medium'}
+          <DetailRow
+            label="Avg price"
+            value={`${(currentPrice * 100).toFixed(1)}¢`}
           />
-          
+          <div className="border-t border-border my-2 pt-2" />
+          <DetailRow
+            label="Potential return"
+            value={`${profit >= 0 ? "+" : ""}${formatCurrency(profit)} (${returnPercent >= 0 ? "+" : ""}${returnPercent.toFixed(0)}%)`}
+            valueClass={
+              profit >= 0 ? "text-yes font-medium" : "text-no font-medium"
+            }
+          />
+
           {estimatedSlippage > 0.5 && (
             <div className="flex items-center gap-2 pt-2 text-warning text-xs">
               <AlertTriangle className="h-3 w-3" />
@@ -151,15 +173,15 @@ export function TradePanel({ yesPrice, noPrice, liquidity, priceFlash }: TradePa
         onClick={handleSubmit}
         disabled={!hasAmount || isSubmitting}
         className={cn(
-          'w-full py-3 px-4 rounded-lg text-sm font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed',
-          selectedSide === 'yes'
-            ? 'bg-yes text-yes-foreground hover:bg-yes/90'
-            : 'bg-no text-no-foreground hover:bg-no/90'
+          "w-full py-3 px-4 rounded-lg text-sm font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed",
+          selectedSide === "yes"
+            ? "bg-yes text-yes-foreground hover:bg-yes/90"
+            : "bg-no text-no-foreground hover:bg-no/90",
         )}
       >
-        {isSubmitting ? 'Submitting...' : `Buy ${selectedSide.toUpperCase()}`}
+        {isSubmitting ? "Submitting..." : `Buy ${selectedSide.toUpperCase()}`}
       </button>
-      
+
       {/* Disclaimer */}
       <p className="text-xs text-muted-foreground text-center mt-4">
         This is a demo. No real money involved.
@@ -168,21 +190,19 @@ export function TradePanel({ yesPrice, noPrice, liquidity, priceFlash }: TradePa
   );
 }
 
-function DetailRow({ 
-  label, 
-  value, 
+function DetailRow({
+  label,
+  value,
   valueClass,
-}: { 
-  label: string; 
-  value: string; 
+}: {
+  label: string;
+  value: string;
   valueClass?: string;
 }) {
   return (
     <div className="flex items-center justify-between text-sm">
       <span className="text-muted-foreground">{label}</span>
-      <span className={cn('text-foreground', valueClass)}>
-        {value}
-      </span>
+      <span className={cn("text-foreground", valueClass)}>{value}</span>
     </div>
   );
 }

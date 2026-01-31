@@ -52,19 +52,19 @@ export function PortfolioPage() {
           <SummaryCard
             icon={Wallet}
             label="Cash Balance"
-            value={`$${balance.toLocaleString("en-US", {
+            value={`₦${balance.toLocaleString("en-US", {
               minimumFractionDigits: 2,
             })}`}
           />
           <SummaryCard
             icon={PieChart}
             label="Wallet Value"
-            value={`$${totalValue.toFixed(2)}`}
+            value={`₦${totalValue.toFixed(2)}`}
           />
           <SummaryCard
             icon={TrendingUp}
             label="Total P&L"
-            value={`${totalPnl >= 0 ? "+" : ""}$${totalPnl.toFixed(2)}`}
+            value={`${totalPnl >= 0 ? "+" : ""}₦${totalPnl.toFixed(2)}`}
             valueClass={totalPnl >= 0 ? "text-yes" : "text-no"}
             subtext={`${
               totalPnlPercent >= 0 ? "+" : ""
@@ -194,7 +194,7 @@ function PositionRow({
               "text-xs font-medium px-2 py-0.5 rounded-full",
               position.side === "yes"
                 ? "bg-yes-light text-yes"
-                : "bg-no-light text-no"
+                : "bg-no-light text-no",
             )}
           >
             {position.side.toUpperCase()}
@@ -206,12 +206,12 @@ function PositionRow({
       </div>
       <div className="text-right ml-4">
         <p className="text-sm font-semibold text-foreground">
-          ${position.currentValue.toFixed(2)}
+          ₦{position.currentValue.toFixed(2)}
         </p>
         <div
           className={cn(
             "flex items-center justify-end gap-1 text-xs font-medium",
-            isProfit ? "text-yes" : "text-no"
+            isProfit ? "text-yes" : "text-no",
           )}
         >
           {isProfit ? (
@@ -220,7 +220,7 @@ function PositionRow({
             <ArrowDownRight className="h-3 w-3" />
           )}
           <span>
-            {isProfit ? "+" : ""}${position.pnl.toFixed(2)} (
+            {isProfit ? "+" : ""}₦{position.pnl.toFixed(2)} (
             {position.pnlPercent.toFixed(1)}%)
           </span>
         </div>
@@ -246,7 +246,7 @@ function TradeRow({
           <span
             className={cn(
               "text-xs font-medium",
-              isBuy ? "text-yes" : "text-no"
+              isBuy ? "text-yes" : "text-no",
             )}
           >
             {trade.type.toUpperCase()}
@@ -256,7 +256,7 @@ function TradeRow({
               "text-xs font-medium px-2 py-0.5 rounded-full",
               trade.side === "yes"
                 ? "bg-yes-light text-yes"
-                : "bg-no-light text-no"
+                : "bg-no-light text-no",
             )}
           >
             {trade.side.toUpperCase()}
@@ -268,7 +268,7 @@ function TradeRow({
       </div>
       <div className="text-right ml-4">
         <p className="text-sm font-semibold text-foreground">
-          ${trade.total.toFixed(2)}
+          ₦{trade.total.toFixed(2)}
         </p>
         <p className="text-xs text-muted-foreground">
           {dayjs(trade.timestamp).format("MMM D, h:mm A")}

@@ -260,8 +260,8 @@ export function CommentsSection({ marketId, outcomes }: CommentsSectionProps) {
   const handleLike = (commentId: string) => {
     setComments(
       comments.map((c) =>
-        c.id === commentId ? { ...c, likes: c.likes + 1 } : c
-      )
+        c.id === commentId ? { ...c, likes: c.likes + 1 } : c,
+      ),
     );
   };
 
@@ -312,7 +312,7 @@ export function CommentsSection({ marketId, outcomes }: CommentsSectionProps) {
               "pb-3 text-sm font-medium border-b-2 -mb-px transition-colors",
               activeTab === "comments"
                 ? "border-foreground text-foreground"
-                : "border-transparent text-muted-foreground hover:text-foreground"
+                : "border-transparent text-muted-foreground hover:text-foreground",
             )}
           >
             Comments ({comments.length})
@@ -334,7 +334,7 @@ export function CommentsSection({ marketId, outcomes }: CommentsSectionProps) {
               "pb-3 text-sm font-medium border-b-2 -mb-px transition-colors",
               activeTab === "activity"
                 ? "border-foreground text-foreground"
-                : "border-transparent text-muted-foreground hover:text-foreground"
+                : "border-transparent text-muted-foreground hover:text-foreground",
             )}
           >
             Activity
@@ -448,10 +448,10 @@ export function CommentsSection({ marketId, outcomes }: CommentsSectionProps) {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="any">Min amount</SelectItem>
-                <SelectItem value="10">$10+</SelectItem>
-                <SelectItem value="100">$100+</SelectItem>
-                <SelectItem value="1000">$1,000+</SelectItem>
-                <SelectItem value="10000">$10,000+</SelectItem>
+                <SelectItem value="10">₦10+</SelectItem>
+                <SelectItem value="100">₦100+</SelectItem>
+                <SelectItem value="1000">₦1,000+</SelectItem>
+                <SelectItem value="10000">₦10,000+</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -473,7 +473,7 @@ export function CommentsSection({ marketId, outcomes }: CommentsSectionProps) {
                     <div
                       className={cn(
                         "w-8 h-8 rounded-full bg-gradient-to-br flex-shrink-0",
-                        event.avatarGradient
+                        event.avatarGradient,
                       )}
                     />
 
@@ -489,7 +489,7 @@ export function CommentsSection({ marketId, outcomes }: CommentsSectionProps) {
                       <span
                         className={cn(
                           "font-medium",
-                          event.side === "Yes" ? "text-yes" : "text-no"
+                          event.side === "Yes" ? "text-yes" : "text-no",
                         )}
                       >
                         {event.quantity} {event.side}
@@ -507,7 +507,7 @@ export function CommentsSection({ marketId, outcomes }: CommentsSectionProps) {
                         at {event.price.toFixed(1)}¢{" "}
                       </span>
                       <span className="text-muted-foreground">
-                        (${event.total})
+                        (₦{event.total})
                       </span>
                     </div>
                   </div>
@@ -557,7 +557,7 @@ function CommentCard({
     <div
       className={cn(
         "py-4",
-        !isReply && "border-b border-border last:border-b-0"
+        !isReply && "border-b border-border last:border-b-0",
       )}
     >
       <div className="flex gap-3">
@@ -566,7 +566,7 @@ function CommentCard({
           className={cn(
             "rounded-full bg-gradient-to-br flex-shrink-0",
             getAvatarGradient(comment.username),
-            isReply ? "h-7 w-7" : "h-9 w-9"
+            isReply ? "h-7 w-7" : "h-9 w-9",
           )}
         />
 
@@ -577,7 +577,7 @@ function CommentCard({
               <span
                 className={cn(
                   "font-medium text-foreground",
-                  isReply ? "text-sm" : "text-sm"
+                  isReply ? "text-sm" : "text-sm",
                 )}
               >
                 {comment.username}
@@ -599,7 +599,7 @@ function CommentCard({
           <p
             className={cn(
               "text-foreground leading-relaxed mt-1",
-              isReply ? "text-sm" : "text-sm"
+              isReply ? "text-sm" : "text-sm",
             )}
           >
             {comment.content}

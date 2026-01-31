@@ -1,10 +1,10 @@
-import { create } from 'zustand';
-import userMock from '@/mocks/user.json';
+import { create } from "zustand";
+import userMock from "@/mocks/user.json";
 
 export interface Position {
   marketId: string;
   marketTitle: string;
-  side: 'yes' | 'no';
+  side: "yes" | "no";
   shares: number;
   avgPrice: number;
   currentPrice: number;
@@ -17,8 +17,8 @@ export interface TradeHistoryItem {
   id: string;
   marketId: string;
   marketTitle: string;
-  side: 'yes' | 'no';
-  type: 'buy' | 'sell';
+  side: "yes" | "no";
+  type: "buy" | "sell";
   price: number;
   quantity: number;
   total: number;
@@ -37,9 +37,9 @@ interface PortfolioState {
 
 // Market titles mapping
 const marketTitles: Record<string, string> = {
-  'btc-100k-2026': 'Will Bitcoin reach $100k in 2026?',
-  'fed-rate-cut-q1': 'Fed rate cut in Q1 2026?',
-  'trump-2028': 'Trump wins 2028 election?',
+  "btc-100k-2026": "Will Bitcoin reach ₦100k in 2026?",
+  "fed-rate-cut-q1": "Fed rate cut in Q1 2026?",
+  "trump-2028": "Trump wins 2028 election?",
 };
 
 export const usePortfolioStore = create<PortfolioState>((set) => ({
@@ -67,7 +67,7 @@ export const usePortfolioStore = create<PortfolioState>((set) => ({
         return {
           marketId: pos.marketId,
           marketTitle: marketTitles[pos.marketId] || pos.marketId,
-          side: pos.side as 'yes' | 'no',
+          side: pos.side as "yes" | "no",
           shares: pos.shares,
           avgPrice: pos.avgPrice,
           currentPrice,
@@ -78,21 +78,29 @@ export const usePortfolioStore = create<PortfolioState>((set) => ({
       });
 
       // Transform trade history
-      const tradeHistory: TradeHistoryItem[] = userMock.tradeHistory.map((trade) => ({
-        id: trade.id,
-        marketId: trade.marketId,
-        marketTitle: marketTitles[trade.marketId] || trade.marketId,
-        side: trade.side as 'yes' | 'no',
-        type: trade.type as 'buy' | 'sell',
-        price: trade.price,
-        quantity: trade.quantity,
-        total: trade.total,
-        timestamp: trade.timestamp,
-      }));
+      const tradeHistory: TradeHistoryItem[] = userMock.tradeHistory.map(
+        (trade) => ({
+          id: trade.id,
+          marketId: trade.marketId,
+          marketTitle: marketTitles[trade.marketId] || trade.marketId,
+          side: trade.side as "yes" | "no",
+          type: trade.type as "buy" | "sell",
+          price: trade.price,
+          quantity: trade.quantity,
+          total: trade.total,
+          timestamp: trade.timestamp,
+        }),
+      );
 
       // Calculate totals
-      const totalValue = positions.reduce((sum, pos) => sum + pos.currentValue, 0);
-      const totalCost = positions.reduce((sum, pos) => sum + (pos.shares * pos.avgPrice), 0);
+      const totalValue = positions.reduce(
+        (sum, pos) => sum + pos.currentValue,
+        0,
+      );
+      const totalCost = positions.reduce(
+        (sum, pos) => sum + pos.shares * pos.avgPrice,
+        0,
+      );
       const totalPnl = totalValue - totalCost;
       const totalPnlPercent = totalCost > 0 ? (totalPnl / totalCost) * 100 : 0;
 

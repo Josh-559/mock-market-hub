@@ -1,4 +1,4 @@
-import Decimal from 'decimal.js';
+import Decimal from "decimal.js";
 
 // Configure Decimal.js for financial precision
 Decimal.set({ precision: 20, rounding: Decimal.ROUND_DOWN });
@@ -22,11 +22,11 @@ export interface PriceLevel {
 export function calculateShares(amount: number, price: number): number {
   const amountDec = new Decimal(amount);
   const priceDec = new Decimal(price);
-  
+
   if (priceDec.isZero() || priceDec.isNegative()) {
     return 0;
   }
-  
+
   return amountDec.dividedBy(priceDec).floor().toNumber();
 }
 
@@ -48,23 +48,24 @@ export function calculateReturn(profit: number, cost: number): number {
 
 // Simulate order execution with slippage
 export function simulateOrderExecution(
-  side: 'yes' | 'no',
-  type: 'buy' | 'sell',
+  side: "yes" | "no",
+  type: "buy" | "sell",
   amount: number,
   currentPrice: number,
-  orderbook: { bids: PriceLevel[]; asks: PriceLevel[] }
+  orderbook: { bids: PriceLevel[]; asks: PriceLevel[] },
 ): OrderResult {
   // Simulate some basic slippage (0.5% - 2% based on order size)
   const slippagePercent = Math.min(0.02, 0.005 + (amount / 100000) * 0.01);
   const slippage = currentPrice * slippagePercent;
-  
-  const executionPrice = type === 'buy' 
-    ? Math.min(0.99, currentPrice + slippage)
-    : Math.max(0.01, currentPrice - slippage);
-  
+
+  const executionPrice =
+    type === "buy"
+      ? Math.min(0.99, currentPrice + slippage)
+      : Math.max(0.01, currentPrice - slippage);
+
   const shares = calculateShares(amount, executionPrice);
   const totalCost = new Decimal(shares).times(executionPrice).toNumber();
-  
+
   if (shares === 0) {
     return {
       success: false,
@@ -72,10 +73,10 @@ export function simulateOrderExecution(
       totalCost: 0,
       avgPrice: 0,
       slippage: 0,
-      error: 'Order too small',
+      error: "Order too small",
     };
   }
-  
+
   return {
     success: true,
     orderId: `ord_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
@@ -98,9 +99,9 @@ export function formatProbability(price: number): string {
 
 // Format currency
 export function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(amount);
@@ -109,10 +110,10 @@ export function formatCurrency(amount: number): string {
 // Format large numbers with K/M suffixes
 export function formatVolume(volume: number): string {
   if (volume >= 1_000_000) {
-    return `$${(volume / 1_000_000).toFixed(1)}M`;
+    return `₦${(volume / 1_000_000).toFixed(1)}M`;
   }
   if (volume >= 1_000) {
-    return `$${(volume / 1_000).toFixed(0)}K`;
+    return `₦${(volume / 1_000).toFixed(0)}K`;
   }
-  return `$${volume}`;
+  return `₦${volume}`;
 }

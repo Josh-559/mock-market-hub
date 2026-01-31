@@ -1,8 +1,8 @@
 [
   {
     "id": "btc-100k-2026",
-    "title": "Bitcoin to reach $100K by end of 2026?",
-    "description": "This market will resolve to YES if Bitcoin reaches or exceeds $100,000 USD on any major exchange before January 1, 2027.",
+    "title": "Bitcoin to reach ₦100K by end of 2026?",
+    "description": "This market will resolve to YES if Bitcoin reaches or exceeds ₦100,000 USD on any major exchange before January 1, 2027.",
     "category": "crypto",
     "status": "active",
     "type": "binary",
@@ -29,9 +29,27 @@
     "endsAt": "2026-11-15T23:59:59Z",
     "imageUrl": "/placeholder.svg",
     "outcomes": [
-      { "id": "republicans", "label": "Republicans", "yesPrice": 0.52, "noPrice": 0.48, "volume": 2345678 },
-      { "id": "democrats", "label": "Democrats", "yesPrice": 0.45, "noPrice": 0.55, "volume": 2123456 },
-      { "id": "independent", "label": "Independent/Other", "yesPrice": 0.03, "noPrice": 0.97, "volume": 234567 }
+      {
+        "id": "republicans",
+        "label": "Republicans",
+        "yesPrice": 0.52,
+        "noPrice": 0.48,
+        "volume": 2345678
+      },
+      {
+        "id": "democrats",
+        "label": "Democrats",
+        "yesPrice": 0.45,
+        "noPrice": 0.55,
+        "volume": 2123456
+      },
+      {
+        "id": "independent",
+        "label": "Independent/Other",
+        "yesPrice": 0.03,
+        "noPrice": 0.97,
+        "volume": 234567
+      }
     ]
   },
   {
@@ -49,10 +67,34 @@
     "endsAt": "2026-12-31T23:59:59Z",
     "imageUrl": "/placeholder.svg",
     "outcomes": [
-      { "id": "starmer", "label": "Keir Starmer", "yesPrice": 0.68, "noPrice": 0.32, "volume": 1567890 },
-      { "id": "sunak", "label": "Rishi Sunak", "yesPrice": 0.12, "noPrice": 0.88, "volume": 456789 },
-      { "id": "truss", "label": "Liz Truss", "yesPrice": 0.02, "noPrice": 0.98, "volume": 123456 },
-      { "id": "other", "label": "Someone Else", "yesPrice": 0.18, "noPrice": 0.82, "volume": 345678 }
+      {
+        "id": "starmer",
+        "label": "Keir Starmer",
+        "yesPrice": 0.68,
+        "noPrice": 0.32,
+        "volume": 1567890
+      },
+      {
+        "id": "sunak",
+        "label": "Rishi Sunak",
+        "yesPrice": 0.12,
+        "noPrice": 0.88,
+        "volume": 456789
+      },
+      {
+        "id": "truss",
+        "label": "Liz Truss",
+        "yesPrice": 0.02,
+        "noPrice": 0.98,
+        "volume": 123456
+      },
+      {
+        "id": "other",
+        "label": "Someone Else",
+        "yesPrice": 0.18,
+        "noPrice": 0.82,
+        "volume": 345678
+      }
     ]
   },
   {
@@ -130,12 +172,48 @@
     "endsAt": "2026-02-15T23:59:59Z",
     "imageUrl": "/placeholder.svg",
     "outcomes": [
-      { "id": "chiefs", "label": "Kansas City Chiefs", "yesPrice": 0.24, "noPrice": 0.76, "volume": 2345678 },
-      { "id": "49ers", "label": "San Francisco 49ers", "yesPrice": 0.18, "noPrice": 0.82, "volume": 1876543 },
-      { "id": "eagles", "label": "Philadelphia Eagles", "yesPrice": 0.15, "noPrice": 0.85, "volume": 1234567 },
-      { "id": "bills", "label": "Buffalo Bills", "yesPrice": 0.12, "noPrice": 0.88, "volume": 987654 },
-      { "id": "ravens", "label": "Baltimore Ravens", "yesPrice": 0.10, "noPrice": 0.90, "volume": 876543 },
-      { "id": "other-team", "label": "Other Team", "yesPrice": 0.21, "noPrice": 0.79, "volume": 1567890 }
+      {
+        "id": "chiefs",
+        "label": "Kansas City Chiefs",
+        "yesPrice": 0.24,
+        "noPrice": 0.76,
+        "volume": 2345678
+      },
+      {
+        "id": "49ers",
+        "label": "San Francisco 49ers",
+        "yesPrice": 0.18,
+        "noPrice": 0.82,
+        "volume": 1876543
+      },
+      {
+        "id": "eagles",
+        "label": "Philadelphia Eagles",
+        "yesPrice": 0.15,
+        "noPrice": 0.85,
+        "volume": 1234567
+      },
+      {
+        "id": "bills",
+        "label": "Buffalo Bills",
+        "yesPrice": 0.12,
+        "noPrice": 0.88,
+        "volume": 987654
+      },
+      {
+        "id": "ravens",
+        "label": "Baltimore Ravens",
+        "yesPrice": 0.1,
+        "noPrice": 0.9,
+        "volume": 876543
+      },
+      {
+        "id": "other-team",
+        "label": "Other Team",
+        "yesPrice": 0.21,
+        "noPrice": 0.79,
+        "volume": 1567890
+      }
     ]
   },
   {
@@ -348,11 +426,41 @@
     "endsAt": "2026-06-30T23:59:59Z",
     "imageUrl": "/placeholder.svg",
     "outcomes": [
-      { "id": "celtics", "label": "Boston Celtics", "yesPrice": 0.22, "noPrice": 0.78, "volume": 1567890 },
-      { "id": "nuggets", "label": "Denver Nuggets", "yesPrice": 0.18, "noPrice": 0.82, "volume": 1234567 },
-      { "id": "thunder", "label": "OKC Thunder", "yesPrice": 0.15, "noPrice": 0.85, "volume": 987654 },
-      { "id": "lakers", "label": "Los Angeles Lakers", "yesPrice": 0.10, "noPrice": 0.90, "volume": 876543 },
-      { "id": "other-nba", "label": "Other Team", "yesPrice": 0.35, "noPrice": 0.65, "volume": 2123456 }
+      {
+        "id": "celtics",
+        "label": "Boston Celtics",
+        "yesPrice": 0.22,
+        "noPrice": 0.78,
+        "volume": 1567890
+      },
+      {
+        "id": "nuggets",
+        "label": "Denver Nuggets",
+        "yesPrice": 0.18,
+        "noPrice": 0.82,
+        "volume": 1234567
+      },
+      {
+        "id": "thunder",
+        "label": "OKC Thunder",
+        "yesPrice": 0.15,
+        "noPrice": 0.85,
+        "volume": 987654
+      },
+      {
+        "id": "lakers",
+        "label": "Los Angeles Lakers",
+        "yesPrice": 0.1,
+        "noPrice": 0.9,
+        "volume": 876543
+      },
+      {
+        "id": "other-nba",
+        "label": "Other Team",
+        "yesPrice": 0.35,
+        "noPrice": 0.65,
+        "volume": 2123456
+      }
     ]
   },
   {
@@ -370,13 +478,55 @@
     "endsAt": "2026-07-20T23:59:59Z",
     "imageUrl": "/placeholder.svg",
     "outcomes": [
-      { "id": "france", "label": "France", "yesPrice": 0.18, "noPrice": 0.82, "volume": 2345678 },
-      { "id": "brazil", "label": "Brazil", "yesPrice": 0.15, "noPrice": 0.85, "volume": 2123456 },
-      { "id": "argentina", "label": "Argentina", "yesPrice": 0.14, "noPrice": 0.86, "volume": 1987654 },
-      { "id": "england", "label": "England", "yesPrice": 0.12, "noPrice": 0.88, "volume": 1567890 },
-      { "id": "germany", "label": "Germany", "yesPrice": 0.10, "noPrice": 0.90, "volume": 1234567 },
-      { "id": "spain", "label": "Spain", "yesPrice": 0.09, "noPrice": 0.91, "volume": 1123456 },
-      { "id": "other-country", "label": "Other Country", "yesPrice": 0.22, "noPrice": 0.78, "volume": 1963456 }
+      {
+        "id": "france",
+        "label": "France",
+        "yesPrice": 0.18,
+        "noPrice": 0.82,
+        "volume": 2345678
+      },
+      {
+        "id": "brazil",
+        "label": "Brazil",
+        "yesPrice": 0.15,
+        "noPrice": 0.85,
+        "volume": 2123456
+      },
+      {
+        "id": "argentina",
+        "label": "Argentina",
+        "yesPrice": 0.14,
+        "noPrice": 0.86,
+        "volume": 1987654
+      },
+      {
+        "id": "england",
+        "label": "England",
+        "yesPrice": 0.12,
+        "noPrice": 0.88,
+        "volume": 1567890
+      },
+      {
+        "id": "germany",
+        "label": "Germany",
+        "yesPrice": 0.1,
+        "noPrice": 0.9,
+        "volume": 1234567
+      },
+      {
+        "id": "spain",
+        "label": "Spain",
+        "yesPrice": 0.09,
+        "noPrice": 0.91,
+        "volume": 1123456
+      },
+      {
+        "id": "other-country",
+        "label": "Other Country",
+        "yesPrice": 0.22,
+        "noPrice": 0.78,
+        "volume": 1963456
+      }
     ]
   },
   {
@@ -394,16 +544,40 @@
     "endsAt": "2026-07-15T23:59:59Z",
     "imageUrl": "/placeholder.svg",
     "outcomes": [
-      { "id": "sinner", "label": "Jannik Sinner", "yesPrice": 0.28, "noPrice": 0.72, "volume": 567890 },
-      { "id": "alcaraz", "label": "Carlos Alcaraz", "yesPrice": 0.25, "noPrice": 0.75, "volume": 543210 },
-      { "id": "djokovic", "label": "Novak Djokovic", "yesPrice": 0.18, "noPrice": 0.82, "volume": 432109 },
-      { "id": "other-player", "label": "Other Player", "yesPrice": 0.29, "noPrice": 0.71, "volume": 802469 }
+      {
+        "id": "sinner",
+        "label": "Jannik Sinner",
+        "yesPrice": 0.28,
+        "noPrice": 0.72,
+        "volume": 567890
+      },
+      {
+        "id": "alcaraz",
+        "label": "Carlos Alcaraz",
+        "yesPrice": 0.25,
+        "noPrice": 0.75,
+        "volume": 543210
+      },
+      {
+        "id": "djokovic",
+        "label": "Novak Djokovic",
+        "yesPrice": 0.18,
+        "noPrice": 0.82,
+        "volume": 432109
+      },
+      {
+        "id": "other-player",
+        "label": "Other Player",
+        "yesPrice": 0.29,
+        "noPrice": 0.71,
+        "volume": 802469
+      }
     ]
   },
   {
     "id": "nvidia-3t-marketcap",
-    "title": "NVIDIA to reach $3T market cap in 2026?",
-    "description": "Will NVIDIA's market capitalization exceed $3 trillion at any point during 2026?",
+    "title": "NVIDIA to reach ₦3T market cap in 2026?",
+    "description": "Will NVIDIA's market capitalization exceed ₦3 trillion at any point during 2026?",
     "category": "tech",
     "status": "active",
     "type": "binary",
@@ -477,8 +651,8 @@
   },
   {
     "id": "dogecoin-1-dollar",
-    "title": "Dogecoin to reach $1 in 2026?",
-    "description": "Will Dogecoin's price reach or exceed $1.00 USD on any major exchange during 2026?",
+    "title": "Dogecoin to reach ₦1 in 2026?",
+    "description": "Will Dogecoin's price reach or exceed ₦1.00 on any major exchange during 2026?",
     "category": "crypto",
     "status": "active",
     "type": "binary",
@@ -552,8 +726,8 @@
   },
   {
     "id": "oil-100-barrel",
-    "title": "Oil to exceed $100/barrel in 2026?",
-    "description": "Will WTI crude oil price exceed $100 per barrel at any point during 2026?",
+    "title": "Oil to exceed ₦100/barrel in 2026?",
+    "description": "Will WTI crude oil price exceed ₦100 per barrel at any point during 2026?",
     "category": "economics",
     "status": "active",
     "type": "binary",
@@ -580,10 +754,34 @@
     "endsAt": "2027-05-15T23:59:59Z",
     "imageUrl": "/placeholder.svg",
     "outcomes": [
-      { "id": "macron-successor", "label": "Macron's Successor (En Marche)", "yesPrice": 0.35, "noPrice": 0.65, "volume": 876543 },
-      { "id": "le-pen", "label": "Marine Le Pen", "yesPrice": 0.32, "noPrice": 0.68, "volume": 765432 },
-      { "id": "melenchon", "label": "Jean-Luc Mélenchon", "yesPrice": 0.12, "noPrice": 0.88, "volume": 432109 },
-      { "id": "other-french", "label": "Other Candidate", "yesPrice": 0.21, "noPrice": 0.79, "volume": 802469 }
+      {
+        "id": "macron-successor",
+        "label": "Macron's Successor (En Marche)",
+        "yesPrice": 0.35,
+        "noPrice": 0.65,
+        "volume": 876543
+      },
+      {
+        "id": "le-pen",
+        "label": "Marine Le Pen",
+        "yesPrice": 0.32,
+        "noPrice": 0.68,
+        "volume": 765432
+      },
+      {
+        "id": "melenchon",
+        "label": "Jean-Luc Mélenchon",
+        "yesPrice": 0.12,
+        "noPrice": 0.88,
+        "volume": 432109
+      },
+      {
+        "id": "other-french",
+        "label": "Other Candidate",
+        "yesPrice": 0.21,
+        "noPrice": 0.79,
+        "volume": 802469
+      }
     ]
   },
   {
@@ -721,11 +919,41 @@
     "endsAt": "2026-06-01T23:59:59Z",
     "imageUrl": "/placeholder.svg",
     "outcomes": [
-      { "id": "real-madrid", "label": "Real Madrid", "yesPrice": 0.22, "noPrice": 0.78, "volume": 1234567 },
-      { "id": "man-city", "label": "Manchester City", "yesPrice": 0.18, "noPrice": 0.82, "volume": 1098765 },
-      { "id": "bayern", "label": "Bayern Munich", "yesPrice": 0.12, "noPrice": 0.88, "volume": 876543 },
-      { "id": "arsenal", "label": "Arsenal", "yesPrice": 0.10, "noPrice": 0.90, "volume": 765432 },
-      { "id": "other-club", "label": "Other Club", "yesPrice": 0.38, "noPrice": 0.62, "volume": 1703594 }
+      {
+        "id": "real-madrid",
+        "label": "Real Madrid",
+        "yesPrice": 0.22,
+        "noPrice": 0.78,
+        "volume": 1234567
+      },
+      {
+        "id": "man-city",
+        "label": "Manchester City",
+        "yesPrice": 0.18,
+        "noPrice": 0.82,
+        "volume": 1098765
+      },
+      {
+        "id": "bayern",
+        "label": "Bayern Munich",
+        "yesPrice": 0.12,
+        "noPrice": 0.88,
+        "volume": 876543
+      },
+      {
+        "id": "arsenal",
+        "label": "Arsenal",
+        "yesPrice": 0.1,
+        "noPrice": 0.9,
+        "volume": 765432
+      },
+      {
+        "id": "other-club",
+        "label": "Other Club",
+        "yesPrice": 0.38,
+        "noPrice": 0.62,
+        "volume": 1703594
+      }
     ]
   },
   {
@@ -743,11 +971,41 @@
     "endsAt": "2026-12-15T23:59:59Z",
     "imageUrl": "/placeholder.svg",
     "outcomes": [
-      { "id": "verstappen", "label": "Max Verstappen", "yesPrice": 0.35, "noPrice": 0.65, "volume": 987654 },
-      { "id": "hamilton", "label": "Lewis Hamilton", "yesPrice": 0.18, "noPrice": 0.82, "volume": 654321 },
-      { "id": "leclerc", "label": "Charles Leclerc", "yesPrice": 0.15, "noPrice": 0.85, "volume": 543210 },
-      { "id": "norris", "label": "Lando Norris", "yesPrice": 0.12, "noPrice": 0.88, "volume": 432109 },
-      { "id": "other-driver", "label": "Other Driver", "yesPrice": 0.20, "noPrice": 0.80, "volume": 839495 }
+      {
+        "id": "verstappen",
+        "label": "Max Verstappen",
+        "yesPrice": 0.35,
+        "noPrice": 0.65,
+        "volume": 987654
+      },
+      {
+        "id": "hamilton",
+        "label": "Lewis Hamilton",
+        "yesPrice": 0.18,
+        "noPrice": 0.82,
+        "volume": 654321
+      },
+      {
+        "id": "leclerc",
+        "label": "Charles Leclerc",
+        "yesPrice": 0.15,
+        "noPrice": 0.85,
+        "volume": 543210
+      },
+      {
+        "id": "norris",
+        "label": "Lando Norris",
+        "yesPrice": 0.12,
+        "noPrice": 0.88,
+        "volume": 432109
+      },
+      {
+        "id": "other-driver",
+        "label": "Other Driver",
+        "yesPrice": 0.2,
+        "noPrice": 0.8,
+        "volume": 839495
+      }
     ]
   },
   {
@@ -780,10 +1038,34 @@
     "endsAt": "2026-03-15T23:59:59Z",
     "imageUrl": "/placeholder.svg",
     "outcomes": [
-      { "id": "anora", "label": "Anora", "yesPrice": 0.25, "noPrice": 0.75, "volume": 345678 },
-      { "id": "conclave", "label": "Conclave", "yesPrice": 0.22, "noPrice": 0.78, "volume": 298765 },
-      { "id": "wicked", "label": "Wicked", "yesPrice": 0.18, "noPrice": 0.82, "volume": 234567 },
-      { "id": "other-film", "label": "Other Film", "yesPrice": 0.35, "noPrice": 0.65, "volume": 355557 }
+      {
+        "id": "anora",
+        "label": "Anora",
+        "yesPrice": 0.25,
+        "noPrice": 0.75,
+        "volume": 345678
+      },
+      {
+        "id": "conclave",
+        "label": "Conclave",
+        "yesPrice": 0.22,
+        "noPrice": 0.78,
+        "volume": 298765
+      },
+      {
+        "id": "wicked",
+        "label": "Wicked",
+        "yesPrice": 0.18,
+        "noPrice": 0.82,
+        "volume": 234567
+      },
+      {
+        "id": "other-film",
+        "label": "Other Film",
+        "yesPrice": 0.35,
+        "noPrice": 0.65,
+        "volume": 355557
+      }
     ]
   },
   {
@@ -801,10 +1083,34 @@
     "endsAt": "2026-02-10T23:59:59Z",
     "imageUrl": "/placeholder.svg",
     "outcomes": [
-      { "id": "beyonce", "label": "Beyoncé", "yesPrice": 0.28, "noPrice": 0.72, "volume": 234567 },
-      { "id": "taylor-swift", "label": "Taylor Swift", "yesPrice": 0.22, "noPrice": 0.78, "volume": 198765 },
-      { "id": "kendrick", "label": "Kendrick Lamar", "yesPrice": 0.18, "noPrice": 0.82, "volume": 165432 },
-      { "id": "other-artist", "label": "Other Artist", "yesPrice": 0.32, "noPrice": 0.68, "volume": 277779 }
+      {
+        "id": "beyonce",
+        "label": "Beyoncé",
+        "yesPrice": 0.28,
+        "noPrice": 0.72,
+        "volume": 234567
+      },
+      {
+        "id": "taylor-swift",
+        "label": "Taylor Swift",
+        "yesPrice": 0.22,
+        "noPrice": 0.78,
+        "volume": 198765
+      },
+      {
+        "id": "kendrick",
+        "label": "Kendrick Lamar",
+        "yesPrice": 0.18,
+        "noPrice": 0.82,
+        "volume": 165432
+      },
+      {
+        "id": "other-artist",
+        "label": "Other Artist",
+        "yesPrice": 0.32,
+        "noPrice": 0.68,
+        "volume": 277779
+      }
     ]
   },
   {

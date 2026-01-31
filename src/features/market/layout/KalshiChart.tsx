@@ -38,7 +38,7 @@ const OUTCOME_COLORS = [
 // Generate simulated price history for each outcome
 function generateOutcomePriceHistory(
   basePrice: number,
-  points: number = 51
+  points: number = 51,
 ): number[] {
   const history: number[] = [];
   let currentPrice = basePrice - 0.15 + Math.random() * 0.1;
@@ -48,7 +48,7 @@ function generateOutcomePriceHistory(
     const randomness = (Math.random() - 0.5) * 0.05;
     currentPrice = Math.max(
       0.01,
-      Math.min(0.99, currentPrice + drift + randomness)
+      Math.min(0.99, currentPrice + drift + randomness),
     );
     history.push(Math.round(currentPrice * 100));
   }
@@ -231,7 +231,7 @@ export function KalshiChart({
                 key={outcome.id}
                 className={cn(
                   "flex items-center gap-2 cursor-pointer transition-opacity duration-200",
-                  isDimmed && "opacity-30"
+                  isDimmed && "opacity-30",
                 )}
                 onMouseEnter={() => handleLegendMouseEnter(outcome.id)}
                 onMouseLeave={handleLegendMouseLeave}
@@ -305,7 +305,7 @@ export function KalshiChart({
                         </div>
                         {payload.map((entry, idx) => {
                           const outcome = outcomes!.find(
-                            (o) => o.id === entry.dataKey
+                            (o) => o.id === entry.dataKey,
                           );
                           return (
                             <div
@@ -473,7 +473,7 @@ export function KalshiChart({
       <div className="flex items-center justify-between mt-4 pt-3 border-t border-border">
         {volume !== undefined && (
           <span className="text-sm text-muted-foreground">
-            ${volume.toLocaleString()} vol
+            ₦{volume.toLocaleString()} vol
           </span>
         )}
         <div className="flex items-center gap-1 ml-auto">
@@ -485,7 +485,7 @@ export function KalshiChart({
                 "px-2.5 py-1 text-xs font-medium rounded transition-colors",
                 selectedRange === range
                   ? "bg-surface text-foreground"
-                  : "text-muted-foreground hover:text-foreground"
+                  : "text-muted-foreground hover:text-foreground",
               )}
             >
               {range}

@@ -1,10 +1,11 @@
-import type { Market } from './markets.types';
+import type { Market } from "./markets.types";
 
 export const mockMarkets: Market[] = [
   {
     id: "btc-100k-2026",
-    title: "Bitcoin to reach $100K by end of 2026?",
-    description: "This market will resolve to YES if Bitcoin reaches or exceeds $100,000 USD on any major exchange before January 1, 2027.",
+    title: "Bitcoin to reach ₦100K by end of 2026?",
+    description:
+      "This market will resolve to YES if Bitcoin reaches or exceeds ₦100,000 USD on any major exchange before January 1, 2027.",
     category: "crypto",
     status: "active",
     volume: 2847592,
@@ -13,12 +14,13 @@ export const mockMarkets: Market[] = [
     noPrice: 0.28,
     createdAt: "2025-06-15T00:00:00Z",
     endsAt: "2026-12-31T23:59:59Z",
-    imageUrl: "/placeholder.svg"
+    imageUrl: "/placeholder.svg",
   },
   {
     id: "fed-rate-cut-q1",
     title: "Fed to cut rates in Q1 2026?",
-    description: "Will the Federal Reserve announce a rate cut during the first quarter of 2026?",
+    description:
+      "Will the Federal Reserve announce a rate cut during the first quarter of 2026?",
     category: "economics",
     status: "active",
     volume: 1523847,
@@ -27,12 +29,13 @@ export const mockMarkets: Market[] = [
     noPrice: 0.55,
     createdAt: "2025-11-01T00:00:00Z",
     endsAt: "2026-03-31T23:59:59Z",
-    imageUrl: "/placeholder.svg"
+    imageUrl: "/placeholder.svg",
   },
   {
     id: "spacex-mars-2026",
     title: "SpaceX Starship to land on Mars by 2026?",
-    description: "Will SpaceX successfully land an uncrewed Starship on Mars before January 1, 2027?",
+    description:
+      "Will SpaceX successfully land an uncrewed Starship on Mars before January 1, 2027?",
     category: "science",
     status: "active",
     volume: 892341,
@@ -41,12 +44,13 @@ export const mockMarkets: Market[] = [
     noPrice: 0.88,
     createdAt: "2025-08-20T00:00:00Z",
     endsAt: "2026-12-31T23:59:59Z",
-    imageUrl: "/placeholder.svg"
+    imageUrl: "/placeholder.svg",
   },
   {
     id: "ai-regulation-2026",
     title: "US to pass major AI regulation in 2026?",
-    description: "Will the US Congress pass comprehensive AI regulation legislation that is signed into law in 2026?",
+    description:
+      "Will the US Congress pass comprehensive AI regulation legislation that is signed into law in 2026?",
     category: "politics",
     status: "active",
     volume: 673928,
@@ -55,12 +59,13 @@ export const mockMarkets: Market[] = [
     noPrice: 0.62,
     createdAt: "2025-09-10T00:00:00Z",
     endsAt: "2026-12-31T23:59:59Z",
-    imageUrl: "/placeholder.svg"
+    imageUrl: "/placeholder.svg",
   },
   {
     id: "nfl-superbowl-chiefs",
     title: "Chiefs to win Super Bowl LX?",
-    description: "Will the Kansas City Chiefs win Super Bowl LX in February 2026?",
+    description:
+      "Will the Kansas City Chiefs win Super Bowl LX in February 2026?",
     category: "sports",
     status: "active",
     volume: 4521893,
@@ -69,12 +74,13 @@ export const mockMarkets: Market[] = [
     noPrice: 0.76,
     createdAt: "2025-10-01T00:00:00Z",
     endsAt: "2026-02-15T23:59:59Z",
-    imageUrl: "/placeholder.svg"
+    imageUrl: "/placeholder.svg",
   },
   {
     id: "apple-vr-sales",
     title: "Apple Vision Pro to sell 5M+ units in 2026?",
-    description: "Will Apple sell more than 5 million Vision Pro units globally in calendar year 2026?",
+    description:
+      "Will Apple sell more than 5 million Vision Pro units globally in calendar year 2026?",
     category: "tech",
     status: "active",
     volume: 1289456,
@@ -83,12 +89,13 @@ export const mockMarkets: Market[] = [
     noPrice: 0.69,
     createdAt: "2025-07-01T00:00:00Z",
     endsAt: "2026-12-31T23:59:59Z",
-    imageUrl: "/placeholder.svg"
+    imageUrl: "/placeholder.svg",
   },
   {
     id: "eth-merge-staking",
     title: "ETH staking yield to exceed 5% in 2026?",
-    description: "Will Ethereum staking APY exceed 5% at any point during 2026?",
+    description:
+      "Will Ethereum staking APY exceed 5% at any point during 2026?",
     category: "crypto",
     status: "active",
     volume: 987234,
@@ -97,12 +104,13 @@ export const mockMarkets: Market[] = [
     noPrice: 0.44,
     createdAt: "2025-11-15T00:00:00Z",
     endsAt: "2026-12-31T23:59:59Z",
-    imageUrl: "/placeholder.svg"
+    imageUrl: "/placeholder.svg",
   },
   {
     id: "recession-2026",
     title: "US recession to occur in 2026?",
-    description: "Will the NBER declare a recession in the United States that occurs during 2026?",
+    description:
+      "Will the NBER declare a recession in the United States that occurs during 2026?",
     category: "economics",
     status: "active",
     volume: 2134567,
@@ -111,6 +119,6 @@ export const mockMarkets: Market[] = [
     noPrice: 0.71,
     createdAt: "2025-06-01T00:00:00Z",
     endsAt: "2027-06-30T23:59:59Z",
-    imageUrl: "/placeholder.svg"
-  }
+    imageUrl: "/placeholder.svg",
+  },
 ];

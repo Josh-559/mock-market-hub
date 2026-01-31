@@ -35,7 +35,7 @@ type TabType = "all" | "watchlist";
 export function MarketList() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(
-    null
+    null,
   );
   const [activeTab, setActiveTab] = useState<TabType>("all");
 
@@ -75,7 +75,7 @@ export function MarketList() {
                 "text-sm font-medium pb-3 -mb-3 border-b-2 transition-colors",
                 activeTab === "all"
                   ? "text-foreground border-primary"
-                  : "text-muted-foreground border-transparent hover:text-foreground"
+                  : "text-muted-foreground border-transparent hover:text-foreground",
               )}
             >
               All Markets
@@ -86,7 +86,7 @@ export function MarketList() {
                 "text-sm font-medium pb-3 -mb-3 border-b-2 transition-colors flex items-center gap-2",
                 activeTab === "watchlist"
                   ? "text-foreground border-primary"
-                  : "text-muted-foreground border-transparent hover:text-foreground"
+                  : "text-muted-foreground border-transparent hover:text-foreground",
               )}
             >
               Watchlist
@@ -116,7 +116,7 @@ export function MarketList() {
                     "px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors rounded-lg",
                     selectedCategory === cat.id
                       ? "text-foreground font-semibold"
-                      : "text-muted-foreground hover:text-foreground"
+                      : "text-muted-foreground hover:text-foreground",
                   )}
                 >
                   {cat.label}
@@ -136,7 +136,7 @@ export function MarketList() {
                 onClick={() => setSelectedSubcategory(null)}
                 className={cn(
                   "category-pill",
-                  !selectedSubcategory && "category-pill-active"
+                  !selectedSubcategory && "category-pill-active",
                 )}
               >
                 All
@@ -147,7 +147,7 @@ export function MarketList() {
                   onClick={() => setSelectedSubcategory(sub)}
                   className={cn(
                     "category-pill",
-                    selectedSubcategory === sub && "category-pill-active"
+                    selectedSubcategory === sub && "category-pill-active",
                   )}
                 >
                   {sub}
@@ -217,7 +217,7 @@ function MarketCard({ market }: { market: Market }) {
   const handleTradeClick = (
     e: React.MouseEvent,
     side: "yes" | "no",
-    outcome?: MarketOutcome
+    outcome?: MarketOutcome,
   ) => {
     e.preventDefault();
     e.stopPropagation();
@@ -309,15 +309,15 @@ function MarketCard({ market }: { market: Market }) {
                 {/* Return calculation */}
                 <div className="flex gap-6 text-xs">
                   <div className="text-muted-foreground">
-                    $100 →{" "}
+                    ₦100 →{" "}
                     <span className="text-yes font-medium">
-                      ${calcReturn(market.yesPrice)}
+                      ₦{calcReturn(market.yesPrice)}
                     </span>
                   </div>
                   <div className="text-muted-foreground">
-                    $100 →{" "}
+                    ₦100 →{" "}
                     <span className="text-no font-medium">
-                      ${calcReturn(market.noPrice)}
+                      ₦{calcReturn(market.noPrice)}
                     </span>
                   </div>
                 </div>
@@ -328,14 +328,14 @@ function MarketCard({ market }: { market: Market }) {
           {/* Volume & Add Button */}
           <div className="flex items-center justify-between mt-4 pt-3 border-t border-border">
             <span className="text-sm text-muted-foreground font-medium">
-              ${formatVolume(market.volume).replace("$", "")}
+              ₦{formatVolume(market.volume).replace("₦", "")}
             </span>
             <button
               className={cn(
                 "h-7 w-7 rounded-full border flex items-center justify-center transition-colors",
                 watched
                   ? "border-primary bg-primary text-primary-foreground"
-                  : "border-border text-muted-foreground hover:text-foreground hover:bg-surface"
+                  : "border-border text-muted-foreground hover:text-foreground hover:bg-surface",
               )}
               onClick={handleWatchlistClick}
             >
